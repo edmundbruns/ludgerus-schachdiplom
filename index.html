@@ -116,18 +116,14 @@ input:focus{outline:none;border-color:var(--brand)}
   background:rgba(0,0,0,.28);pointer-events:none;z-index:3}
 .cb-sq.sq-active{outline:4px solid #facc15;outline-offset:-4px;z-index:2}
 .cb-piece{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  pointer-events:none;z-index:2}
-.cb-piece span{
-  display:flex;align-items:center;justify-content:center;
-  width:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .78),30px);
-  height:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .78),30px);
-  border-radius:50%;
-  font-size:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .58),22px);
-  line-height:1;
+  pointer-events:none;z-index:2;
+  font-size:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .72),28px);
   font-family:"Segoe UI Symbol","Apple Color Emoji","Noto Sans Symbols2",serif;
-  box-shadow:0 2px 4px rgba(0,0,0,.5)}
-.piece-w span{background:radial-gradient(circle at 35% 30%,#FFFDE8,#E8C84A);border:2px solid #3D1E00;color:#1a0800}
-.piece-b span{background:radial-gradient(circle at 35% 30%,#5a3010,#1a0800);border:2px solid #D4A830;color:#F0D070}
+  line-height:1}
+.piece-w{color:#FFFFE0;
+  filter:drop-shadow(0 0 2px #000) drop-shadow(0 0 1.5px #000) drop-shadow(0 0 1px #3D1E00)}
+.piece-b{color:#0d0500;
+  filter:drop-shadow(0 0 1.5px #C8A020) drop-shadow(0 0 1px #C8A020)}
 .board-info{text-align:center;font-size:13px;font-weight:700;color:var(--muted);
   padding:5px 10px;background:#f3f4f6;border-radius:7px;margin-top:5px;min-height:28px}
 /* Match */
@@ -1166,8 +1162,7 @@ function buildBoard(cid,opts={}){
       sq.dataset.coord=coord;sq.setAttribute("aria-label",coord);
       if(opts.position&&opts.position[coord]){
         const{sym,color}=opts.position[coord];
-        const p=document.createElement("span");p.className="cb-piece piece-"+color;
-        const pi=document.createElement("span");pi.textContent=sym;p.appendChild(pi);sq.appendChild(p);
+        const p=document.createElement("span");p.className="cb-piece piece-"+color;p.textContent=sym;sq.appendChild(p);
       }
       if(opts.onSquareClick)sq.addEventListener("click",()=>opts.onSquareClick(coord,sq,board));
       board.appendChild(sq);
