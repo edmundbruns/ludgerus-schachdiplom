@@ -1377,4 +1377,22 @@ render();
     b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",b4q2:"gute-partie",b4q3:"warten",
     s1q1:"vorwaerts",s1q2:"umwandlung",s1q4:"diagonal",
     s2q1:"koenig-turm",s2q2:"im-schach",s2q3:"sonderschlag",s2q4:"zwei-felder",
-    s3q1:"figuren-entwickel
+    s3q1:"figuren-entwickeln",s3q2:"zentrum",s3q3:"fruehzeitig",s3q4:"einmal",
+    s4q1:"unentschieden",s4q2:"patt",s4q3:"anbieten-ziehen",
+    g1q1:"narrenmatt",g1q2:"zwei-figuren",g1q3:"springer-eingemauert",g1q4:"grundreihe",
+    g2q1:"kein-bauer-davor",g2q2:"nicht-verteidigt",g2q3:"gute-felder",g2q4:"wenn-besser",
+    g3q1:"koenige-gegeneinander",g3q2:"schlechter-ziehen",g3q3:"immer-gewinner",
+    g4q1:"eigene-bedenkzeit",g4q2:"schiedsrichter"
+  };
+  Object.entries(mcTasks).forEach(([tid,correct])=>{
+    const saved=state.answers[tid];if(!saved)return;
+    const task=document.querySelector(`[data-task='${tid}']`);if(!task)return;
+    task.querySelectorAll(".ch").forEach(btn=>{
+      const m=btn.getAttribute("onclick")?.match(/choose\(this,'[^']+','([^']+)'/);
+      if(m&&m[1]===saved){btn.classList.add(saved===correct?"ok":"err");task.classList.toggle("good",saved===correct);task.classList.toggle("bad",saved!==correct)}
+    });
+  });
+})();
+</script>
+</body>
+</html>
