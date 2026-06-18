@@ -96,10 +96,10 @@ input:focus{outline:none;border-color:var(--brand)}
 .cb-wrap{width:min(100%,380px);margin:8px auto;user-select:none;-webkit-user-select:none}
 .cb-outer{display:flex;flex-direction:column}
 .cb-middle{display:flex;align-items:stretch}
-.cb-files{display:flex;padding:0 20px;height:17px}
-.cb-files span{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12}
-.cb-ranks{display:flex;flex-direction:column;justify-content:space-around;width:20px;flex-shrink:0}
-.cb-ranks span{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12;flex:1}
+.cb-files{display:flex;padding:0 32px;height:26px}
+.cb-files span{flex:1;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#6b3d12}
+.cb-ranks{display:flex;flex-direction:column;justify-content:space-around;width:32px;flex-shrink:0}
+.cb-ranks span{display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#6b3d12;flex:1}
 .cb-board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);
   border:4px solid var(--board-border);border-radius:3px;overflow:hidden;
   box-shadow:0 4px 12px rgba(0,0,0,.28);flex:1;aspect-ratio:1/1}
@@ -118,8 +118,8 @@ input:focus{outline:none;border-color:var(--brand)}
 .cb-piece{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-size:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .82),32px);
   line-height:1;pointer-events:none;z-index:2}
-.piece-w{color:#FFF5CC;-webkit-text-stroke:1.8px #3D1E00;text-shadow:0 2px 4px rgba(0,0,0,.7)}
-.piece-b{color:#080400;text-shadow:0 1px 4px rgba(255,255,255,.25)}
+.piece-w{color:#FFFFFF;-webkit-text-stroke:3px #000000;text-shadow:0 0 6px #000,0 0 3px #000,0 2px 5px rgba(0,0,0,.9)}
+.piece-b{color:#000000;-webkit-text-stroke:2.5px #FFFFFF;text-shadow:0 0 6px #fff,0 0 3px #fff,0 1px 5px rgba(255,255,255,.8)}
 .board-info{text-align:center;font-size:13px;font-weight:700;color:var(--muted);
   padding:5px 10px;background:#f3f4f6;border-radius:7px;margin-top:5px;min-height:28px}
 /* Match */
@@ -127,6 +127,7 @@ input:focus{outline:none;border-color:var(--brand)}
 .msym,.mnam{padding:9px 12px;border:2px solid #d1d5db;border-radius:9px;background:#fff;
   cursor:pointer;font-size:16px;font-weight:700;min-width:46px;min-height:46px;
   transition:border-color .1s,background .1s}
+.msym{font-size:28px;font-family:"Segoe UI Symbol","Apple Color Emoji","Noto Sans Symbols2","Symbola",serif}
 .msym:hover,.mnam:hover{border-color:#a78bfa}
 .msym.sel,.mnam.sel{border-color:var(--brand);background:#ede9fe}
 .msym.ok,.mnam.ok{border-color:#22c55e;background:#dcfce7;color:#14532d;pointer-events:none}
@@ -443,8 +444,9 @@ input:focus{outline:none;border-color:var(--brand)}
 
   <div class="task" data-task="b3q2">
     <h3>Aufgabe 2 – König retten!</h3>
-    <p class="hint">Weißer König e1, schwarzer Turm a1 (Schach!). Klicke ein sicheres Fluchtfeld.</p>
+    <p class="hint">Weißer König e1, schwarzer Turm a1 (Schach!). Markiere <strong>alle Felder</strong>, auf die der weiße König jetzt sicher ziehen kann.</p>
     <div id="board-b3q2" class="cb-wrap"></div>
+    <div id="b3q2-info" style="text-align:center;font-size:13px;color:#6b7280;margin-top:4px">0 von 3 sicheren Feldern markiert.</div>
     <div id="fb-b3q2" class="fb"></div>
   </div>
 
@@ -1102,14 +1104,33 @@ function markTask(taskId,ok){
 }
 
 function finishQuest(qid,taskIds){
+  // Sprung zur ersten unvollständigen / falschen Aufgabe
   const missing=taskIds.filter(t=>!state.answers[t]);
-  if(missing.length){alert("Noch nicht fertig! Schau, welche Aufgabe noch fehlt.");return}
+  if(missing.length){
+    const el=document.querySelector(`[data-task="${missing[0]}"]`);
+    if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
+    showFb(missing[0],null,"⬆️ Diese Aufgabe noch lösen!");
+    return;
+  }
   const wrong=taskIds.filter(t=>CORRECT[t]&&state.answers[t]!==CORRECT[t]);
-  if(wrong.length){alert("Fast! Mindestens eine Antwort stimmt noch nicht.");return}
+  if(wrong.length){
+    const el=document.querySelector(`[data-task="${wrong[0]}"]`);
+    if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
+    showFb(wrong[0],false,"⬆️ Diese Antwort nochmal prüfen!");
+    return;
+  }
   state.quests[qid]=true;persist();syncToSheet(false);
+  // Nächste Mission automatisch öffnen
+  const NEXT_QUEST={b1:"b2",b2:"b3",b3:"b4",b4:null,s1:"s2",s2:"s3",s3:"s4",s4:null,g1:"g2",g2:"g3",g3:"g4",g4:null};
+  const nextId=NEXT_QUEST[qid];
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  alert("🎉 Mission erledigt!");
-  document.getElementById("quests").scrollIntoView({behavior:"smooth",block:"start"});
+  if(nextId){
+    setTimeout(()=>{openSection(nextId);},300);
+    alert("🎉 Mission erledigt! Weiter zu "+nextId.replace(/([bsg])(\d)/,(m,l,n)=>(l==="b"?"Bronze":l==="s"?"Silber":"Gold")+" "+n)+".");
+  }else{
+    alert("🎉 Mission erledigt!");
+    document.getElementById("quests").scrollIntoView({behavior:"smooth",block:"start"});
+  }
 }
 
 function checkFairGeneric(taskId,ids){
@@ -1198,33 +1219,56 @@ function setupB2Q4(){buildBoard("board-b2q4",{position:{"d4":{sym:"♝",color:"w
   if(done){markTask("b2q4",true);showFb("b2q4",true,"✓ Klasse! Du kennst alle Läuferzüge.")}else markTask("b2q4",false);
 }})}
 
-// B2 Bonus
-const SPR=new Set(["b3","b5","c2","c6","e2","e6","f3","f5"]);
-let sprSel=false;
+// B2 Bonus – Springer kontinuierlich ziehen
+function getSpringerMoves(pos){
+  const fi=FILES.indexOf(pos[0]),rank=parseInt(pos[1]);
+  const moves=[];
+  [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]].forEach(([df,dr])=>{
+    const nf=fi+df,nr=rank+dr;
+    if(nf>=0&&nf<8&&nr>=1&&nr<=8)moves.push(FILES[nf]+nr);
+  });
+  return new Set(moves);
+}
+let sprPos="d4",sprSel=false;
 function setupBonus(){buildBoard("board-bonus",{position:{"d4":{sym:"♞",color:"w"}},onSquareClick(coord,sq,board){
-  if(coord==="d4"){
-    sprSel=!sprSel;clearMarks("board-bonus",["sq-active","sq-dot","sq-mark"]);
-    if(sprSel){sq.classList.add("sq-active");SPR.forEach(t=>{const s=board.querySelector(`[data-coord="${t}"]`);if(s)s.classList.add("sq-dot")});document.getElementById("springer-info").textContent="Zielfeld anklicken!"}
-    else document.getElementById("springer-info").textContent="Klicke den Springer auf d4.";
+  const curSq=board.querySelector(`[data-coord="${sprPos}"]`);
+  if(coord===sprPos){
+    sprSel=!sprSel;
+    clearMarks("board-bonus",["sq-active","sq-dot"]);
+    if(sprSel){
+      curSq?.classList.add("sq-active");
+      getSpringerMoves(sprPos).forEach(t=>{const s=board.querySelector(`[data-coord="${t}"]`);if(s)s.classList.add("sq-dot")});
+      document.getElementById("springer-info").textContent="Zielfeld anklicken!";
+    }else{
+      document.getElementById("springer-info").textContent=`Klicke den Springer auf ${sprPos}.`;
+    }
     return;
   }
-  if(sprSel&&SPR.has(coord)){
-    const from=board.querySelector(`[data-coord="d4"]`),piece=from?.querySelector(".cb-piece");
-    if(piece&&from){from.removeChild(piece);sq.appendChild(piece)}
-    clearMarks("board-bonus",["sq-active","sq-dot"]);sq.classList.add("sq-mark");sprSel=false;
-    document.getElementById("springer-info").textContent=`🎉 Springer d4→${coord}!`;
+  if(sprSel&&getSpringerMoves(sprPos).has(coord)){
+    const piece=curSq?.querySelector(".cb-piece");
+    if(piece&&curSq){curSq.removeChild(piece);sq.appendChild(piece)}
+    clearMarks("board-bonus",["sq-active","sq-dot"]);
+    sprPos=coord;sprSel=false;
+    document.getElementById("springer-info").textContent=`✓ Springer jetzt auf ${coord}. Weiterziehen!`;
     state.bonus.springerMove=coord;persist();
   }else if(sprSel){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500)}
 }})}
 
-// B3Q2
+// B3Q2 – alle 3 sicheren Felder markieren
 const K_SAFE=new Set(["d2","e2","f2"]);
 const K_ATK=new Set(["a1","b1","c1","d1","e1","f1","g1","h1","a2","a3","a4","a5","a6","a7","a8"]);
-function setupB3Q2(){buildBoard("board-b3q2",{position:{"e1":{sym:"♚",color:"w"},"a1":{sym:"♜",color:"b"}},onSquareClick(coord,sq,board){
+let b3q2Marked=new Set();
+function setupB3Q2(){b3q2Marked=new Set();buildBoard("board-b3q2",{position:{"e1":{sym:"♚",color:"w"},"a1":{sym:"♜",color:"b"}},onSquareClick(coord,sq,board){
   if(coord==="e1"||coord==="a1")return;
-  clearMarks("board-b3q2",["sq-mark","sq-err"]);
-  if(K_SAFE.has(coord)){sq.classList.add("sq-mark");const k=board.querySelector(`[data-coord="e1"] .cb-piece`);if(k)sq.appendChild(k);markTask("b3q2",true);showFb("b3q2",true,`✓ Richtig! ${coord} – der König ist sicher.`)}
-  else{sq.classList.add("sq-err");markTask("b3q2",false);showFb("b3q2",false,K_ATK.has(coord)?`✗ ${coord} wird vom schwarzen Turm kontrolliert!`:`✗ ${coord} ist kein erlaubtes Königsfeld von e1.`)}
+  if(K_SAFE.has(coord)){
+    if(b3q2Marked.has(coord)){sq.classList.remove("sq-mark");b3q2Marked.delete(coord)}
+    else{sq.classList.add("sq-mark");b3q2Marked.add(coord)}
+    const n=b3q2Marked.size;
+    document.getElementById("b3q2-info").textContent=`${n} von 3 sicheren Feldern markiert.`;
+    if(n===3){markTask("b3q2",true);showFb("b3q2",true,"✓ Perfekt! d2, e2 und f2 – alle sicheren Felder gefunden.")}
+    else{markTask("b3q2",false);showFb("b3q2",null,`Weiter suchen – noch ${3-n} Feld${3-n>1?"er":""}!`)}
+  }else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),600);
+    showFb("b3q2",false,K_ATK.has(coord)?`✗ ${coord} wird vom schwarzen Turm kontrolliert!`:`✗ ${coord} ist kein gültiges Königsfeld von e1.`)}
 }})}
 
 // S1Q3: Bauer e2 → e3 und e4
@@ -1333,22 +1377,4 @@ render();
     b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",b4q2:"gute-partie",b4q3:"warten",
     s1q1:"vorwaerts",s1q2:"umwandlung",s1q4:"diagonal",
     s2q1:"koenig-turm",s2q2:"im-schach",s2q3:"sonderschlag",s2q4:"zwei-felder",
-    s3q1:"figuren-entwickeln",s3q2:"zentrum",s3q3:"fruehzeitig",s3q4:"einmal",
-    s4q1:"unentschieden",s4q2:"patt",s4q3:"anbieten-ziehen",
-    g1q1:"narrenmatt",g1q2:"zwei-figuren",g1q3:"springer-eingemauert",g1q4:"grundreihe",
-    g2q1:"kein-bauer-davor",g2q2:"nicht-verteidigt",g2q3:"gute-felder",g2q4:"wenn-besser",
-    g3q1:"koenige-gegeneinander",g3q2:"schlechter-ziehen",g3q3:"immer-gewinner",
-    g4q1:"eigene-bedenkzeit",g4q2:"schiedsrichter"
-  };
-  Object.entries(mcTasks).forEach(([tid,correct])=>{
-    const saved=state.answers[tid];if(!saved)return;
-    const task=document.querySelector(`[data-task='${tid}']`);if(!task)return;
-    task.querySelectorAll(".ch").forEach(btn=>{
-      const m=btn.getAttribute("onclick")?.match(/choose\(this,'[^']+','([^']+)'/);
-      if(m&&m[1]===saved){btn.classList.add(saved===correct?"ok":"err");task.classList.toggle("good",saved===correct);task.classList.toggle("bad",saved!==correct)}
-    });
-  });
-})();
-</script>
-</body>
-</html>
+    s3q1:"figuren-entwickel
