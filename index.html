@@ -1,1081 +1,834 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Ludgerus-Schachdiplom Bronze</title>
-  <meta name="description" content="Kindgerechter Lernpass – Ludgerus-Schachdiplom Bronze"/>
-  <style>
-    /* ── Variablen ──────────────────────────────────────────── */
-    :root{
-      --bg:#fff8e7;
-      --card:#ffffff;
-      --ink:#1f2937;
-      --muted:#5b6472;
-      --brand:#7c3aed;
-      --brand2:#f59e0b;
-      --brand3:#16a34a;
-      --warn:#dc2626;
-      --soft:#fef3c7;
-      --soft2:#ede9fe;
-      --soft3:#dcfce7;
-      --line:#e5e7eb;
-      --shadow:0 14px 35px rgba(31,41,55,.12);
-      --radius:22px;
-      /* Schachbrett */
-      --sq-light:#f0d9b5;
-      --sq-dark:#b58863;
-      --sq-sel:#f6f669;
-      --sq-ok:#7fc97f;
-      --sq-err:#e05555;
-      --sq-target:rgba(0,0,0,0.18);
-      --board-border:#5b3418;
-    }
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at top left,rgba(124,58,237,.18),transparent 34rem),
-        radial-gradient(circle at top right,rgba(245,158,11,.20),transparent 28rem),
-        linear-gradient(180deg,#fff8e7 0%,#f7f7ff 60%,#fff 100%);
-      min-height:100vh;
-    }
-    a{color:inherit}
-
-    /* ── Layout ─────────────────────────────────────────────── */
-    .wrap{max-width:1100px;margin:0 auto;padding:14px 16px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px}
-    .card{background:rgba(255,255,255,.96);border:1px solid rgba(229,231,235,.95);border-radius:var(--radius);padding:18px 20px;box-shadow:0 8px 20px rgba(31,41,55,.08)}
-    .span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}
-    .span-7{grid-column:span 7}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
-    @media(max-width:860px){
-      .span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12}
-    }
-
-    /* ── Hero ───────────────────────────────────────────────── */
-    .hero{
-      position:relative;overflow:hidden;
-      border:4px solid rgba(124,58,237,.18);
-      background:linear-gradient(135deg,#fff 0%,#fff7db 45%,#eee7ff 100%);
-      border-radius:32px;padding:22px 24px;box-shadow:var(--shadow);
-    }
-    .hero::after{
-      content:"♟ ♞ ♜ ♛";
-      position:absolute;right:20px;bottom:-6px;
-      font-size:clamp(40px,10vw,88px);
-      color:rgba(124,58,237,.10);letter-spacing:6px;pointer-events:none;
-    }
-    .topline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
-    .pill{
-      display:inline-flex;align-items:center;gap:6px;
-      border-radius:999px;padding:7px 12px;
-      background:var(--soft2);font-size:13px;font-weight:750;color:#4c1d95;
-    }
-    h1{font-size:clamp(26px,6vw,56px);line-height:1.02;margin:4px 0 10px;letter-spacing:-.04em}
-    h2{font-size:clamp(20px,4vw,34px);margin:0 0 10px;letter-spacing:-.03em}
-    h3{font-size:18px;margin:0 0 8px;font-weight:800}
-    p{line-height:1.55;margin:0 0 10px;color:var(--muted)}
-    .lead{font-size:clamp(16px,2.4vw,20px);max-width:720px;color:#374151;font-weight:520}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    button,.btn{
-      border:0;border-radius:14px;padding:12px 18px;font:inherit;font-weight:800;
-      cursor:pointer;background:#111827;color:#fff;
-      box-shadow:0 6px 14px rgba(17,24,39,.14);
-      transition:transform .08s,filter .12s;
-      text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;
-      min-height:48px; /* Mobile touch target */
-      touch-action:manipulation;
-    }
-    button:hover,.btn:hover{filter:brightness(1.06)}
-    button:active,.btn:active{transform:translateY(1px)}
-    .btn-primary{background:linear-gradient(135deg,var(--brand),#4f46e5)}
-    .btn-bronze{background:linear-gradient(135deg,#b45309,#f59e0b)}
-    .btn-green{background:linear-gradient(135deg,#15803d,#22c55e)}
-    .btn-light{background:#fff;color:#111827;border:2px solid var(--line);box-shadow:none}
-    .btn-danger{background:linear-gradient(135deg,#991b1b,#ef4444)}
-    .tiny{font-size:13px;color:var(--muted)}
-    label{display:block;font-weight:700;margin:10px 0 5px}
-    input,select{
-      width:100%;border:2px solid var(--line);border-radius:14px;padding:13px 14px;
-      font:inherit;font-size:16px; /* 16px prevents zoom on iOS */
-      background:#fff;color:var(--ink);outline:none;
-    }
-    input:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(124,58,237,.12)}
-    .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    @media(max-width:640px){.row3{grid-template-columns:1fr}}
-
-    /* ── Fortschritt ────────────────────────────────────────── */
-    .progress-shell{background:#e5e7eb;border-radius:999px;height:18px;overflow:hidden;border:2px solid #fff}
-    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,#f59e0b,#22c55e);border-radius:999px;transition:width .4s ease}
-    .status-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 10px;background:#f3f4f6;font-weight:800;font-size:12px;color:#374151}
-    .status-done{background:var(--soft3);color:#166534}
-    .status-open{background:#fee2e2;color:#991b1b}
-
-    /* ── Quest-Karten ───────────────────────────────────────── */
-    .quest-card{
-      border:3px solid transparent;
-      background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#f59e0b,#7c3aed) border-box;
-      position:relative;overflow:hidden;
-    }
-    .quest-card .bigicon{font-size:44px;line-height:1;margin-bottom:5px}
-
-    /* ── Sections ───────────────────────────────────────────── */
-    .section{display:none;margin-top:14px}
-    .section.active{display:block}
-    .mini-note{padding:12px;border-radius:14px;background:#f9fafb;border:1px solid #e5e7eb;margin-top:10px;font-size:14px}
-    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--brand);cursor:pointer;margin-bottom:14px;text-decoration:none;background:none;border:none;box-shadow:none;padding:0;min-height:0}
-    .back-link:hover{text-decoration:underline}
-
-    /* ── Aufgaben-Blöcke ────────────────────────────────────── */
-    .task{border:2px dashed #e5e7eb;border-radius:18px;padding:16px;margin:14px 0;background:#fff;transition:border-color .3s,background .3s}
-    .task.good{border-color:#86efac;background:#f0fdf4}
-    .task.bad{border-color:#fca5a5;background:#fff1f2}
-    .task-hint{font-size:13px;color:var(--muted);margin:4px 0 8px}
-    .task-feedback{padding:9px 13px;border-radius:12px;font-weight:700;font-size:14px;min-height:34px;margin-top:10px;display:none}
-    .task-feedback.show{display:block}
-    .fb-ok{background:#dcfce7;color:#166534}
-    .fb-err{background:#fee2e2;color:#991b1b}
-
-    /* ── Multiple Choice ────────────────────────────────────── */
-    .choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px}
-    .choice{
-      background:#fff;border:2.5px solid #e5e7eb;color:#111827;
-      box-shadow:0 2px 6px rgba(0,0,0,.05);border-radius:16px;
-      min-height:56px;font-size:15px;padding:10px 14px;
-      transition:border-color .12s,background .12s;
-    }
-    .choice:hover{border-color:#a78bfa}
-    .choice.selected{border-color:var(--brand);background:var(--soft2)}
-    .choice.correct{border-color:#22c55e;background:#dcfce7;color:#14532d}
-    .choice.wrong{border-color:#ef4444;background:#fee2e2;color:#7f1d1d}
-
-    /* ── Schachbrett ─────────────────────────────────────────
-       Koordinaten AUSSERHALB des Brettes.
-       Helle und dunkle Felder korrekt:
-         a1 = dunkel (links unten)
-         h1 = hell   (rechts unten) ← "Rechts unten ist hell"
-    ────────────────────────────────────────────────────────── */
-    .cb-wrap{
-      width:min(100%, 440px);
-      margin:14px auto;
-      user-select:none;
-      -webkit-user-select:none;
-    }
-    .cb-outer{display:flex;flex-direction:column;align-items:stretch;gap:0}
-    .cb-middle{display:flex;align-items:stretch;gap:0}
-    .cb-files-row{
-      display:flex;
-      padding:0 22px; /* gleich wie Rank-Labels-Breite */
-      height:20px;
-    }
-    .cb-files-row span{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#7c5230}
-    .cb-ranks-col{display:flex;flex-direction:column;justify-content:space-around;width:22px;flex-shrink:0}
-    .cb-ranks-col span{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#7c5230;flex:1}
-    .cb-board{
-      display:grid;
-      grid-template-columns:repeat(8,1fr);
-      grid-template-rows:repeat(8,1fr);
-      border:4px solid var(--board-border);
-      border-radius:5px;
-      overflow:hidden;
-      box-shadow:0 6px 22px rgba(0,0,0,.22);
-      flex:1;
-      aspect-ratio:1/1;
-    }
-    .cb-sq{
-      position:relative;
-      border:none;
-      border-radius:0;
-      box-shadow:none;
-      padding:0;
-      margin:0;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      touch-action:manipulation;
-      outline:none;
-      transition:filter .08s;
-      aspect-ratio:1/1;
-    }
-    .cb-sq:focus-visible{outline:3px solid #3b82f6;outline-offset:-3px;z-index:1}
-    .cb-sq.sq-light{background:var(--sq-light)}
-    .cb-sq.sq-dark{background:var(--sq-dark)}
-    .cb-sq.sq-sel{background:var(--sq-sel)!important}
-    .cb-sq.sq-ok{background:var(--sq-ok)!important}
-    .cb-sq.sq-err{background:var(--sq-err)!important;animation:err-flash .5s}
-    @keyframes err-flash{0%,100%{opacity:1}50%{opacity:.6}}
-    /* Ziel-Punkt für mögliche Züge */
-    .cb-sq.sq-dot::after{
-      content:'';position:absolute;
-      width:32%;height:32%;
-      background:rgba(0,0,0,.22);
-      border-radius:50%;pointer-events:none;z-index:3;
-    }
-    /* Ziel-Ring wenn eine Figur drauf steht */
-    .cb-sq.sq-cap::after{
-      content:'';position:absolute;inset:0;
-      border:4px solid rgba(0,0,0,.30);
-      border-radius:2px;pointer-events:none;z-index:3;
-    }
-    /* Ausgewählte Figur – leuchtender Rahmen */
-    .cb-sq.sq-active{outline:4px solid #facc15;outline-offset:-4px;z-index:2}
-
-    /* Figuren: absolut positioniert → ändert NICHT die Feldgröße */
-    .cb-piece{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:min(calc((min(100vw - 48px, 440px) - 44px) / 8 * 0.80), 36px);
-      line-height:1;
-      pointer-events:none;
-      z-index:2;
-      transition:transform .12s;
-    }
-    /* Weiße Figuren: gefüllt mit hellem Fill + dunkler Kontur */
-    .piece-w{
-      color:#faf0d8;
-      -webkit-text-stroke:1.5px #5b3418;
-      text-shadow:0 1px 3px rgba(0,0,0,.45);
-    }
-    /* Schwarze Figuren: dunkel + leichte Aufhellung */
-    .piece-b{
-      color:#140c00;
-      text-shadow:0 1px 3px rgba(255,255,255,.15);
-    }
-
-    /* Figur-Zug-Info */
-    .board-info{
-      text-align:center;font-size:13px;font-weight:700;color:var(--muted);
-      padding:7px 10px;border-radius:10px;background:#f9fafb;border:1px solid var(--line);
-      margin-top:8px;min-height:32px;
-    }
-
-    /* ── Fairplay-Checkliste ─────────────────────────────────  */
-    .fair-check{display:flex;flex-direction:column;gap:10px;margin:10px 0}
-    .fair-item{
-      display:flex;align-items:center;gap:14px;
-      padding:14px 16px;border-radius:16px;
-      border:2.5px solid var(--line);background:#fff;
-      cursor:pointer;transition:border-color .15s,background .15s;
-      touch-action:manipulation;
-      font-size:15px;font-weight:600;
-    }
-    .fair-item.checked{border-color:#22c55e;background:#f0fdf4}
-    .fair-item input[type=checkbox]{width:22px;height:22px;accent-color:var(--brand3);cursor:pointer;flex-shrink:0}
-    .teacher-box{border:2px solid #c4b5fd;background:#f5f3ff;border-radius:18px;padding:16px;margin-top:14px}
-
-    /* ── Urkunde ────────────────────────────────────────────── */
-    .certificate{
-      background:linear-gradient(135deg,#fff7ed,#fef3c7,#fff);
-      border:8px double #b45309;
-      padding:28px;border-radius:24px;text-align:center;box-shadow:var(--shadow);
-    }
-    .certificate h2{font-size:38px;color:#92400e}.certificate .cert-piece{font-size:64px}
-
-    /* ── Bonus-Aufgabe ──────────────────────────────────────── */
-    .bonus-card{
-      border:2px dashed #a78bfa;border-radius:18px;padding:16px;margin:14px 0;
-      background:linear-gradient(135deg,#faf5ff,#ede9fe);
-    }
-    .bonus-badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 10px;background:#7c3aed;color:#fff;font-size:12px;font-weight:800;margin-bottom:8px}
-
-    /* ── Utility ─────────────────────────────────────────────── */
-    .print-only{display:none}
-    .footer{font-size:12px;color:#9ca3af;padding:20px 4px 40px;text-align:center}
-    @media print{
-      body{background:#fff}
-      .no-print,.hero,.card:not(.certificate-card){display:none!important}
-      .print-only{display:block}
-      .certificate-card{box-shadow:none;border:none}
-      .certificate{page-break-inside:avoid;box-shadow:none}
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ludgerus-Schachdiplom Bronze</title>
+<style>
+:root{
+  --bg:#f5f5f5;--card:#fff;--ink:#1a1a1a;--muted:#666;
+  --brand:#5c35d4;--line:#dedede;--r:14px;
+  --sq-light:#F2D9A5;--sq-dark:#7B4A1E;--board-border:#3D2200;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:900px;margin:0 auto;padding:14px 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+h1{font-size:clamp(22px,5vw,38px);margin:0 0 6px;letter-spacing:-.03em}
+h2{font-size:clamp(17px,3.5vw,26px);margin:0 0 8px}
+h3{font-size:15px;margin:0 0 6px;font-weight:700}
+p{margin:0 0 8px;line-height:1.5;color:var(--muted);font-size:14px}
+button,.btn{
+  border:none;border-radius:10px;padding:10px 16px;
+  font:inherit;font-weight:700;cursor:pointer;
+  background:#1a1a1a;color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;touch-action:manipulation;
+  transition:filter .1s,transform .08s;
+}
+button:hover{filter:brightness(1.1)}
+button:active{transform:translateY(1px)}
+.btn-primary{background:var(--brand)}
+.btn-orange{background:#b45309}
+.btn-green{background:#166534}
+.btn-light{background:#fff;color:#1a1a1a;border:1.5px solid var(--line)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.back-link{background:none;border:none;box-shadow:none;padding:0;color:var(--brand);
+  font-size:13px;font-weight:700;min-height:0;cursor:pointer;margin-bottom:10px;
+  display:inline-flex;align-items:center;gap:4px}
+label{display:block;font-weight:700;font-size:13px;margin-bottom:3px}
+input{width:100%;border:1.5px solid var(--line);border-radius:10px;
+  padding:10px 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+input:focus{outline:none;border-color:var(--brand)}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+@media(max-width:480px){.row3{grid-template-columns:1fr}}
+/* Hero */
+.hero{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:12px}
+.pill{display:inline-block;background:#ede9fe;color:#4c1d95;border-radius:999px;
+  padding:3px 9px;font-size:12px;font-weight:700;margin:0 3px 4px 0}
+/* Fortschritt */
+.prog-shell{background:#e5e7eb;border-radius:999px;height:10px;margin:6px 0}
+.prog-fill{height:100%;border-radius:999px;background:#16a34a;transition:width .4s}
+.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700}
+.badge-open{background:#fee2e2;color:#991b1b}
+.badge-done{background:#dcfce7;color:#166534}
+/* Missionsübersicht */
+.quest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+@media(max-width:700px){.quest-grid{grid-template-columns:repeat(2,1fr)}}
+.q-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:16px}
+.q-card .icon{font-size:32px;margin-bottom:4px}
+/* Sections */
+.section{display:none}.section.active{display:block}
+/* Tasks */
+.task{border:2px dashed var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#fff}
+.task.good{border-color:#86efac;background:#f0fdf4}
+.task.bad{border-color:#fca5a5;background:#fff1f2}
+.hint{font-size:13px;color:var(--muted);margin:3px 0 8px}
+.fb{padding:9px 12px;border-radius:9px;font-weight:700;font-size:13px;margin-top:8px;display:none}
+.fb.show{display:block}
+.fb-ok{background:#dcfce7;color:#166534}
+.fb-err{background:#fee2e2;color:#991b1b}
+.fb-info{background:#f3f4f6;color:#374151}
+/* Multiple Choice */
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:8px}
+.ch{background:#fff;border:2px solid #d1d5db;color:#1a1a1a;border-radius:10px;
+  min-height:52px;font-size:14px;padding:9px 12px;
+  transition:border-color .1s,background .1s}
+.ch:hover{border-color:#a78bfa}
+.ch.sel{border-color:var(--brand);background:#ede9fe}
+.ch.ok{border-color:#22c55e;background:#dcfce7;color:#14532d}
+.ch.err{border-color:#ef4444;background:#fee2e2;color:#7f1d1d}
+/* Schachbrett */
+.cb-wrap{width:min(100%,400px);margin:10px auto;user-select:none;-webkit-user-select:none}
+.cb-outer{display:flex;flex-direction:column}
+.cb-middle{display:flex;align-items:stretch}
+.cb-files{display:flex;padding:0 22px;height:18px}
+.cb-files span{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12}
+.cb-ranks{display:flex;flex-direction:column;justify-content:space-around;width:22px;flex-shrink:0}
+.cb-ranks span{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12;flex:1}
+.cb-board{
+  display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);
+  border:4px solid var(--board-border);border-radius:3px;overflow:hidden;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);flex:1;aspect-ratio:1/1
+}
+.cb-sq{
+  position:relative;border:none;border-radius:0;box-shadow:none;
+  padding:0;margin:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  touch-action:manipulation;outline:none;aspect-ratio:1/1
+}
+.cb-sq.sq-light{background:var(--sq-light)}
+.cb-sq.sq-dark{background:var(--sq-dark)}
+.cb-sq.sq-err{background:#dc2626!important;animation:flash .5s}
+@keyframes flash{0%,100%{opacity:1}50%{opacity:.45}}
+/* Kreis-Markierung – kein volles Feld grün */
+.cb-sq.sq-mark::after{
+  content:'';position:absolute;
+  width:64%;height:64%;border-radius:50%;
+  background:rgba(34,197,94,.4);border:3px solid #16a34a;
+  pointer-events:none;z-index:3
+}
+/* Zugziel-Punkt */
+.cb-sq.sq-dot::after{
+  content:'';position:absolute;
+  width:28%;height:28%;border-radius:50%;
+  background:rgba(0,0,0,.28);pointer-events:none;z-index:3
+}
+/* Aktive Figur */
+.cb-sq.sq-active{outline:4px solid #facc15;outline-offset:-4px;z-index:2}
+/* Figuren */
+.cb-piece{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:min(calc((min(100vw - 44px,400px) - 44px) / 8 * .82),34px);
+  line-height:1;pointer-events:none;z-index:2
+}
+.piece-w{color:#FFF5CC;-webkit-text-stroke:1.8px #3D1E00;text-shadow:0 2px 4px rgba(0,0,0,.7)}
+.piece-b{color:#080400;text-shadow:0 1px 4px rgba(255,255,255,.25)}
+.board-info{text-align:center;font-size:13px;font-weight:700;color:var(--muted);
+  padding:6px 10px;background:#f3f4f6;border-radius:8px;margin-top:6px;min-height:30px}
+/* Match-Zuordnung */
+.match-area{margin:10px 0}
+.match-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0}
+.msym,.mnam{
+  padding:10px 13px;border:2px solid #d1d5db;border-radius:9px;
+  background:#fff;cursor:pointer;font-size:17px;font-weight:700;
+  min-width:48px;min-height:48px;transition:border-color .1s,background .1s
+}
+.msym:hover,.mnam:hover{border-color:#a78bfa}
+.msym.sel,.mnam.sel{border-color:var(--brand);background:#ede9fe}
+.msym.ok,.mnam.ok{border-color:#22c55e;background:#dcfce7;color:#14532d;pointer-events:none}
+.msym.err,.mnam.err{border-color:#ef4444;background:#fee2e2}
+/* Fairplay */
+.fair-list{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.fair-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:10px;border:2px solid var(--line);
+  background:#fff;cursor:pointer;font-size:14px;font-weight:600
+}
+.fair-item.checked{border-color:#22c55e;background:#f0fdf4}
+.fair-item input[type=checkbox]{width:20px;height:20px;accent-color:#16a34a;cursor:pointer;flex-shrink:0}
+.teacher-box{border:1px solid #c4b5fd;background:#f5f3ff;border-radius:10px;padding:12px;margin-top:10px}
+/* Bonus */
+.bonus-card{border:2px dashed #a78bfa;border-radius:12px;padding:14px;margin:10px 0;background:#faf5ff}
+.bonus-badge{display:inline-block;background:#7c3aed;color:#fff;border-radius:999px;
+  padding:2px 9px;font-size:11px;font-weight:700;margin-bottom:6px}
+/* Urkunde */
+.certificate{
+  background:linear-gradient(135deg,#fff7ed,#fef3c7);
+  border:5px double #b45309;border-radius:16px;padding:24px;text-align:center
+}
+.note{padding:10px 13px;border-radius:9px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin-top:8px}
+.footer{font-size:11px;color:#9ca3af;padding:18px 4px 36px;text-align:center}
+@media print{
+  body{background:#fff}
+  .no-print,.hero,button{display:none!important}
+  .certificate{box-shadow:none}
+}
+</style>
 </head>
 <body>
 <main class="wrap">
 
-  <!-- ── Hero ─────────────────────────────────────────────── -->
-  <section class="hero no-print" aria-labelledby="title">
-    <div class="topline">
-      <span class="pill">♟ Ludgerus-Schachdiplom</span>
-      <span class="pill">🥉 Bronze</span>
-      <span class="pill">Für Anfänger · kurz · spaßig</span>
-    </div>
-    <h1 id="title">Werde Schach-<br>Bronze-Profi!</h1>
-    <p class="lead">Bearbeite vier Missionen. Du lernst das Brett, die Figuren, Schach &amp; Matt und Fairplay. Danach bekommst du dein Bronze-Diplom.</p>
-    <div class="btns">
-      <a class="btn btn-primary" href="#pass">Zum Diplom-Pass</a>
-      <a class="btn btn-bronze" href="#quests">Missionen starten</a>
-    </div>
-  </section>
+<!-- Hero -->
+<section class="hero no-print">
+  <span class="pill">♟ Ludgerus-Schachdiplom</span>
+  <span class="pill">🥉 Bronze</span>
+  <h1>Schach-Bronze-Diplom</h1>
+  <p>Vier Missionen – Brett, Figuren, Schach &amp; Fairplay. Danach dein Diplom.</p>
+  <div class="btns">
+    <a class="btn btn-primary" href="#pass">Diplom-Pass</a>
+    <a class="btn btn-orange" href="#quests">Missionen starten</a>
+  </div>
+</section>
 
-  <!-- ── Diplom-Pass ───────────────────────────────────────── -->
-  <section id="pass" class="grid no-print">
-    <div class="card span-7">
+<!-- Diplom-Pass -->
+<section id="pass" class="no-print">
+  <div class="grid2">
+    <div class="card">
       <h2>Mein Diplom-Pass</h2>
-      <p>Trage deinen Vornamen, deine Klasse und einen Lerncode ein.</p>
+      <p>Vorname, Klasse und Lerncode eintragen.</p>
       <div class="row3">
-        <div><label for="childName">Vorname / Kurzname</label><input id="childName" autocomplete="given-name" placeholder="z. B. Emma"/></div>
-        <div><label for="className">Klasse / Gruppe</label><input id="className" placeholder="z. B. 4a"/></div>
-        <div><label for="childCode">Lerncode</label><input id="childCode" placeholder="z. B. EMMA4A"/></div>
+        <div><label for="childName">Vorname</label><input id="childName" autocomplete="given-name" placeholder="Emma"/></div>
+        <div><label for="className">Klasse</label><input id="className" placeholder="4a"/></div>
+        <div><label for="childCode">Lerncode</label><input id="childCode" placeholder="EMMA4A"/></div>
       </div>
       <div class="btns">
-        <button class="btn-primary" type="button" onclick="saveProfile()">💾 Pass speichern</button>
-        <button class="btn-light" type="button" onclick="makeCode()">🎲 Code vorschlagen</button>
-        <button class="btn-light" type="button" onclick="syncToSheet()">☁️ Fortschritt senden</button>
+        <button class="btn-primary" onclick="saveProfile()">💾 Speichern</button>
+        <button class="btn-light" onclick="makeCode()">🎲 Code vorschlagen</button>
+        <button class="btn-light" onclick="syncToSheet()">☁️ Senden</button>
       </div>
-      <div id="saveInfo" class="mini-note tiny">Noch nicht gespeichert.</div>
+      <div id="saveInfo" class="note" style="margin-top:10px">Noch nicht gespeichert.</div>
     </div>
-    <div class="card span-5">
+    <div class="card">
       <h2>Bronze-Fortschritt</h2>
-      <div class="progress-shell" aria-label="Fortschritt"><div id="progressBar" class="progress-bar"></div></div>
-      <p id="progressText" style="font-weight:800;margin-top:10px;color:#374151">0 von 4 Missionen erledigt</p>
-      <div class="mini-note"><strong>Bronze:</strong> Brett &amp; Figuren · Figurenwege · Schach/Matt/Patt · Fairplay</div>
+      <div class="prog-shell"><div id="progressBar" class="prog-fill" style="width:0"></div></div>
+      <p id="progressText" style="font-weight:700;color:var(--ink);margin-top:6px">0 von 4 Missionen erledigt</p>
+      <p style="font-size:12px">Brett · Figuren · Schach/Matt/Patt · Fairplay</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── Missionsübersicht ─────────────────────────────────── -->
-  <section id="quests" class="grid no-print" aria-label="Missionen">
-    <div class="card quest-card span-3 span-6" id="card-b1">
-      <div class="bigicon">♟</div>
-      <h3>Bronze 1</h3>
-      <p>Brett und Figuren</p>
-      <span id="status-b1" class="status-badge status-open">offen</span>
-      <div class="btns"><button class="btn-bronze" onclick="openSection('b1')">Starten →</button></div>
+<!-- Missionsübersicht -->
+<section id="quests" class="no-print">
+  <div class="quest-grid">
+    <div class="q-card" id="card-b1">
+      <div class="icon">♟</div><h3>Bronze 1</h3>
+      <p style="font-size:12px">Brett und Figuren</p>
+      <span id="status-b1" class="badge badge-open">offen</span>
+      <div class="btns"><button class="btn-orange" onclick="openSection('b1')">Starten →</button></div>
     </div>
-    <div class="card quest-card span-3 span-6" id="card-b2">
-      <div class="bigicon">♜</div>
-      <h3>Bronze 2</h3>
-      <p>So ziehen die Figuren</p>
-      <span id="status-b2" class="status-badge status-open">offen</span>
-      <div class="btns"><button class="btn-bronze" onclick="openSection('b2')">Starten →</button></div>
+    <div class="q-card" id="card-b2">
+      <div class="icon">♜</div><h3>Bronze 2</h3>
+      <p style="font-size:12px">So ziehen die Figuren</p>
+      <span id="status-b2" class="badge badge-open">offen</span>
+      <div class="btns"><button class="btn-orange" onclick="openSection('b2')">Starten →</button></div>
     </div>
-    <div class="card quest-card span-3 span-6" id="card-b3">
-      <div class="bigicon">♚</div>
-      <h3>Bronze 3</h3>
-      <p>Schach, Matt und Patt</p>
-      <span id="status-b3" class="status-badge status-open">offen</span>
-      <div class="btns"><button class="btn-bronze" onclick="openSection('b3')">Starten →</button></div>
+    <div class="q-card" id="card-b3">
+      <div class="icon">♚</div><h3>Bronze 3</h3>
+      <p style="font-size:12px">Schach, Matt und Patt</p>
+      <span id="status-b3" class="badge badge-open">offen</span>
+      <div class="btns"><button class="btn-orange" onclick="openSection('b3')">Starten →</button></div>
     </div>
-    <div class="card quest-card span-3 span-6" id="card-b4">
-      <div class="bigicon">🤝</div>
-      <h3>Bronze 4</h3>
-      <p>Erste Partie &amp; Fairplay</p>
-      <span id="status-b4" class="status-badge status-open">offen</span>
-      <div class="btns"><button class="btn-bronze" onclick="openSection('b4')">Starten →</button></div>
+    <div class="q-card" id="card-b4">
+      <div class="icon">🤝</div><h3>Bronze 4</h3>
+      <p style="font-size:12px">Erste Partie &amp; Fairplay</p>
+      <span id="status-b4" class="badge badge-open">offen</span>
+      <div class="btns"><button class="btn-orange" onclick="openSection('b4')">Starten →</button></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══════════════════════════════════════════════════════
-       MISSION 1: Brett und Figuren
-  ════════════════════════════════════════════════════════ -->
-  <section id="b1" class="section card no-print" aria-labelledby="b1-title">
-    <button class="back-link" onclick="openSection('quests')">← Zurück zur Übersicht</button>
-    <h2 id="b1-title">🥉 Bronze 1: Brett und Figuren</h2>
-    <p><strong>Ziel:</strong> Du kennst das Schachbrett und die Figuren.</p>
+<!-- ═══ MISSION 1 ═══ -->
+<section id="b1" class="section card no-print">
+  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <h2>🥉 Bronze 1: Brett und Figuren</h2>
+  <p><strong>Ziel:</strong> Du kennst das Schachbrett und alle Figuren.</p>
 
-    <!-- B1 Q1: Multiple Choice -->
-    <div class="task" data-task="b1q1">
-      <h3>Aufgabe 1: Wie viele Felder hat ein Schachbrett?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b1q1','32','64')">32 Felder</button>
-        <button class="choice" onclick="choose(this,'b1q1','64','64')">64 Felder</button>
-        <button class="choice" onclick="choose(this,'b1q1','100','64')">100 Felder</button>
+  <div class="task" data-task="b1q1">
+    <h3>Aufgabe 1 – Multiple Choice: Wie viele Felder hat ein Schachbrett?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b1q1','32','64')">32 Felder</button>
+      <button class="ch" onclick="choose(this,'b1q1','64','64')">64 Felder</button>
+      <button class="ch" onclick="choose(this,'b1q1','100','64')">100 Felder</button>
+    </div>
+    <div id="fb-b1q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b1q2">
+    <h3>Aufgabe 2 – Multiple Choice: Welche Figuren stehen in den Ecken?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b1q2','damen','tuerme')">♛ Damen</button>
+      <button class="ch" onclick="choose(this,'b1q2','tuerme','tuerme')">♜ Türme</button>
+      <button class="ch" onclick="choose(this,'b1q2','springer','tuerme')">♞ Springer</button>
+    </div>
+    <div id="fb-b1q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b1q3">
+    <h3>Aufgabe 3 – Anklicken: Klicke das helle Feld unten rechts an.</h3>
+    <p class="hint">Merksatz: <strong>Rechts unten ist hell</strong> (das Feld heißt h1).</p>
+    <div id="board-b1q3" class="cb-wrap"></div>
+    <div id="fb-b1q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b1q4">
+    <h3>Aufgabe 4 – Zuordnung: Klicke eine Figur, dann den richtigen Namen.</h3>
+    <p class="hint">Zuerst oben eine Figur anklicken, dann unten den passenden Namen.</p>
+    <div class="match-area">
+      <div class="match-row" id="match-syms">
+        <button class="msym" data-key="koenig" onclick="matchClick(this,'sym')">♚</button>
+        <button class="msym" data-key="dame"   onclick="matchClick(this,'sym')">♛</button>
+        <button class="msym" data-key="turm"   onclick="matchClick(this,'sym')">♜</button>
+        <button class="msym" data-key="laeufer" onclick="matchClick(this,'sym')">♝</button>
+        <button class="msym" data-key="springer" onclick="matchClick(this,'sym')">♞</button>
       </div>
-      <div id="fb-b1q1" class="task-feedback"></div>
-    </div>
-
-    <!-- B1 Q2: Multiple Choice -->
-    <div class="task" data-task="b1q2">
-      <h3>Aufgabe 2: Welche Figuren stehen ganz außen in den Ecken?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b1q2','damen','tuerme')">♛ Damen</button>
-        <button class="choice" onclick="choose(this,'b1q2','tuerme','tuerme')">♜ Türme</button>
-        <button class="choice" onclick="choose(this,'b1q2','springer','tuerme')">♞ Springer</button>
+      <div class="match-row" id="match-nams">
+        <button class="mnam" data-key="turm"   onclick="matchClick(this,'nam')">Turm</button>
+        <button class="mnam" data-key="springer" onclick="matchClick(this,'nam')">Springer</button>
+        <button class="mnam" data-key="dame"   onclick="matchClick(this,'nam')">Dame</button>
+        <button class="mnam" data-key="koenig" onclick="matchClick(this,'nam')">König</button>
+        <button class="mnam" data-key="laeufer" onclick="matchClick(this,'nam')">Läufer</button>
       </div>
-      <div id="fb-b1q2" class="task-feedback"></div>
     </div>
+    <div id="fb-b1q4" class="fb"></div>
+  </div>
 
-    <!-- B1 Q3: Board-Klick h1 -->
-    <div class="task" data-task="b1q3">
-      <h3>Aufgabe 3: Klicke das weiße Feld unten rechts an.</h3>
-      <p class="task-hint">Merksatz: <strong>Rechts unten ist hell</strong> (das Feld heißt h1).</p>
-      <div id="board-b1q3" class="cb-wrap"></div>
-      <div id="fb-b1q3" class="task-feedback"></div>
+  <div class="task" data-task="b1q5">
+    <h3>Aufgabe 5 – Felder markieren: Markiere alle dunklen Felder in Reihe 1.</h3>
+    <p class="hint">Es gibt genau 4 dunkle Felder in der untersten Reihe.</p>
+    <div id="board-b1q5" class="cb-wrap"></div>
+    <div id="b1q5-info" class="board-info">0 von 4 dunklen Feldern markiert.</div>
+    <div id="fb-b1q5" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('b1',['b1q1','b1q2','b1q3','b1q4','b1q5'])">✅ Bronze 1 abschließen</button>
+    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- ═══ MISSION 2 ═══ -->
+<section id="b2" class="section card no-print">
+  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <h2>🥉 Bronze 2: So ziehen die Figuren</h2>
+  <p><strong>Ziel:</strong> Du kennst die Zugwege von Turm, Läufer, Springer und Dame.</p>
+
+  <div class="task" data-task="b2q1">
+    <h3>Aufgabe 1 – Felder markieren: Turmzüge von d4</h3>
+    <p class="hint">Der Turm steht auf <strong>d4</strong>. Klicke alle Felder, auf die er ziehen kann (waagerecht &amp; senkrecht). 14 Felder total.</p>
+    <div id="board-b2q1" class="cb-wrap"></div>
+    <div id="turm-info" class="board-info">0 von 14 Turmfeldern markiert.</div>
+    <div id="fb-b2q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b2q2">
+    <h3>Aufgabe 2 – Multiple Choice: Welche Figur zieht diagonal?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b2q2','bauer','laeufer')">♟ Bauer</button>
+      <button class="ch" onclick="choose(this,'b2q2','laeufer','laeufer')">♝ Läufer</button>
+      <button class="ch" onclick="choose(this,'b2q2','turm','laeufer')">♜ Turm</button>
     </div>
+    <div id="fb-b2q2" class="fb"></div>
+  </div>
 
-    <div class="btns">
-      <button class="btn-green" onclick="finishQuest('b1',['b1q1','b1q2','b1q3'])">✅ Bronze 1 abschließen</button>
-      <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  <div class="task" data-task="b2q3">
+    <h3>Aufgabe 3 – Multiple Choice: Welche Figur springt über andere hinweg?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b2q3','koenig','springer')">♚ König</button>
+      <button class="ch" onclick="choose(this,'b2q3','springer','springer')">♞ Springer</button>
+      <button class="ch" onclick="choose(this,'b2q3','dame','springer')">♛ Dame</button>
     </div>
-  </section>
+    <div id="fb-b2q3" class="fb"></div>
+  </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       MISSION 2: So ziehen die Figuren
-  ════════════════════════════════════════════════════════ -->
-  <section id="b2" class="section card no-print" aria-labelledby="b2-title">
-    <button class="back-link" onclick="openSection('quests')">← Zurück zur Übersicht</button>
-    <h2 id="b2-title">🥉 Bronze 2: So ziehen die Figuren</h2>
-    <p><strong>Ziel:</strong> Du kennst die Grundbewegungen von Turm, Läufer und Springer.</p>
+  <div class="task" data-task="b2q4">
+    <h3>Aufgabe 4 – Felder markieren: Läuferzüge von d4</h3>
+    <p class="hint">Der Läufer steht auf <strong>d4</strong>. Klicke alle Felder, auf die er ziehen kann (immer schräg). 13 Felder total.</p>
+    <div id="board-b2q4" class="cb-wrap"></div>
+    <div id="laeufer-info" class="board-info">0 von 13 Läuferfeldern markiert.</div>
+    <div id="fb-b2q4" class="fb"></div>
+  </div>
 
-    <!-- B2 Q1: Turm-Züge markieren (interaktiv) -->
-    <div class="task" data-task="b2q1">
-      <h3>Aufgabe 1: Turmzüge markieren</h3>
-      <p class="task-hint">Der Turm steht auf <strong>d4</strong>. Klicke alle Felder an, auf die er ziehen kann. Der Turm zieht immer gerade – waagerecht oder senkrecht.</p>
-      <div id="board-b2q1" class="cb-wrap"></div>
-      <div id="turm-info" class="board-info">0 von 14 Turmfeldern markiert.</div>
-      <div id="fb-b2q1" class="task-feedback"></div>
+  <div class="task" data-task="b2q5">
+    <h3>Aufgabe 5 – Multiple Choice: Was kann die Dame in einem Zug?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b2q5','nur-gerade','dame-alles')">Nur gerade (wie Turm)</button>
+      <button class="ch" onclick="choose(this,'b2q5','dame-alles','dame-alles')">Gerade und diagonal – kombiniert Turm + Läufer!</button>
+      <button class="ch" onclick="choose(this,'b2q5','nur-diagonal','dame-alles')">Nur diagonal (wie Läufer)</button>
     </div>
+    <div id="fb-b2q5" class="fb"></div>
+  </div>
 
-    <!-- B2 Q2: Multiple Choice -->
-    <div class="task" data-task="b2q2">
-      <h3>Aufgabe 2: Welche Figur zieht diagonal (schräg)?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b2q2','bauer','laeufer')">♟ Bauer</button>
-        <button class="choice" onclick="choose(this,'b2q2','laeufer','laeufer')">♝ Läufer</button>
-        <button class="choice" onclick="choose(this,'b2q2','turm','laeufer')">♜ Turm</button>
-      </div>
-      <div id="fb-b2q2" class="task-feedback"></div>
+  <div class="bonus-card">
+    <span class="bonus-badge">⭐ Bonus</span>
+    <h3>Bonus – Figur ziehen: Bewege den Springer!</h3>
+    <p class="hint">Klicke den Springer auf <strong>d4</strong> an – die Sprungfelder leuchten auf. Klicke dann ein Zielfeld!</p>
+    <div id="board-bonus" class="cb-wrap"></div>
+    <div id="springer-info" class="board-info">Klicke den Springer auf d4.</div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('b2',['b2q1','b2q2','b2q3','b2q4','b2q5'])">✅ Bronze 2 abschließen</button>
+    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- ═══ MISSION 3 ═══ -->
+<section id="b3" class="section card no-print">
+  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <h2>🥉 Bronze 3: Schach, Matt und Patt</h2>
+  <p><strong>Ziel:</strong> Du weißt, wann der König angegriffen ist und warum eine Partie endet.</p>
+
+  <div class="task" data-task="b3q1">
+    <h3>Aufgabe 1 – Multiple Choice: Was bedeutet „Schach"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b3q1','figur-weg','koenig-angegriffen')">Eine Figur muss weg.</button>
+      <button class="ch" onclick="choose(this,'b3q1','koenig-angegriffen','koenig-angegriffen')">Der König ist angegriffen.</button>
+      <button class="ch" onclick="choose(this,'b3q1','partie-vorbei','koenig-angegriffen')">Die Partie ist sofort vorbei.</button>
     </div>
+    <div id="fb-b3q1" class="fb"></div>
+  </div>
 
-    <!-- B2 Q3: Multiple Choice -->
-    <div class="task" data-task="b2q3">
-      <h3>Aufgabe 3: Welche Figur springt über andere hinweg?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b2q3','koenig','springer')">♚ König</button>
-        <button class="choice" onclick="choose(this,'b2q3','springer','springer')">♞ Springer</button>
-        <button class="choice" onclick="choose(this,'b2q3','dame','springer')">♛ Dame</button>
-      </div>
-      <div id="fb-b2q3" class="task-feedback"></div>
+  <div class="task" data-task="b3q2">
+    <h3>Aufgabe 2 – Figur ziehen: Rette den König!</h3>
+    <p class="hint">Weißer König auf <strong>e1</strong>, schwarzer Turm auf <strong>a1</strong> (Schach auf ganzer Reihe 1). <strong>Klicke ein sicheres Fluchtfeld!</strong></p>
+    <div id="board-b3q2" class="cb-wrap"></div>
+    <div id="fb-b3q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b3q3">
+    <h3>Aufgabe 3 – Multiple Choice: Was ist Schachmatt?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b3q3','kein-ausweg','kein-ausweg')">Der König steht im Schach und hat keinen Ausweg mehr.</button>
+      <button class="ch" onclick="choose(this,'b3q3','kein-schach','kein-ausweg')">Der König steht nicht im Schach.</button>
+      <button class="ch" onclick="choose(this,'b3q3','nur-dame','kein-ausweg')">Nur die Dame darf noch ziehen.</button>
     </div>
+    <div id="fb-b3q3" class="fb"></div>
+  </div>
 
-    <!-- Bonus: Springer bewegen -->
-    <div class="bonus-card">
-      <span class="bonus-badge">⭐ Bonus</span>
-      <h3>Bonus: Bewege den Springer!</h3>
-      <p class="task-hint">Der Springer steht auf <strong>d4</strong>. Klicke ihn an – dann leuchten alle Felder auf, auf die er springen kann. Dann klicke ein Zielfeld!</p>
-      <div id="board-bonus" class="cb-wrap"></div>
-      <div id="springer-info" class="board-info">Klicke den Springer auf d4 an.</div>
+  <div class="task" data-task="b3q4">
+    <h3>Aufgabe 4 – Multiple Choice: Was ist Patt?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b3q4','kein-zug','kein-zug')">Kein erlaubter Zug, aber kein Schach – Unentschieden.</button>
+      <button class="ch" onclick="choose(this,'b3q4','koenig-weg','kein-zug')">Der König wird vom Brett genommen.</button>
+      <button class="ch" onclick="choose(this,'b3q4','dame-gewinnt','kein-zug')">Die Dame gewinnt automatisch.</button>
     </div>
+    <div id="fb-b3q4" class="fb"></div>
+  </div>
 
-    <div class="btns">
-      <button class="btn-green" onclick="finishQuest('b2',['b2q1','b2q2','b2q3'])">✅ Bronze 2 abschließen</button>
-      <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  <div class="task" data-task="b3q5">
+    <h3>Aufgabe 5 – Multiple Choice: Dein König steht im Schach – was kannst du tun?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b3q5','drei-wege','drei-wege')">König ziehen, Angreifer schlagen oder eine Figur dazwischenstellen.</button>
+      <button class="ch" onclick="choose(this,'b3q5','passen','drei-wege')">Einmal aussetzen.</button>
+      <button class="ch" onclick="choose(this,'b3q5','bauer','drei-wege')">Immer einen Bauern vorziehen.</button>
     </div>
-  </section>
+    <div id="fb-b3q5" class="fb"></div>
+  </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       MISSION 3: Schach, Matt und Patt
-  ════════════════════════════════════════════════════════ -->
-  <section id="b3" class="section card no-print" aria-labelledby="b3-title">
-    <button class="back-link" onclick="openSection('quests')">← Zurück zur Übersicht</button>
-    <h2 id="b3-title">🥉 Bronze 3: Schach, Matt und Patt</h2>
-    <p><strong>Ziel:</strong> Du weißt, wann der König angegriffen ist und warum eine Partie endet.</p>
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('b3',['b3q1','b3q2','b3q3','b3q4','b3q5'])">✅ Bronze 3 abschließen</button>
+    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  </div>
+</section>
 
-    <!-- B3 Q1: Multiple Choice -->
-    <div class="task" data-task="b3q1">
-      <h3>Aufgabe 1: Was bedeutet „Schach"?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b3q1','figur-weg','koenig-angegriffen')">Eine Figur muss weg.</button>
-        <button class="choice" onclick="choose(this,'b3q1','koenig-angegriffen','koenig-angegriffen')">Der König ist angegriffen.</button>
-        <button class="choice" onclick="choose(this,'b3q1','partie-vorbei','koenig-angegriffen')">Die Partie ist sofort vorbei.</button>
-      </div>
-      <div id="fb-b3q1" class="task-feedback"></div>
+<!-- ═══ MISSION 4 ═══ -->
+<section id="b4" class="section card no-print">
+  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <h2>🥉 Bronze 4: Erste Partie &amp; Fairplay</h2>
+  <p><strong>Ziel:</strong> Du spielst ruhig, fair und freundlich.</p>
+
+  <div class="task" data-task="b4q1">
+    <h3>Aufgabe 1 – Checkliste: Fairplay-Check</h3>
+    <p class="hint">Setze alle Häkchen, wenn du das wirklich so machst:</p>
+    <div class="fair-list">
+      <label class="fair-item" for="fair1">
+        <input type="checkbox" id="fair1" onchange="checkFair()"/>
+        🤝 Ich gebe vor und nach dem Spiel die Hand oder sage „gutes Spiel".
+      </label>
+      <label class="fair-item" for="fair2">
+        <input type="checkbox" id="fair2" onchange="checkFair()"/>
+        ⏳ Ich warte geduldig, bis ich am Zug bin.
+      </label>
+      <label class="fair-item" for="fair3">
+        <input type="checkbox" id="fair3" onchange="checkFair()"/>
+        😊 Ich bleibe fair und freundlich, auch wenn ich verliere.
+      </label>
     </div>
-
-    <!-- B3 Q2: Interaktiv – König retten -->
-    <div class="task" data-task="b3q2">
-      <h3>Aufgabe 2: Rette den König!</h3>
-      <p class="task-hint">Der weiße König steht auf <strong>e1</strong>. Der schwarze Turm auf <strong>a1</strong> greift die ganze 1. Reihe an (Schach!). <strong>Klicke das Feld, auf das der König fliehen kann.</strong></p>
-      <div id="board-b3q2" class="cb-wrap"></div>
-      <div id="fb-b3q2" class="task-feedback"></div>
-    </div>
-
-    <!-- B3 Q3: Multiple Choice -->
-    <div class="task" data-task="b3q3">
-      <h3>Aufgabe 3: Was ist Schachmatt?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b3q3','kein-ausweg','kein-ausweg')">Der König steht im Schach und hat keinen Ausweg mehr.</button>
-        <button class="choice" onclick="choose(this,'b3q3','kein-schach','kein-ausweg')">Der König steht nicht im Schach.</button>
-        <button class="choice" onclick="choose(this,'b3q3','nur-dame','kein-ausweg')">Nur die Dame darf noch ziehen.</button>
-      </div>
-      <div id="fb-b3q3" class="task-feedback"></div>
-    </div>
-
-    <!-- B3 Q4: Multiple Choice -->
-    <div class="task" data-task="b3q4">
-      <h3>Aufgabe 4: Was ist Patt?</h3>
-      <div class="choice-grid">
-        <button class="choice" onclick="choose(this,'b3q4','kein-zug-kein-schach','kein-zug-kein-schach')">Kein erlaubter Zug, aber kein Schach – Unentschieden.</button>
-        <button class="choice" onclick="choose(this,'b3q4','koenig-weg','kein-zug-kein-schach')">Der König wird vom Brett genommen.</button>
-        <button class="choice" onclick="choose(this,'b3q4','dame-gewinnt','kein-zug-kein-schach')">Die Dame gewinnt automatisch.</button>
-      </div>
-      <div id="fb-b3q4" class="task-feedback"></div>
-    </div>
-
-    <div class="btns">
-      <button class="btn-green" onclick="finishQuest('b3',['b3q1','b3q2','b3q3','b3q4'])">✅ Bronze 3 abschließen</button>
-      <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════
-       MISSION 4: Fairplay
-  ════════════════════════════════════════════════════════ -->
-  <section id="b4" class="section card no-print" aria-labelledby="b4-title">
-    <button class="back-link" onclick="openSection('quests')">← Zurück zur Übersicht</button>
-    <h2 id="b4-title">🥉 Bronze 4: Erste Partie &amp; Fairplay</h2>
-    <p><strong>Ziel:</strong> Du spielst ruhig, fair und freundlich.</p>
-
-    <div class="task" data-task="b4q1">
-      <h3>Fairplay-Check</h3>
-      <p class="task-hint">Setze alle Häkchen, wenn du das wirklich so machst:</p>
-      <div class="fair-check">
-        <label class="fair-item" for="fair1">
-          <input type="checkbox" id="fair1" onchange="checkFair()"/>
-          🤝 Ich gebe vor und nach dem Spiel die Hand oder sage „gutes Spiel".
+    <div class="teacher-box">
+      <h3>✏️ Bestätigung</h3>
+      <div class="fair-list">
+        <label class="fair-item" for="teacherConfirm">
+          <input type="checkbox" id="teacherConfirm" onchange="checkFair()"/>
+          🏫 AG-Leitung bestätigt: Das Kind hat fair gespielt.
         </label>
-        <label class="fair-item" for="fair2">
-          <input type="checkbox" id="fair2" onchange="checkFair()"/>
-          ⏳ Ich warte geduldig, bis ich am Zug bin.
-        </label>
-        <label class="fair-item" for="fair3">
-          <input type="checkbox" id="fair3" onchange="checkFair()"/>
-          😊 Ich bleibe fair und freundlich, auch wenn ich verliere.
-        </label>
-      </div>
-      <div class="teacher-box">
-        <h3>✏️ Bestätigung durch AG-Leitung</h3>
-        <p style="font-size:14px">Für den Pilot kann die Bestätigung testweise gesetzt werden. Im echten Einsatz wird hier ein Lehrkraft-Login eingebaut.</p>
-        <div class="fair-check">
-          <label class="fair-item" for="teacherConfirm">
-            <input type="checkbox" id="teacherConfirm" onchange="checkFair()"/>
-            🏫 AG-Leitung bestätigt: Das Kind hat fair gespielt.
-          </label>
-        </div>
-      </div>
-      <div id="fb-b4q1" class="task-feedback"></div>
-    </div>
-
-    <div class="btns">
-      <button class="btn-green" onclick="finishQuest('b4',['b4q1'])">✅ Bronze 4 abschließen</button>
-      <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
-    </div>
-  </section>
-
-  <!-- ── Urkunde ────────────────────────────────────────────── -->
-  <section id="certificateArea" class="grid">
-    <div class="card certificate-card span-12">
-      <h2>🏅 Bronze-Urkunde</h2>
-      <p class="no-print">Die Urkunde wird freigeschaltet, wenn alle vier Missionen erledigt sind.</p>
-      <div id="certLock" class="mini-note no-print">🔒 Noch gesperrt. Erledige zuerst alle Bronze-Missionen.</div>
-      <div id="certificate" class="certificate" style="display:none">
-        <div class="cert-piece">♟</div>
-        <h2>Bronze-Schachdiplom</h2>
-        <p style="font-size:20px;color:#374151">verliehen an</p>
-        <p id="certName" style="font-size:34px;font-weight:900;color:#111827">________________</p>
-        <p style="font-size:18px;color:#374151;margin-top:10px">für das erfolgreiche Bearbeiten der Bronze-Missionen im<br>Ludgerus-Schachdiplom.</p>
-        <p style="margin-top:18px;color:#374151;font-size:15px">Brett &amp; Figuren · Figurenwege · Schach/Matt/Patt · Fairplay</p>
-        <p style="margin-top:28px;color:#6b7280;font-size:14px">Datum: <span id="certDate"></span> &nbsp;·&nbsp; AG-Leitung: __________________</p>
-      </div>
-      <div class="btns no-print">
-        <button class="btn-light" onclick="window.print()">🖨️ Urkunde drucken</button>
-        <button class="btn-primary" onclick="syncToSheet()">☁️ Stand senden</button>
       </div>
     </div>
-  </section>
+    <div id="fb-b4q1" class="fb"></div>
+  </div>
 
-  <p class="footer no-print">Datenschutz: Nur Vorname/Kurzname, Klasse und Lerncode verwenden. Keine vollständigen Namen oder sensiblen Daten eingeben. · Ludgerus-Schachdiplom Bronze · Pilot-Version</p>
+  <div class="task" data-task="b4q2">
+    <h3>Aufgabe 2 – Multiple Choice: Du hast verloren – was sagst du?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b4q2','gute-partie','gute-partie')">„Gute Partie, danke fürs Spiel!"</button>
+      <button class="ch" onclick="choose(this,'b4q2','wortlos','gute-partie')">Ich gehe wortlos weg.</button>
+      <button class="ch" onclick="choose(this,'b4q2','beschweren','gute-partie')">Ich sage, das Spiel war unfair.</button>
+    </div>
+    <div id="fb-b4q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="b4q3">
+    <h3>Aufgabe 3 – Multiple Choice: Dein Gegner denkt lange nach – was tust du?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'b4q3','warten','warten')">Ich warte ruhig und lasse ihn denken.</button>
+      <button class="ch" onclick="choose(this,'b4q3','trommeln','warten')">Ich trommle auf den Tisch.</button>
+      <button class="ch" onclick="choose(this,'b4q3','reden','warten')">Ich rede laut, um ihn abzulenken.</button>
+    </div>
+    <div id="fb-b4q3" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('b4',['b4q1','b4q2','b4q3'])">✅ Bronze 4 abschließen</button>
+    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- Urkunde -->
+<section id="certificateArea">
+  <div class="card">
+    <h2>🏅 Bronze-Urkunde</h2>
+    <p class="no-print">Die Urkunde wird freigeschaltet, wenn alle vier Missionen erledigt sind.</p>
+    <div id="certLock" class="note no-print">🔒 Noch gesperrt. Erledige zuerst alle Bronze-Missionen.</div>
+    <div id="certificate" class="certificate" style="display:none">
+      <div style="font-size:52px">♟</div>
+      <h2 style="color:#92400e">Bronze-Schachdiplom</h2>
+      <p style="font-size:17px;color:#374151">verliehen an</p>
+      <p id="certName" style="font-size:30px;font-weight:900;color:#111827">________________</p>
+      <p style="font-size:15px;color:#374151;margin-top:8px">für das erfolgreiche Bearbeiten der Bronze-Missionen<br>im Ludgerus-Schachdiplom.</p>
+      <p style="margin-top:18px;color:#6b7280;font-size:13px">Datum: <span id="certDate"></span> · AG-Leitung: __________________</p>
+    </div>
+    <div class="btns no-print">
+      <button class="btn-light" onclick="window.print()">🖨️ Drucken</button>
+      <button class="btn-primary" onclick="syncToSheet()">☁️ Stand senden</button>
+    </div>
+  </div>
+</section>
+
+<p class="footer no-print">Datenschutz: Nur Vorname/Kurzname, Klasse und Lerncode verwenden. · Ludgerus-Schachdiplom Bronze · Pilot-Version</p>
 </main>
 
-<!-- ═══════════════════════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════════════════════════ -->
 <script>
 "use strict";
-
-/* ── Konfiguration ─────────────────────────────────────────── */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJym6UR2gT0YMPldPCdvNTCzShdofm-7EQBo3SY98UFD__J7C173E3cxhoYSjMDdA1/exec";
-const STORAGE_KEY = "ludgerus_schachdiplom_bronze_v2";
-const QUEST_IDS   = ["b1","b2","b3","b4"];
-
-/* Richtige Antworten
-   "ok" = wird programmatisch gesetzt (Brett-Aufgaben)
-   andere Strings = Multiple-Choice-Wert */
-const CORRECT = {
-  b1q1:"64", b1q2:"tuerme", b1q3:"ok",
-  b2q1:"ok",           /* Turmzüge-Brett */
-  b2q2:"laeufer", b2q3:"springer",
-  b3q1:"koenig-angegriffen",
-  b3q2:"ok",           /* König-Flucht-Brett */
-  b3q3:"kein-ausweg", b3q4:"kein-zug-kein-schach",
-  b4q1:"ok"
+const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwJym6UR2gT0YMPldPCdvNTCzShdofm-7EQBo3SY98UFD__J7C173E3cxhoYSjMDdA1/exec";
+const STORAGE_KEY="ludgerus_bronze_v3";
+const QUEST_IDS=["b1","b2","b3","b4"];
+const CORRECT={
+  b1q1:"64",b1q2:"tuerme",b1q3:"ok",b1q4:"ok",b1q5:"ok",
+  b2q1:"ok",b2q2:"laeufer",b2q3:"springer",b2q4:"ok",b2q5:"dame-alles",
+  b3q1:"koenig-angegriffen",b3q2:"ok",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",
+  b4q1:"ok",b4q2:"gute-partie",b4q3:"warten"
 };
 
-/* ── Zustand ────────────────────────────────────────────────── */
-function defaultState(){
-  return {
-    profile:{childName:"",className:"",childCode:""},
-    answers:{},
-    quests:{b1:false,b2:false,b3:false,b4:false},
-    bonus:{springerMove:null,turmSelected:[]},
-    lastSaved:null,lastSent:null
-  };
-}
-function loadState(){
-  try{ return {...defaultState(), ...(JSON.parse(localStorage.getItem(STORAGE_KEY))||{})}; }
-  catch(e){ return defaultState(); }
-}
-const state = loadState();
+function defaultState(){return{profile:{childName:"",className:"",childCode:""},answers:{},quests:{b1:false,b2:false,b3:false,b4:false},bonus:{springerMove:null},lastSaved:null,lastSent:null}}
+function loadState(){try{return{...defaultState(),...(JSON.parse(localStorage.getItem(STORAGE_KEY))||{})}}catch(e){return defaultState()}}
+const state=loadState();
+function persist(){state.lastSaved=new Date().toISOString();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render()}
 
-function persist(){
-  state.lastSaved = new Date().toISOString();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  render();
-}
-
-/* ── Profil ─────────────────────────────────────────────────── */
 function saveProfile(){
-  state.profile.childName  = document.getElementById("childName").value.trim();
-  state.profile.className  = document.getElementById("className").value.trim();
-  state.profile.childCode  = document.getElementById("childCode").value.trim().toUpperCase();
-  if(!state.profile.childCode) makeCode(false);
+  state.profile.childName=document.getElementById("childName").value.trim();
+  state.profile.className=document.getElementById("className").value.trim();
+  state.profile.childCode=document.getElementById("childCode").value.trim().toUpperCase();
+  if(!state.profile.childCode)makeCode(false);
   persist();
-  document.getElementById("saveInfo").textContent = "✓ Pass gespeichert.";
+  document.getElementById("saveInfo").textContent="✓ Pass gespeichert.";
 }
 function makeCode(save=true){
-  const name = (document.getElementById("childName").value||"KIND").trim()
-    .replace(/[^A-Za-zÄÖÜäöüß]/g,"").slice(0,5).toUpperCase()||"KIND";
-  const cls  = (document.getElementById("className").value||"AG").trim()
-    .replace(/[^A-Za-z0-9]/g,"").slice(0,3).toUpperCase()||"AG";
-  const rnd  = Math.floor(10+Math.random()*90);
-  document.getElementById("childCode").value = `${name}${cls}${rnd}`;
-  if(save) saveProfile();
+  const name=(document.getElementById("childName").value||"KIND").trim().replace(/[^A-Za-zÄÖÜäöüß]/g,"").slice(0,5).toUpperCase()||"KIND";
+  const cls=(document.getElementById("className").value||"AG").trim().replace(/[^A-Za-z0-9]/g,"").slice(0,3).toUpperCase()||"AG";
+  document.getElementById("childCode").value=`${name}${cls}${Math.floor(10+Math.random()*90)}`;
+  if(save)saveProfile();
 }
 
-/* ── Navigation ─────────────────────────────────────────────── */
 function openSection(id){
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  const el = document.getElementById(id);
-  if(el){ el.classList.add("active"); el.scrollIntoView({behavior:"smooth",block:"start"}); }
-  else{ document.getElementById("quests").scrollIntoView({behavior:"smooth"}); }
+  const el=document.getElementById(id);
+  if(el){el.classList.add("active");el.scrollIntoView({behavior:"smooth",block:"start"})}
+  else{document.getElementById("quests").scrollIntoView({behavior:"smooth"})}
 }
 
-/* ── Multiple Choice ────────────────────────────────────────── */
-function choose(btn, taskId, value, correct){
-  const task = btn.closest(".task");
-  task.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected","correct","wrong"));
-  btn.classList.add("selected");
-  state.answers[taskId] = value;
-  const ok = (value === correct);
-  btn.classList.add(ok ? "correct" : "wrong");
-  task.classList.toggle("good", ok);
-  task.classList.toggle("bad", !ok);
-  showFeedback(taskId, ok,
-    ok ? "✓ Richtig!" :
-         "✗ Das ist leider falsch. Versuche es nochmal!");
+function choose(btn,taskId,value,correct){
+  const task=btn.closest(".task");
+  task.querySelectorAll(".ch").forEach(b=>b.classList.remove("sel","ok","err"));
+  btn.classList.add("sel");
+  state.answers[taskId]=value;
+  const ok=(value===correct);
+  btn.classList.add(ok?"ok":"err");
+  task.classList.toggle("good",ok);
+  task.classList.toggle("bad",!ok);
+  showFb(taskId,ok,ok?"✓ Richtig!":"✗ Noch nicht ganz. Probiere es nochmal!");
   persist();
 }
 
-/* ── Task-Feedback ──────────────────────────────────────────── */
-function showFeedback(taskId, ok, msg){
-  const el = document.getElementById("fb-"+taskId);
-  if(!el) return;
-  el.textContent = msg;
-  el.className = "task-feedback show " + (ok ? "fb-ok" : "fb-err");
+function showFb(taskId,ok,msg){
+  const el=document.getElementById("fb-"+taskId);
+  if(!el)return;
+  el.textContent=msg;
+  el.className="fb show "+(ok===true?"fb-ok":ok===false?"fb-err":"fb-info");
 }
-function markTask(taskId, ok){
-  state.answers[taskId] = ok ? "ok" : "";
-  const task = document.querySelector(`[data-task='${taskId}']`);
-  if(task){ task.classList.toggle("good",ok); task.classList.toggle("bad",!ok); }
+function markTask(taskId,ok){
+  state.answers[taskId]=ok?"ok":"";
+  const task=document.querySelector(`[data-task='${taskId}']`);
+  if(task){task.classList.toggle("good",ok);task.classList.toggle("bad",!ok)}
   persist();
 }
 
-/* ── Mission abschließen ────────────────────────────────────── */
-function finishQuest(qid, taskIds){
-  const missing = taskIds.filter(t => !state.answers[t]);
-  if(missing.length){
-    alert("Noch nicht fertig! Schau, welche Aufgabe noch fehlt.");
-    return;
-  }
-  const wrong = taskIds.filter(t => CORRECT[t] && state.answers[t] !== CORRECT[t]);
-  if(wrong.length){
-    alert("Fast! Mindestens eine Antwort stimmt noch nicht. Schau auf die rot markierten Aufgaben.");
-    return;
-  }
-  state.quests[qid] = true;
-  persist();
-  syncToSheet(false);
-  alert("🎉 Mission erledigt! Dein Bronze-Pass wurde aktualisiert.");
-  openSection("quests");
+function finishQuest(qid,taskIds){
+  const missing=taskIds.filter(t=>!state.answers[t]);
+  if(missing.length){alert("Noch nicht fertig! Schau, welche Aufgabe noch fehlt.");return}
+  const wrong=taskIds.filter(t=>CORRECT[t]&&state.answers[t]!==CORRECT[t]);
+  if(wrong.length){alert("Fast! Mindestens eine Antwort stimmt noch nicht.");return}
+  state.quests[qid]=true;persist();syncToSheet(false);
+  alert("🎉 Mission erledigt!");openSection("quests");
 }
 
-/* ── Fairplay-Check ─────────────────────────────────────────── */
 function checkFair(){
-  const ids = ["fair1","fair2","fair3","teacherConfirm"];
-  ids.forEach(id=>{
-    const label = document.getElementById(id)?.closest(".fair-item");
-    if(label) label.classList.toggle("checked", document.getElementById(id).checked);
-  });
-  const ok = ids.every(id => document.getElementById(id)?.checked);
-  markTask("b4q1", ok);
-  showFeedback("b4q1", ok,
-    ok ? "✓ Super! Alle Häkchen gesetzt." : "Bitte alle Punkte bestätigen.");
+  const ids=["fair1","fair2","fair3","teacherConfirm"];
+  ids.forEach(id=>{const l=document.getElementById(id)?.closest(".fair-item");if(l)l.classList.toggle("checked",document.getElementById(id).checked)});
+  const ok=ids.every(id=>document.getElementById(id)?.checked);
+  markTask("b4q1",ok);
+  showFb("b4q1",ok,ok?"✓ Super! Alle Häkchen gesetzt.":"Bitte alle Punkte bestätigen.");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SCHACHBRETT-ENGINE
-   Koordinaten AUSSERHALB des Brettes.
-   Korrekte Feldfarben: h1 = hell, a1 = dunkel.
-════════════════════════════════════════════════════════════ */
-const FILES = ["a","b","c","d","e","f","g","h"];
-
-/**
- * buildBoard(containerId, opts)
- *
- * opts.position : { coord: {sym, color} }
- *   color = "w" (weiß) | "b" (schwarz)
- *   sym = Unicode-Figur (♜ ♞ ♟ usw.)
- *
- * opts.onSquareClick : (coord, sqEl, boardEl) => void
- */
-function buildBoard(containerId, opts={}){
-  const container = document.getElementById(containerId);
-  if(!container) return;
-  container.innerHTML = "";
-  container.className = "cb-wrap";
-
-  const outer = document.createElement("div");
-  outer.className = "cb-outer";
-
-  // Top file labels (a-h)
-  outer.appendChild(makeFilesRow());
-
-  // Middle: left-rank + board + right-rank
-  const middle = document.createElement("div");
-  middle.className = "cb-middle";
-  middle.appendChild(makeRanksCol());
-
-  const board = document.createElement("div");
-  board.className = "cb-board";
-  board.id = containerId + "-board";
-
-  // 8×8 squares, rank 8→1, file a→h
-  for(let rank = 8; rank >= 1; rank--){
-    for(let fi = 0; fi < 8; fi++){
-      const file  = FILES[fi];
-      const coord = file + rank;
-      // h1 = hell: (fi + rank) % 2 === 0
-      const isLight = (fi + rank) % 2 === 0;
-
-      const sq = document.createElement("button");
-      sq.type = "button";
-      sq.className = "cb-sq " + (isLight ? "sq-light" : "sq-dark");
-      sq.dataset.coord = coord;
-      sq.setAttribute("aria-label", coord);
-
-      // Figur einsetzen
-      if(opts.position && opts.position[coord]){
-        const {sym, color} = opts.position[coord];
-        const piece = document.createElement("span");
-        piece.className = "cb-piece piece-" + color;
-        piece.textContent = sym;
-        sq.appendChild(piece);
+/* ═══ BRETT ENGINE ═══ */
+const FILES=["a","b","c","d","e","f","g","h"];
+function buildBoard(cid,opts={}){
+  const c=document.getElementById(cid);if(!c)return;
+  c.innerHTML="";c.className="cb-wrap";
+  const outer=document.createElement("div");outer.className="cb-outer";
+  outer.appendChild(mkFiles());
+  const mid=document.createElement("div");mid.className="cb-middle";
+  mid.appendChild(mkRanks());
+  const board=document.createElement("div");board.className="cb-board";board.id=cid+"-board";
+  for(let rank=8;rank>=1;rank--){
+    for(let fi=0;fi<8;fi++){
+      const file=FILES[fi],coord=file+rank,isLight=(fi+rank)%2===0;
+      const sq=document.createElement("button");
+      sq.type="button";sq.className="cb-sq "+(isLight?"sq-light":"sq-dark");
+      sq.dataset.coord=coord;sq.setAttribute("aria-label",coord);
+      if(opts.position&&opts.position[coord]){
+        const{sym,color}=opts.position[coord];
+        const p=document.createElement("span");p.className="cb-piece piece-"+color;p.textContent=sym;sq.appendChild(p);
       }
-
-      // Klick-Handler
-      if(opts.onSquareClick){
-        sq.addEventListener("click", ()=> opts.onSquareClick(coord, sq, board));
-      }
-
+      if(opts.onSquareClick)sq.addEventListener("click",()=>opts.onSquareClick(coord,sq,board));
       board.appendChild(sq);
     }
   }
-
-  middle.appendChild(board);
-  middle.appendChild(makeRanksCol());
-  outer.appendChild(middle);
-  outer.appendChild(makeFilesRow());
-  container.appendChild(outer);
+  mid.appendChild(board);mid.appendChild(mkRanks());
+  outer.appendChild(mid);outer.appendChild(mkFiles());c.appendChild(outer);
+}
+function mkFiles(){const r=document.createElement("div");r.className="cb-files";FILES.forEach(f=>{const s=document.createElement("span");s.textContent=f;r.appendChild(s)});return r}
+function mkRanks(){const c=document.createElement("div");c.className="cb-ranks";for(let r=8;r>=1;r--){const s=document.createElement("span");s.textContent=r;c.appendChild(s)}return c}
+function clearMarks(bid,cls=["sq-mark","sq-err","sq-dot","sq-active"]){
+  const b=document.getElementById(bid+"-board");if(!b)return;
+  b.querySelectorAll(".cb-sq").forEach(sq=>sq.classList.remove(...cls));
 }
 
-function makeFilesRow(){
-  const row = document.createElement("div");
-  row.className = "cb-files-row";
-  FILES.forEach(f=>{ const s=document.createElement("span"); s.textContent=f; row.appendChild(s); });
-  return row;
-}
-function makeRanksCol(){
-  const col = document.createElement("div");
-  col.className = "cb-ranks-col";
-  for(let r=8;r>=1;r--){ const s=document.createElement("span"); s.textContent=r; col.appendChild(s); }
-  return col;
-}
-function getBoardSq(boardId, coord){
-  return document.querySelector(`#${boardId}-board [data-coord="${coord}"]`);
-}
-function clearBoardHighlights(boardId, classes=["sq-sel","sq-ok","sq-err","sq-dot","sq-cap","sq-active"]){
-  const board = document.getElementById(boardId+"-board");
-  if(!board) return;
-  board.querySelectorAll(".cb-sq").forEach(sq=>sq.classList.remove(...classes));
-}
-
-/* ── B1Q3: Klick auf h1 ──────────────────────────────────── */
+/* B1Q3 */
 function setupB1Board(){
-  buildBoard("board-b1q3", {
-    onSquareClick(coord, sq, board){
-      clearBoardHighlights("board-b1q3", ["sq-sel","sq-ok","sq-err"]);
-      const ok = coord === "h1";
-      sq.classList.add(ok ? "sq-ok" : "sq-err");
-      markTask("b1q3", ok);
-      showFeedback("b1q3", ok,
-        ok ? "✓ Richtig! h1 – das helle Feld ganz rechts unten." :
-             `✗ Das war ${coord}. Das weiße Feld ist ganz rechts unten (h1).`);
+  buildBoard("board-b1q3",{
+    onSquareClick(coord,sq){
+      clearMarks("board-b1q3",["sq-mark","sq-err"]);
+      const ok=coord==="h1";
+      sq.classList.add(ok?"sq-mark":"sq-err");
+      markTask("b1q3",ok);
+      showFb("b1q3",ok,ok?"✓ Richtig! h1 – ganz rechts unten.":` ✗ Das war ${coord}. Das helle Feld ist h1 – ganz rechts unten.`);
     }
   });
 }
 
-/* ── B2Q1: Turmzüge markieren ─────────────────────────────── */
-const TURM_MOVES = new Set(
-  ["a4","b4","c4","e4","f4","g4","h4",  // Reihe 4
-   "d1","d2","d3","d5","d6","d7","d8"]  // Linie d
-);
+/* B1Q5: dunkle Felder Reihe 1 */
+const DARK1=new Set(["a1","c1","e1","g1"]);
+function setupB1Q5(){
+  const marked=new Set();
+  buildBoard("board-b1q5",{
+    onSquareClick(coord,sq,board){
+      if(!DARK1.has(coord)){
+        sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return;
+      }
+      if(marked.has(coord)){sq.classList.remove("sq-mark");marked.delete(coord)}
+      else{sq.classList.add("sq-mark");marked.add(coord)}
+      const n=marked.size,done=n===4;
+      document.getElementById("b1q5-info").textContent=
+        `${n} von 4 dunklen Feldern markiert${done?" — Super! ✓":"."} `;
+      if(done){markTask("b1q5",true);showFb("b1q5",true,"✓ Alle 4 dunklen Felder in Reihe 1 gefunden!")}
+      else markTask("b1q5",false);
+    }
+  });
+}
 
-function setupB2Board(){
-  buildBoard("board-b2q1", {
-    position: { "d4": {sym:"♜", color:"w"} },
-    onSquareClick(coord, sq, board){
-      if(coord === "d4") return; // Figur-Feld nicht klickbar
-      const isCorrect = TURM_MOVES.has(coord);
-      const already   = sq.classList.contains("sq-ok");
+/* B2Q1: Turmzüge */
+const TURM=new Set(["a4","b4","c4","e4","f4","g4","h4","d1","d2","d3","d5","d6","d7","d8"]);
+function setupB2Q1(){
+  buildBoard("board-b2q1",{
+    position:{"d4":{sym:"♜",color:"w"}},
+    onSquareClick(coord,sq,board){
+      if(coord==="d4")return;
+      const ok=TURM.has(coord),already=sq.classList.contains("sq-mark");
+      if(already){sq.classList.remove("sq-mark")}
+      else if(ok){sq.classList.add("sq-mark")}
+      else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+      const n=board.querySelectorAll(".sq-mark").length,done=n===14;
+      document.getElementById("turm-info").textContent=`${n} von 14 Turmfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
+      if(done){markTask("b2q1",true);showFb("b2q1",true,"✓ Perfekt! Du kennst alle Turmzüge.")}
+      else markTask("b2q1",false);
+    }
+  });
+}
 
-      if(already){
-        // Abwählen
-        sq.classList.remove("sq-ok");
-      } else if(isCorrect){
-        sq.classList.add("sq-ok");
-      } else {
-        // Falsch → kurzes Rot-Blinken, keine Auswahl
-        sq.classList.add("sq-err");
-        setTimeout(()=>sq.classList.remove("sq-err"), 600);
+/* B2Q4: Läuferzüge */
+const LAEUFER=new Set(["a1","b2","c3","e5","f6","g7","h8","c5","b6","a7","e3","f2","g1"]);
+function setupB2Q4(){
+  buildBoard("board-b2q4",{
+    position:{"d4":{sym:"♝",color:"w"}},
+    onSquareClick(coord,sq,board){
+      if(coord==="d4")return;
+      const ok=LAEUFER.has(coord),already=sq.classList.contains("sq-mark");
+      if(already){sq.classList.remove("sq-mark")}
+      else if(ok){sq.classList.add("sq-mark")}
+      else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+      const n=board.querySelectorAll(".sq-mark").length,done=n===13;
+      document.getElementById("laeufer-info").textContent=`${n} von 13 Läuferfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
+      if(done){markTask("b2q4",true);showFb("b2q4",true,"✓ Klasse! Du kennst alle Läuferzüge.")}
+      else markTask("b2q4",false);
+    }
+  });
+}
+
+/* B2 Bonus: Springer */
+const SPR=new Set(["b3","b5","c2","c6","e2","e6","f3","f5"]);
+let sprSel=false;
+function setupBonus(){
+  buildBoard("board-bonus",{
+    position:{"d4":{sym:"♞",color:"w"}},
+    onSquareClick(coord,sq,board){
+      if(coord==="d4"){
+        sprSel=!sprSel;clearMarks("board-bonus",["sq-active","sq-dot","sq-mark"]);
+        if(sprSel){sq.classList.add("sq-active");SPR.forEach(t=>{const s=board.querySelector(`[data-coord="${t}"]`);if(s)s.classList.add("sq-dot")});document.getElementById("springer-info").textContent="Zielfeld anklicken!"}
+        else{document.getElementById("springer-info").textContent="Klicke den Springer auf d4."}
         return;
       }
-
-      // Fortschritt zählen
-      const marked = board.querySelectorAll(".sq-ok");
-      const count  = marked.length;
-      const allOk  = count === 14;
-      document.getElementById("turm-info").textContent =
-        `${count} von 14 Turmfeldern markiert${allOk ? " — Super, alle gefunden! ✓" : "."}`;
-
-      if(allOk){
-        markTask("b2q1", true);
-        showFeedback("b2q1", true, "✓ Perfekt! Du kennst alle Turmzüge.");
-      } else {
-        markTask("b2q1", false);
-      }
+      if(sprSel&&SPR.has(coord)){
+        const from=board.querySelector(`[data-coord="d4"]`),piece=from?.querySelector(".cb-piece");
+        if(piece&&from){from.removeChild(piece);sq.appendChild(piece)}
+        clearMarks("board-bonus",["sq-active","sq-dot"]);sq.classList.add("sq-mark");sprSel=false;
+        document.getElementById("springer-info").textContent=`🎉 Springer d4→${coord} – typischer L-Zug!`;
+        state.bonus.springerMove=coord;persist();
+      }else if(sprSel){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);document.getElementById("springer-info").textContent="Kein gültiges Springer-Feld."}
     }
   });
 }
 
-/* ── B2 Bonus: Springer klicken und ziehen ──────────────────── */
-const SPRINGER_MOVES = new Set(["b3","b5","c2","c6","e2","e6","f3","f5"]);
-let springerSelected = false;
-
-function setupSpringerBonus(){
-  buildBoard("board-bonus", {
-    position: { "d4": {sym:"♞", color:"w"} },
-    onSquareClick(coord, sq, board){
-      if(coord === "d4"){
-        // Springer an-/abwählen
-        springerSelected = !springerSelected;
-        clearBoardHighlights("board-bonus", ["sq-active","sq-dot","sq-cap","sq-ok"]);
-        if(springerSelected){
-          sq.classList.add("sq-active");
-          SPRINGER_MOVES.forEach(t=>{
-            const tsq = board.querySelector(`[data-coord="${t}"]`);
-            if(tsq) tsq.classList.add("sq-dot");
-          });
-          document.getElementById("springer-info").textContent =
-            "Jetzt ein leuchtendes Feld anklicken → Springer springt!";
-        } else {
-          document.getElementById("springer-info").textContent =
-            "Klicke den Springer auf d4 an.";
-        }
-        return;
-      }
-
-      if(springerSelected && SPRINGER_MOVES.has(coord)){
-        // Springer bewegen
-        const fromSq = board.querySelector(`[data-coord="d4"]`);
-        const piece  = fromSq?.querySelector(".cb-piece");
-        if(piece && fromSq){
-          fromSq.removeChild(piece);
-          sq.appendChild(piece);
-        }
-        clearBoardHighlights("board-bonus", ["sq-active","sq-dot"]);
-        sq.classList.add("sq-ok");
-        springerSelected = false;
-
-        document.getElementById("springer-info").textContent =
-          `🎉 Klasse! Der Springer ist von d4 nach ${coord} gesprungen – typischer L-Zug!`;
-        state.bonus.springerMove = coord;
-        persist();
-      } else if(springerSelected){
-        // Ungültiges Feld
+/* B3Q2: König retten */
+const K_SAFE=new Set(["d2","e2","f2"]);
+const K_ATK=new Set(["a1","b1","c1","d1","e1","f1","g1","h1","a2","a3","a4","a5","a6","a7","a8"]);
+function setupB3Q2(){
+  buildBoard("board-b3q2",{
+    position:{"e1":{sym:"♚",color:"w"},"a1":{sym:"♜",color:"b"}},
+    onSquareClick(coord,sq,board){
+      if(coord==="e1"||coord==="a1")return;
+      clearMarks("board-b3q2",["sq-mark","sq-err"]);
+      if(K_SAFE.has(coord)){
+        sq.classList.add("sq-mark");
+        const k=board.querySelector(`[data-coord="e1"] .cb-piece`);if(k)sq.appendChild(k);
+        markTask("b3q2",true);showFb("b3q2",true,`✓ Richtig! ${coord} – der König ist sicher.`);
+      }else{
         sq.classList.add("sq-err");
-        setTimeout(()=>sq.classList.remove("sq-err"), 500);
-        document.getElementById("springer-info").textContent =
-          "Das ist kein gültiges Springer-Feld. Probiere ein anderes!";
+        markTask("b3q2",false);
+        showFb("b3q2",false,K_ATK.has(coord)?`✗ ${coord} wird vom schwarzen Turm kontrolliert!`:`✗ ${coord} ist kein Zug des Königs von e1.`);
       }
     }
   });
 }
 
-/* ── B3Q2: König retten ─────────────────────────────────────── */
-// Weißer König auf e1, schwarzer Turm auf a1 (gibt Schach auf Reihe 1)
-// Turm kontrolliert: gesamte Reihe 1 + Linie a
-// König kann: d2, e2, f2 (sicher)
-// König DARF NICHT: d1, f1 (Reihe 1, vom Turm kontrolliert)
-const KOENIG_SAFE = new Set(["d2","e2","f2"]);
-const KOENIG_ATTACK = new Set( // Vom Turm kontrollierte Felder (Reihe 1 + Linie a)
-  ["a1","b1","c1","d1","e1","f1","g1","h1",
-   "a2","a3","a4","a5","a6","a7","a8"]
-);
-
-function setupB3Board(){
-  buildBoard("board-b3q2", {
-    position: {
-      "e1": {sym:"♚", color:"w"},  // weißer König
-      "a1": {sym:"♜", color:"b"},  // schwarzer Turm (gibt Schach)
-    },
-    onSquareClick(coord, sq, board){
-      if(coord === "e1" || coord === "a1") return; // Figuren nicht anklickbar
-
-      clearBoardHighlights("board-b3q2", ["sq-sel","sq-ok","sq-err"]);
-
-      if(KOENIG_SAFE.has(coord)){
-        sq.classList.add("sq-ok");
-        // König optisch "bewegen"
-        const koenig = board.querySelector(`[data-coord="e1"] .cb-piece`);
-        if(koenig) sq.appendChild(koenig);
-
-        markTask("b3q2", true);
-        showFeedback("b3q2", true,
-          `✓ Richtig! Der König flieht nach ${coord} – dort ist er sicher vor dem Turm.`);
-      } else {
-        sq.classList.add("sq-err");
-        const msg = KOENIG_ATTACK.has(coord)
-          ? `✗ ${coord} wird vom schwarzen Turm kontrolliert – kein sicheres Feld!`
-          : `✗ ${coord} ist kein Zug, den der König von e1 machen kann.`;
-        markTask("b3q2", false);
-        showFeedback("b3q2", false, msg);
-      }
-    }
-  });
+/* B1Q4: Match-Zuordnung */
+let matchSel=null;const matchDone=new Set();
+function matchClick(el,type){
+  if(el.classList.contains("ok"))return;
+  const key=el.dataset.key;
+  if(!matchSel){
+    document.querySelectorAll(".msym.sel,.mnam.sel").forEach(b=>b.classList.remove("sel"));
+    el.classList.add("sel");matchSel={key,el,type};return;
+  }
+  if(matchSel.type===type){
+    matchSel.el.classList.remove("sel");el.classList.add("sel");matchSel={key,el,type};return;
+  }
+  if(matchSel.key===key){
+    matchSel.el.classList.remove("sel");matchSel.el.classList.add("ok");el.classList.add("ok");
+    matchDone.add(key);matchSel=null;
+    if(matchDone.size===5){markTask("b1q4",true);showFb("b1q4",true,"✓ Alle 5 Figuren richtig zugeordnet!")}
+    else showFb("b1q4",null,`${matchDone.size} von 5 Figuren zugeordnet.`);
+  }else{
+    el.classList.add("err");setTimeout(()=>el.classList.remove("err"),500);
+    matchSel.el.classList.remove("sel");matchSel=null;
+  }
 }
 
-/* ── Render ─────────────────────────────────────────────────── */
+/* Render */
 function render(){
-  ["childName","className","childCode"].forEach(id=>{
-    document.getElementById(id).value =
-      state.profile[id.replace("child","child").replace("class","class")] || "";
-  });
-  document.getElementById("childName").value  = state.profile.childName  || "";
-  document.getElementById("className").value  = state.profile.className  || "";
-  document.getElementById("childCode").value  = state.profile.childCode  || "";
-
-  const done = QUEST_IDS.filter(q=>state.quests[q]).length;
-  document.getElementById("progressBar").style.width = (done/QUEST_IDS.length*100)+"%";
-  document.getElementById("progressText").textContent =
-    `${done} von ${QUEST_IDS.length} Missionen erledigt`;
-
+  document.getElementById("childName").value=state.profile.childName||"";
+  document.getElementById("className").value=state.profile.className||"";
+  document.getElementById("childCode").value=state.profile.childCode||"";
+  const done=QUEST_IDS.filter(q=>state.quests[q]).length;
+  document.getElementById("progressBar").style.width=(done/4*100)+"%";
+  document.getElementById("progressText").textContent=`${done} von 4 Missionen erledigt`;
   QUEST_IDS.forEach(q=>{
-    const el = document.getElementById("status-"+q);
-    if(el){
-      el.textContent = state.quests[q] ? "✓ erledigt" : "offen";
-      el.className   = "status-badge " + (state.quests[q] ? "status-done" : "status-open");
-    }
+    const el=document.getElementById("status-"+q);
+    if(el){el.textContent=state.quests[q]?"✓ erledigt":"offen";el.className="badge "+(state.quests[q]?"badge-done":"badge-open")}
   });
-
-  const ready = done === QUEST_IDS.length;
-  document.getElementById("certLock").style.display      = ready ? "none"  : "block";
-  document.getElementById("certificate").style.display   = ready ? "block" : "none";
-  document.getElementById("certName").textContent        = state.profile.childName || "________________";
-  document.getElementById("certDate").textContent        = new Date().toLocaleDateString("de-DE");
-
-  const info = document.getElementById("saveInfo");
-  if(info && state.lastSaved)
-    info.textContent = `✓ Zuletzt gespeichert: ${new Date(state.lastSaved).toLocaleString("de-DE")}`;
+  const ready=done===4;
+  document.getElementById("certLock").style.display=ready?"none":"block";
+  document.getElementById("certificate").style.display=ready?"block":"none";
+  document.getElementById("certName").textContent=state.profile.childName||"________________";
+  document.getElementById("certDate").textContent=new Date().toLocaleDateString("de-DE");
+  const info=document.getElementById("saveInfo");
+  if(info&&state.lastSaved)info.textContent=`✓ Gespeichert: ${new Date(state.lastSaved).toLocaleString("de-DE")}`;
 }
 
-/* ── Payload & Sync ─────────────────────────────────────────── */
 function payload(){
-  const done = QUEST_IDS.filter(q=>state.quests[q]).length;
-  return {
-    system:"Ludgerus-Schachdiplom",level:"Bronze",version:"2.0",
+  const done=QUEST_IDS.filter(q=>state.quests[q]).length;
+  return{system:"Ludgerus-Schachdiplom",level:"Bronze",version:"3.0",
     profile:state.profile,quests:state.quests,answers:state.answers,bonus:state.bonus,
-    progressPercent:Math.round(done/QUEST_IDS.length*100),
-    completedCount:done,totalCount:QUEST_IDS.length,
-    certificateReady:done===QUEST_IDS.length,
-    clientTimestamp:new Date().toISOString()
-  };
+    progressPercent:Math.round(done/4*100),completedCount:done,totalCount:4,
+    certificateReady:done===4,clientTimestamp:new Date().toISOString()};
 }
 async function syncToSheet(showAlert=true){
   saveProfile();
-  if(!APPS_SCRIPT_URL||APPS_SCRIPT_URL.includes("HIER_DEINE")){
-    if(showAlert) alert("Keine Apps-Script-URL. Lokal gespeichert.");
-    return;
-  }
+  if(!APPS_SCRIPT_URL||APPS_SCRIPT_URL.includes("HIER")){if(showAlert)alert("Keine Apps-Script-URL.");return}
   try{
-    await fetch(APPS_SCRIPT_URL,{
-      method:"POST",mode:"no-cors",
-      headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify(payload())
-    });
-    state.lastSent = new Date().toISOString();
-    persist();
-    if(showAlert) alert("✓ Sendeversuch ausgeführt. Prüfe das Google Sheet.");
-  }catch(err){
-    if(showAlert) alert("Senden nicht möglich: "+err.message);
-  }
+    await fetch(APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload())});
+    state.lastSent=new Date().toISOString();persist();
+    if(showAlert)alert("✓ Gesendet. Prüfe das Google Sheet.");
+  }catch(err){if(showAlert)alert("Senden nicht möglich: "+err.message)}
 }
 
-/* ── Init ───────────────────────────────────────────────────── */
-setupB1Board();
-setupB2Board();
-setupSpringerBonus();
-setupB3Board();
-render();
+/* Init */
+setupB1Board();setupB1Q5();setupB2Q1();setupB2Q4();setupBonus();setupB3Q2();render();
 
-// Gespeicherte Antworten in Multiple-Choice-Buttons wiederherstellen
-(function restoreChoices(){
-  const taskMap = {
-    b1q1:"64",b1q2:"tuerme",
-    b2q2:"laeufer",b2q3:"springer",
-    b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug-kein-schach"
-  };
-  Object.entries(taskMap).forEach(([tid, correct])=>{
-    const saved = state.answers[tid];
-    if(!saved) return;
-    const task = document.querySelector(`[data-task='${tid}']`);
-    if(!task) return;
-    task.querySelectorAll(".choice").forEach(btn=>{
-      // Value steht im onclick-Attribut
-      const m = btn.getAttribute("onclick")?.match(/'([^']+)','[^']+'\)/);
-      if(!m) return;
-      const v = m[1];
-      if(v === saved){
-        btn.classList.add(saved === correct ? "correct" : "wrong");
-        task.classList.toggle("good", saved === correct);
-        task.classList.toggle("bad",  saved !== correct);
-      }
+/* Antworten wiederherstellen */
+(function(){
+  const map={b1q1:"64",b1q2:"tuerme",b2q2:"laeufer",b2q3:"springer",b2q5:"dame-alles",
+    b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",b4q2:"gute-partie",b4q3:"warten"};
+  Object.entries(map).forEach(([tid,correct])=>{
+    const saved=state.answers[tid];if(!saved)return;
+    const task=document.querySelector(`[data-task='${tid}']`);if(!task)return;
+    task.querySelectorAll(".ch").forEach(btn=>{
+      const m=btn.getAttribute("onclick")?.match(/choose\(this,'[^']+','([^']+)'/);
+      if(!m)return;
+      if(m[1]===saved){btn.classList.add(saved===correct?"ok":"err");task.classList.toggle("good",saved===correct);task.classList.toggle("bad",saved!==correct)}
     });
   });
 })();
