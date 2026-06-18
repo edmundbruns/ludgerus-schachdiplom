@@ -3,171 +3,154 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Ludgerus-Schachdiplom Bronze</title>
+<title>Ludgerus-Schachdiplom</title>
 <style>
 :root{
   --bg:#f5f5f5;--card:#fff;--ink:#1a1a1a;--muted:#666;
   --brand:#5c35d4;--line:#dedede;--r:14px;
   --sq-light:#F2D9A5;--sq-dark:#7B4A1E;--board-border:#3D2200;
+  --bronze:#b45309;--silber:#6b7280;--gold:#d97706;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:900px;margin:0 auto;padding:14px 14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:640px){.grid2{grid-template-columns:1fr}}
-h1{font-size:clamp(22px,5vw,38px);margin:0 0 6px;letter-spacing:-.03em}
-h2{font-size:clamp(17px,3.5vw,26px);margin:0 0 8px}
-h3{font-size:15px;margin:0 0 6px;font-weight:700}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:10px}
+h1{font-size:clamp(22px,5vw,36px);margin:0 0 6px;letter-spacing:-.03em}
+h2{font-size:clamp(16px,3.5vw,24px);margin:0 0 8px}
+h3{font-size:14px;margin:0 0 5px;font-weight:700}
 p{margin:0 0 8px;line-height:1.5;color:var(--muted);font-size:14px}
-button,.btn{
-  border:none;border-radius:10px;padding:10px 16px;
-  font:inherit;font-weight:700;cursor:pointer;
-  background:#1a1a1a;color:#fff;
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  min-height:44px;touch-action:manipulation;
-  transition:filter .1s,transform .08s;
-}
-button:hover{filter:brightness(1.1)}
-button:active{transform:translateY(1px)}
+button,.btn{border:none;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer;
+  background:#1a1a1a;color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;touch-action:manipulation;transition:filter .1s,transform .08s}
+button:hover:not(:disabled){filter:brightness(1.1)}
+button:active:not(:disabled){transform:translateY(1px)}
+button:disabled{opacity:.4;cursor:not-allowed}
 .btn-primary{background:var(--brand)}
-.btn-orange{background:#b45309}
+.btn-bronze{background:var(--bronze)}
+.btn-silber{background:var(--silber)}
+.btn-gold{background:var(--gold)}
 .btn-green{background:#166534}
 .btn-light{background:#fff;color:#1a1a1a;border:1.5px solid var(--line)}
-.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .back-link{background:none;border:none;box-shadow:none;padding:0;color:var(--brand);
-  font-size:13px;font-weight:700;min-height:0;cursor:pointer;margin-bottom:10px;
+  font-size:13px;font-weight:700;min-height:0;cursor:pointer;margin-bottom:8px;
   display:inline-flex;align-items:center;gap:4px}
 label{display:block;font-weight:700;font-size:13px;margin-bottom:3px}
-input{width:100%;border:1.5px solid var(--line);border-radius:10px;
-  padding:10px 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;
+  font:inherit;font-size:16px;background:#fff;color:var(--ink)}
 input:focus{outline:none;border-color:var(--brand)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
-@media(max-width:480px){.row3{grid-template-columns:1fr}}
+@media(max-width:640px){.grid2,.grid3,.row3{grid-template-columns:1fr}}
 /* Hero */
-.hero{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:12px}
-.pill{display:inline-block;background:#ede9fe;color:#4c1d95;border-radius:999px;
-  padding:3px 9px;font-size:12px;font-weight:700;margin:0 3px 4px 0}
+.hero{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:10px}
+.pill{display:inline-block;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:700;margin:0 3px 4px 0}
+.pill-b{background:#fef3c7;color:#92400e}
+.pill-s{background:#f3f4f6;color:#374151}
+.pill-g{background:#fffbeb;color:#78350f}
 /* Fortschritt */
-.prog-shell{background:#e5e7eb;border-radius:999px;height:10px;margin:6px 0}
+.prog-shell{background:#e5e7eb;border-radius:999px;height:9px;flex:1}
 .prog-fill{height:100%;border-radius:999px;background:#16a34a;transition:width .4s}
-.badge{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700}
+.prog-silber{background:var(--silber)}
+.prog-gold{background:var(--gold)}
+.level-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+.level-label{width:78px;font-weight:700;font-size:13px;flex-shrink:0}
+.level-pct{width:36px;text-align:right;font-size:12px;font-weight:700;color:var(--muted);flex-shrink:0}
+.badge{display:inline-block;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700}
 .badge-open{background:#fee2e2;color:#991b1b}
 .badge-done{background:#dcfce7;color:#166534}
-/* Missionsübersicht */
-.quest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
-@media(max-width:700px){.quest-grid{grid-template-columns:repeat(2,1fr)}}
-.q-card{background:#fff;border:1.5px solid var(--line);border-radius:var(--r);padding:16px}
-.q-card .icon{font-size:32px;margin-bottom:4px}
+/* Level blocks */
+.level-block{margin-bottom:12px}
+.level-hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;
+  border:1.5px solid var(--line);border-radius:11px;margin-bottom:8px}
+.level-hdr-title{font-weight:700;font-size:14px;flex:1}
+.lock-tag{background:#fee2e2;color:#991b1b;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:700}
+.quest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:680px){.quest-grid{grid-template-columns:repeat(2,1fr)}}
+.q-card{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:13px;text-align:center}
+.q-card .icon{font-size:28px;margin-bottom:3px}
+.q-card h3{font-size:13px;margin:0 0 2px}
+.q-card p{font-size:11px;margin:0 0 6px}
 /* Sections */
 .section{display:none}.section.active{display:block}
 /* Tasks */
-.task{border:2px dashed var(--line);border-radius:12px;padding:14px;margin:10px 0;background:#fff}
+.task{border:2px dashed var(--line);border-radius:11px;padding:12px;margin:8px 0;background:#fff}
 .task.good{border-color:#86efac;background:#f0fdf4}
 .task.bad{border-color:#fca5a5;background:#fff1f2}
-.hint{font-size:13px;color:var(--muted);margin:3px 0 8px}
-.fb{padding:9px 12px;border-radius:9px;font-weight:700;font-size:13px;margin-top:8px;display:none}
+.hint{font-size:13px;color:var(--muted);margin:2px 0 7px}
+.fb{padding:8px 12px;border-radius:8px;font-weight:700;font-size:13px;margin-top:7px;display:none}
 .fb.show{display:block}
 .fb-ok{background:#dcfce7;color:#166534}
 .fb-err{background:#fee2e2;color:#991b1b}
 .fb-info{background:#f3f4f6;color:#374151}
 /* Multiple Choice */
-.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:8px}
-.ch{background:#fff;border:2px solid #d1d5db;color:#1a1a1a;border-radius:10px;
-  min-height:52px;font-size:14px;padding:9px 12px;
-  transition:border-color .1s,background .1s}
-.ch:hover{border-color:#a78bfa}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin-top:7px}
+.ch{background:#fff;border:2px solid #d1d5db;color:#1a1a1a;border-radius:9px;
+  min-height:50px;font-size:13px;padding:8px 11px;transition:border-color .1s,background .1s;text-align:left}
+.ch:hover:not(:disabled){border-color:#a78bfa}
 .ch.sel{border-color:var(--brand);background:#ede9fe}
 .ch.ok{border-color:#22c55e;background:#dcfce7;color:#14532d}
 .ch.err{border-color:#ef4444;background:#fee2e2;color:#7f1d1d}
 /* Schachbrett */
-.cb-wrap{width:min(100%,400px);margin:10px auto;user-select:none;-webkit-user-select:none}
+.cb-wrap{width:min(100%,380px);margin:8px auto;user-select:none;-webkit-user-select:none}
 .cb-outer{display:flex;flex-direction:column}
 .cb-middle{display:flex;align-items:stretch}
-.cb-files{display:flex;padding:0 22px;height:18px}
+.cb-files{display:flex;padding:0 20px;height:17px}
 .cb-files span{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12}
-.cb-ranks{display:flex;flex-direction:column;justify-content:space-around;width:22px;flex-shrink:0}
+.cb-ranks{display:flex;flex-direction:column;justify-content:space-around;width:20px;flex-shrink:0}
 .cb-ranks span{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b3d12;flex:1}
-.cb-board{
-  display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);
+.cb-board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);
   border:4px solid var(--board-border);border-radius:3px;overflow:hidden;
-  box-shadow:0 4px 14px rgba(0,0,0,.28);flex:1;aspect-ratio:1/1
-}
-.cb-sq{
-  position:relative;border:none;border-radius:0;box-shadow:none;
-  padding:0;margin:0;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  touch-action:manipulation;outline:none;aspect-ratio:1/1
-}
+  box-shadow:0 4px 12px rgba(0,0,0,.28);flex:1;aspect-ratio:1/1}
+.cb-sq{position:relative;border:none;border-radius:0;box-shadow:none;padding:0;margin:0;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  touch-action:manipulation;outline:none;aspect-ratio:1/1}
 .cb-sq.sq-light{background:var(--sq-light)}
 .cb-sq.sq-dark{background:var(--sq-dark)}
 .cb-sq.sq-err{background:#dc2626!important;animation:flash .5s}
-@keyframes flash{0%,100%{opacity:1}50%{opacity:.45}}
-/* Kreis-Markierung – kein volles Feld grün */
-.cb-sq.sq-mark::after{
-  content:'';position:absolute;
-  width:64%;height:64%;border-radius:50%;
-  background:rgba(34,197,94,.4);border:3px solid #16a34a;
-  pointer-events:none;z-index:3
-}
-/* Zugziel-Punkt */
-.cb-sq.sq-dot::after{
-  content:'';position:absolute;
-  width:28%;height:28%;border-radius:50%;
-  background:rgba(0,0,0,.28);pointer-events:none;z-index:3
-}
-/* Aktive Figur */
+@keyframes flash{0%,100%{opacity:1}50%{opacity:.4}}
+.cb-sq.sq-mark::after{content:'';position:absolute;width:64%;height:64%;border-radius:50%;
+  background:rgba(34,197,94,.4);border:3px solid #16a34a;pointer-events:none;z-index:3}
+.cb-sq.sq-dot::after{content:'';position:absolute;width:28%;height:28%;border-radius:50%;
+  background:rgba(0,0,0,.28);pointer-events:none;z-index:3}
 .cb-sq.sq-active{outline:4px solid #facc15;outline-offset:-4px;z-index:2}
-/* Figuren */
-.cb-piece{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:min(calc((min(100vw - 44px,400px) - 44px) / 8 * .82),34px);
-  line-height:1;pointer-events:none;z-index:2
-}
+.cb-piece{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:min(calc((min(100vw - 44px,380px) - 40px) / 8 * .82),32px);
+  line-height:1;pointer-events:none;z-index:2}
 .piece-w{color:#FFF5CC;-webkit-text-stroke:1.8px #3D1E00;text-shadow:0 2px 4px rgba(0,0,0,.7)}
 .piece-b{color:#080400;text-shadow:0 1px 4px rgba(255,255,255,.25)}
 .board-info{text-align:center;font-size:13px;font-weight:700;color:var(--muted);
-  padding:6px 10px;background:#f3f4f6;border-radius:8px;margin-top:6px;min-height:30px}
-/* Match-Zuordnung */
-.match-area{margin:10px 0}
-.match-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0}
-.msym,.mnam{
-  padding:10px 13px;border:2px solid #d1d5db;border-radius:9px;
-  background:#fff;cursor:pointer;font-size:17px;font-weight:700;
-  min-width:48px;min-height:48px;transition:border-color .1s,background .1s
-}
+  padding:5px 10px;background:#f3f4f6;border-radius:7px;margin-top:5px;min-height:28px}
+/* Match */
+.match-row{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:5px 0}
+.msym,.mnam{padding:9px 12px;border:2px solid #d1d5db;border-radius:9px;background:#fff;
+  cursor:pointer;font-size:16px;font-weight:700;min-width:46px;min-height:46px;
+  transition:border-color .1s,background .1s}
 .msym:hover,.mnam:hover{border-color:#a78bfa}
 .msym.sel,.mnam.sel{border-color:var(--brand);background:#ede9fe}
 .msym.ok,.mnam.ok{border-color:#22c55e;background:#dcfce7;color:#14532d;pointer-events:none}
 .msym.err,.mnam.err{border-color:#ef4444;background:#fee2e2}
 /* Fairplay */
-.fair-list{display:flex;flex-direction:column;gap:8px;margin:8px 0}
-.fair-item{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 14px;border-radius:10px;border:2px solid var(--line);
-  background:#fff;cursor:pointer;font-size:14px;font-weight:600
-}
+.fair-list{display:flex;flex-direction:column;gap:7px;margin:7px 0}
+.fair-item{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:9px;
+  border:2px solid var(--line);background:#fff;cursor:pointer;font-size:13px;font-weight:600}
 .fair-item.checked{border-color:#22c55e;background:#f0fdf4}
 .fair-item input[type=checkbox]{width:20px;height:20px;accent-color:#16a34a;cursor:pointer;flex-shrink:0}
-.teacher-box{border:1px solid #c4b5fd;background:#f5f3ff;border-radius:10px;padding:12px;margin-top:10px}
+.teacher-box{border:1px solid #c4b5fd;background:#f5f3ff;border-radius:9px;padding:10px;margin-top:8px}
 /* Bonus */
-.bonus-card{border:2px dashed #a78bfa;border-radius:12px;padding:14px;margin:10px 0;background:#faf5ff}
+.bonus-card{border:2px dashed #a78bfa;border-radius:11px;padding:12px;margin:8px 0;background:#faf5ff}
 .bonus-badge{display:inline-block;background:#7c3aed;color:#fff;border-radius:999px;
-  padding:2px 9px;font-size:11px;font-weight:700;margin-bottom:6px}
-/* Urkunde */
-.certificate{
-  background:linear-gradient(135deg,#fff7ed,#fef3c7);
-  border:5px double #b45309;border-radius:16px;padding:24px;text-align:center
-}
-.note{padding:10px 13px;border-radius:9px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin-top:8px}
-.footer{font-size:11px;color:#9ca3af;padding:18px 4px 36px;text-align:center}
-@media print{
-  body{background:#fff}
-  .no-print,.hero,button{display:none!important}
-  .certificate{box-shadow:none}
-}
+  padding:2px 8px;font-size:11px;font-weight:700;margin-bottom:5px}
+/* Urkunden */
+.cert-card{border:4px double #b45309;border-radius:14px;padding:20px;text-align:center;background:linear-gradient(135deg,#fff7ed,#fef3c7)}
+.cert-card.silber{border-color:var(--silber);background:linear-gradient(135deg,#f9fafb,#f3f4f6)}
+.cert-card.gold{border-color:var(--gold);background:linear-gradient(135deg,#fffbeb,#fef9c3)}
+.cert-locked{background:#f9fafb;border:1px solid var(--line);border-radius:11px;padding:14px;
+  text-align:center;color:var(--muted);font-size:13px}
+.note{padding:9px 12px;border-radius:8px;background:#f9fafb;border:1px solid var(--line);font-size:13px;margin-top:7px}
+.footer{font-size:11px;color:#9ca3af;padding:16px 4px 34px;text-align:center}
+@media print{body{background:#fff}.no-print,.hero,button{display:none!important}.cert-card,.cert-card.silber,.cert-card.gold{box-shadow:none}}
 </style>
 </head>
 <body>
@@ -175,13 +158,14 @@ input:focus{outline:none;border-color:var(--brand)}
 
 <!-- Hero -->
 <section class="hero no-print">
-  <span class="pill">♟ Ludgerus-Schachdiplom</span>
-  <span class="pill">🥉 Bronze</span>
-  <h1>Schach-Bronze-Diplom</h1>
-  <p>Vier Missionen – Brett, Figuren, Schach &amp; Fairplay. Danach dein Diplom.</p>
+  <span class="pill pill-b">🥉 Bronze</span>
+  <span class="pill pill-s">🥈 Silber</span>
+  <span class="pill pill-g">🥇 Gold</span>
+  <h1>Ludgerus-Schachdiplom</h1>
+  <p>Drei Stufen – Bronze, Silber, Gold. Jede Stufe baut auf der vorherigen auf.</p>
   <div class="btns">
-    <a class="btn btn-primary" href="#pass">Diplom-Pass</a>
-    <a class="btn btn-orange" href="#quests">Missionen starten</a>
+    <button class="btn-primary" onclick="scrollTo2('pass')">Diplom-Pass</button>
+    <button class="btn-bronze" onclick="scrollTo2('quests')">Missionen starten</button>
   </div>
 </section>
 
@@ -190,7 +174,6 @@ input:focus{outline:none;border-color:var(--brand)}
   <div class="grid2">
     <div class="card">
       <h2>Mein Diplom-Pass</h2>
-      <p>Vorname, Klasse und Lerncode eintragen.</p>
       <div class="row3">
         <div><label for="childName">Vorname</label><input id="childName" autocomplete="given-name" placeholder="Emma"/></div>
         <div><label for="className">Klasse</label><input id="className" placeholder="4a"/></div>
@@ -201,55 +184,122 @@ input:focus{outline:none;border-color:var(--brand)}
         <button class="btn-light" onclick="makeCode()">🎲 Code vorschlagen</button>
         <button class="btn-light" onclick="syncToSheet()">☁️ Senden</button>
       </div>
-      <div id="saveInfo" class="note" style="margin-top:10px">Noch nicht gespeichert.</div>
+      <div id="saveInfo" class="note" style="margin-top:8px">Noch nicht gespeichert.</div>
     </div>
     <div class="card">
-      <h2>Bronze-Fortschritt</h2>
-      <div class="prog-shell"><div id="progressBar" class="prog-fill" style="width:0"></div></div>
-      <p id="progressText" style="font-weight:700;color:var(--ink);margin-top:6px">0 von 4 Missionen erledigt</p>
-      <p style="font-size:12px">Brett · Figuren · Schach/Matt/Patt · Fairplay</p>
+      <h2>Gesamtfortschritt</h2>
+      <div class="level-row">
+        <div class="level-label">🥉 Bronze</div>
+        <div class="prog-shell"><div id="b-prog" class="prog-fill" style="width:0"></div></div>
+        <div id="b-prog-text" class="level-pct">0/4</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">🥈 Silber</div>
+        <div class="prog-shell"><div id="s-prog" class="prog-fill prog-silber" style="width:0"></div></div>
+        <div id="s-prog-text" class="level-pct">0/4</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">🥇 Gold</div>
+        <div class="prog-shell"><div id="g-prog" class="prog-fill prog-gold" style="width:0"></div></div>
+        <div id="g-prog-text" class="level-pct">0/4</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Missionsübersicht -->
+<!-- Missionen Übersicht -->
 <section id="quests" class="no-print">
-  <div class="quest-grid">
-    <div class="q-card" id="card-b1">
-      <div class="icon">♟</div><h3>Bronze 1</h3>
-      <p style="font-size:12px">Brett und Figuren</p>
-      <span id="status-b1" class="badge badge-open">offen</span>
-      <div class="btns"><button class="btn-orange" onclick="openSection('b1')">Starten →</button></div>
+
+  <!-- BRONZE -->
+  <div class="level-block">
+    <div class="level-hdr">
+      <span class="level-hdr-title">🥉 Bronze – Brett &amp; Figurengrundlagen</span>
     </div>
-    <div class="q-card" id="card-b2">
-      <div class="icon">♜</div><h3>Bronze 2</h3>
-      <p style="font-size:12px">So ziehen die Figuren</p>
-      <span id="status-b2" class="badge badge-open">offen</span>
-      <div class="btns"><button class="btn-orange" onclick="openSection('b2')">Starten →</button></div>
+    <div class="quest-grid">
+      <div class="q-card"><div class="icon">♟</div><h3>Bronze 1</h3><p>Brett und Figuren</p>
+        <span id="status-b1" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-b1" class="btn-bronze" onclick="openSection('b1')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">♜</div><h3>Bronze 2</h3><p>Figurenzüge</p>
+        <span id="status-b2" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-b2" class="btn-bronze" onclick="openSection('b2')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">♚</div><h3>Bronze 3</h3><p>Schach, Matt &amp; Patt</p>
+        <span id="status-b3" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-b3" class="btn-bronze" onclick="openSection('b3')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">🤝</div><h3>Bronze 4</h3><p>Erste Partie</p>
+        <span id="status-b4" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-b4" class="btn-bronze" onclick="openSection('b4')">Start →</button></div>
+      </div>
     </div>
-    <div class="q-card" id="card-b3">
-      <div class="icon">♚</div><h3>Bronze 3</h3>
-      <p style="font-size:12px">Schach, Matt und Patt</p>
-      <span id="status-b3" class="badge badge-open">offen</span>
-      <div class="btns"><button class="btn-orange" onclick="openSection('b3')">Starten →</button></div>
+  </div>
+
+  <!-- SILBER -->
+  <div class="level-block">
+    <div class="level-hdr">
+      <span class="level-hdr-title">🥈 Silber – Sonderregeln &amp; Eröffnung</span>
+      <span id="silber-lock" class="lock-tag">🔒 Erst Bronze abschließen</span>
     </div>
-    <div class="q-card" id="card-b4">
-      <div class="icon">🤝</div><h3>Bronze 4</h3>
-      <p style="font-size:12px">Erste Partie &amp; Fairplay</p>
-      <span id="status-b4" class="badge badge-open">offen</span>
-      <div class="btns"><button class="btn-orange" onclick="openSection('b4')">Starten →</button></div>
+    <div class="quest-grid">
+      <div class="q-card"><div class="icon">♟</div><h3>Silber 1</h3><p>Der Bauer</p>
+        <span id="status-s1" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-s1" class="btn-silber" onclick="openSection('s1')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">🏰</div><h3>Silber 2</h3><p>Sonderregeln</p>
+        <span id="status-s2" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-s2" class="btn-silber" onclick="openSection('s2')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">📖</div><h3>Silber 3</h3><p>Eröffnung</p>
+        <span id="status-s3" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-s3" class="btn-silber" onclick="openSection('s3')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">🤝</div><h3>Silber 4</h3><p>Remis &amp; Etikette</p>
+        <span id="status-s4" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-s4" class="btn-silber" onclick="openSection('s4')">Start →</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOLD -->
+  <div class="level-block">
+    <div class="level-hdr">
+      <span class="level-hdr-title">🥇 Gold – Mattbilder, Strategie &amp; Turnier</span>
+      <span id="gold-lock" class="lock-tag">🔒 Erst Silber abschließen</span>
+    </div>
+    <div class="quest-grid">
+      <div class="q-card"><div class="icon">♔</div><h3>Gold 1</h3><p>Mattbilder</p>
+        <span id="status-g1" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-g1" class="btn-gold" onclick="openSection('g1')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">⚔️</div><h3>Gold 2</h3><p>Strategie</p>
+        <span id="status-g2" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-g2" class="btn-gold" onclick="openSection('g2')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">🏁</div><h3>Gold 3</h3><p>Endspiele</p>
+        <span id="status-g3" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-g3" class="btn-gold" onclick="openSection('g3')">Start →</button></div>
+      </div>
+      <div class="q-card"><div class="icon">🏆</div><h3>Gold 4</h3><p>Turnier</p>
+        <span id="status-g4" class="badge badge-open">offen</span>
+        <div class="btns" style="justify-content:center"><button id="btn-g4" class="btn-gold" onclick="openSection('g4')">Start →</button></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ MISSION 1 ═══ -->
+<!-- ══════════════════════════════════════════════════════════
+     BRONZE MISSIONEN
+══════════════════════════════════════════════════════════ -->
+
+<!-- BRONZE 1 -->
 <section id="b1" class="section card no-print">
-  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
   <h2>🥉 Bronze 1: Brett und Figuren</h2>
   <p><strong>Ziel:</strong> Du kennst das Schachbrett und alle Figuren.</p>
 
   <div class="task" data-task="b1q1">
-    <h3>Aufgabe 1 – Multiple Choice: Wie viele Felder hat ein Schachbrett?</h3>
+    <h3>Aufgabe 1 – Wie viele Felder hat ein Schachbrett?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b1q1','32','64')">32 Felder</button>
       <button class="ch" onclick="choose(this,'b1q1','64','64')">64 Felder</button>
@@ -259,7 +309,7 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b1q2">
-    <h3>Aufgabe 2 – Multiple Choice: Welche Figuren stehen in den Ecken?</h3>
+    <h3>Aufgabe 2 – Welche Figuren stehen in den Ecken?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b1q2','damen','tuerme')">♛ Damen</button>
       <button class="ch" onclick="choose(this,'b1q2','tuerme','tuerme')">♜ Türme</button>
@@ -269,36 +319,34 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b1q3">
-    <h3>Aufgabe 3 – Anklicken: Klicke das helle Feld unten rechts an.</h3>
+    <h3>Aufgabe 3 – Anklicken: Das helle Feld unten rechts</h3>
     <p class="hint">Merksatz: <strong>Rechts unten ist hell</strong> (das Feld heißt h1).</p>
     <div id="board-b1q3" class="cb-wrap"></div>
     <div id="fb-b1q3" class="fb"></div>
   </div>
 
   <div class="task" data-task="b1q4">
-    <h3>Aufgabe 4 – Zuordnung: Klicke eine Figur, dann den richtigen Namen.</h3>
-    <p class="hint">Zuerst oben eine Figur anklicken, dann unten den passenden Namen.</p>
-    <div class="match-area">
-      <div class="match-row" id="match-syms">
-        <button class="msym" data-key="koenig" onclick="matchClick(this,'sym')">♚</button>
-        <button class="msym" data-key="dame"   onclick="matchClick(this,'sym')">♛</button>
-        <button class="msym" data-key="turm"   onclick="matchClick(this,'sym')">♜</button>
-        <button class="msym" data-key="laeufer" onclick="matchClick(this,'sym')">♝</button>
-        <button class="msym" data-key="springer" onclick="matchClick(this,'sym')">♞</button>
-      </div>
-      <div class="match-row" id="match-nams">
-        <button class="mnam" data-key="turm"   onclick="matchClick(this,'nam')">Turm</button>
-        <button class="mnam" data-key="springer" onclick="matchClick(this,'nam')">Springer</button>
-        <button class="mnam" data-key="dame"   onclick="matchClick(this,'nam')">Dame</button>
-        <button class="mnam" data-key="koenig" onclick="matchClick(this,'nam')">König</button>
-        <button class="mnam" data-key="laeufer" onclick="matchClick(this,'nam')">Läufer</button>
-      </div>
+    <h3>Aufgabe 4 – Zuordnung: Figur → Name</h3>
+    <p class="hint">Erst eine Figur oben anklicken, dann den richtigen Namen unten.</p>
+    <div class="match-row" id="match-syms">
+      <button class="msym" data-key="koenig" onclick="matchClick(this,'sym')">♚</button>
+      <button class="msym" data-key="dame"   onclick="matchClick(this,'sym')">♛</button>
+      <button class="msym" data-key="turm"   onclick="matchClick(this,'sym')">♜</button>
+      <button class="msym" data-key="laeufer" onclick="matchClick(this,'sym')">♝</button>
+      <button class="msym" data-key="springer" onclick="matchClick(this,'sym')">♞</button>
+    </div>
+    <div class="match-row" id="match-nams">
+      <button class="mnam" data-key="turm"   onclick="matchClick(this,'nam')">Turm</button>
+      <button class="mnam" data-key="springer" onclick="matchClick(this,'nam')">Springer</button>
+      <button class="mnam" data-key="dame"   onclick="matchClick(this,'nam')">Dame</button>
+      <button class="mnam" data-key="koenig" onclick="matchClick(this,'nam')">König</button>
+      <button class="mnam" data-key="laeufer" onclick="matchClick(this,'nam')">Läufer</button>
     </div>
     <div id="fb-b1q4" class="fb"></div>
   </div>
 
   <div class="task" data-task="b1q5">
-    <h3>Aufgabe 5 – Felder markieren: Markiere alle dunklen Felder in Reihe 1.</h3>
+    <h3>Aufgabe 5 – Felder markieren: Alle dunklen Felder in Reihe 1</h3>
     <p class="hint">Es gibt genau 4 dunkle Felder in der untersten Reihe.</p>
     <div id="board-b1q5" class="cb-wrap"></div>
     <div id="b1q5-info" class="board-info">0 von 4 dunklen Feldern markiert.</div>
@@ -307,26 +355,26 @@ input:focus{outline:none;border-color:var(--brand)}
 
   <div class="btns">
     <button class="btn-green" onclick="finishQuest('b1',['b1q1','b1q2','b1q3','b1q4','b1q5'])">✅ Bronze 1 abschließen</button>
-    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
   </div>
 </section>
 
-<!-- ═══ MISSION 2 ═══ -->
+<!-- BRONZE 2 -->
 <section id="b2" class="section card no-print">
-  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
   <h2>🥉 Bronze 2: So ziehen die Figuren</h2>
   <p><strong>Ziel:</strong> Du kennst die Zugwege von Turm, Läufer, Springer und Dame.</p>
 
   <div class="task" data-task="b2q1">
-    <h3>Aufgabe 1 – Felder markieren: Turmzüge von d4</h3>
-    <p class="hint">Der Turm steht auf <strong>d4</strong>. Klicke alle Felder, auf die er ziehen kann (waagerecht &amp; senkrecht). 14 Felder total.</p>
+    <h3>Aufgabe 1 – Turmzüge markieren (von d4)</h3>
+    <p class="hint">Der Turm zieht waagerecht und senkrecht. Markiere alle 14 Felder.</p>
     <div id="board-b2q1" class="cb-wrap"></div>
     <div id="turm-info" class="board-info">0 von 14 Turmfeldern markiert.</div>
     <div id="fb-b2q1" class="fb"></div>
   </div>
 
   <div class="task" data-task="b2q2">
-    <h3>Aufgabe 2 – Multiple Choice: Welche Figur zieht diagonal?</h3>
+    <h3>Aufgabe 2 – Welche Figur zieht diagonal?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b2q2','bauer','laeufer')">♟ Bauer</button>
       <button class="ch" onclick="choose(this,'b2q2','laeufer','laeufer')">♝ Läufer</button>
@@ -336,7 +384,7 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b2q3">
-    <h3>Aufgabe 3 – Multiple Choice: Welche Figur springt über andere hinweg?</h3>
+    <h3>Aufgabe 3 – Welche Figur springt über andere hinweg?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b2q3','koenig','springer')">♚ König</button>
       <button class="ch" onclick="choose(this,'b2q3','springer','springer')">♞ Springer</button>
@@ -346,18 +394,18 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b2q4">
-    <h3>Aufgabe 4 – Felder markieren: Läuferzüge von d4</h3>
-    <p class="hint">Der Läufer steht auf <strong>d4</strong>. Klicke alle Felder, auf die er ziehen kann (immer schräg). 13 Felder total.</p>
+    <h3>Aufgabe 4 – Läuferzüge markieren (von d4)</h3>
+    <p class="hint">Der Läufer zieht diagonal. Markiere alle 13 Felder.</p>
     <div id="board-b2q4" class="cb-wrap"></div>
     <div id="laeufer-info" class="board-info">0 von 13 Läuferfeldern markiert.</div>
     <div id="fb-b2q4" class="fb"></div>
   </div>
 
   <div class="task" data-task="b2q5">
-    <h3>Aufgabe 5 – Multiple Choice: Was kann die Dame in einem Zug?</h3>
+    <h3>Aufgabe 5 – Was kann die Dame?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b2q5','nur-gerade','dame-alles')">Nur gerade (wie Turm)</button>
-      <button class="ch" onclick="choose(this,'b2q5','dame-alles','dame-alles')">Gerade und diagonal – kombiniert Turm + Läufer!</button>
+      <button class="ch" onclick="choose(this,'b2q5','dame-alles','dame-alles')">Gerade und diagonal – kombiniert Turm + Läufer</button>
       <button class="ch" onclick="choose(this,'b2q5','nur-diagonal','dame-alles')">Nur diagonal (wie Läufer)</button>
     </div>
     <div id="fb-b2q5" class="fb"></div>
@@ -365,26 +413,26 @@ input:focus{outline:none;border-color:var(--brand)}
 
   <div class="bonus-card">
     <span class="bonus-badge">⭐ Bonus</span>
-    <h3>Bonus – Figur ziehen: Bewege den Springer!</h3>
-    <p class="hint">Klicke den Springer auf <strong>d4</strong> an – die Sprungfelder leuchten auf. Klicke dann ein Zielfeld!</p>
+    <h3>Bonus – Springer ziehen!</h3>
+    <p class="hint">Klicke den Springer auf d4, dann ein Sprungfeld.</p>
     <div id="board-bonus" class="cb-wrap"></div>
     <div id="springer-info" class="board-info">Klicke den Springer auf d4.</div>
   </div>
 
   <div class="btns">
     <button class="btn-green" onclick="finishQuest('b2',['b2q1','b2q2','b2q3','b2q4','b2q5'])">✅ Bronze 2 abschließen</button>
-    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
   </div>
 </section>
 
-<!-- ═══ MISSION 3 ═══ -->
+<!-- BRONZE 3 -->
 <section id="b3" class="section card no-print">
-  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
   <h2>🥉 Bronze 3: Schach, Matt und Patt</h2>
   <p><strong>Ziel:</strong> Du weißt, wann der König angegriffen ist und warum eine Partie endet.</p>
 
   <div class="task" data-task="b3q1">
-    <h3>Aufgabe 1 – Multiple Choice: Was bedeutet „Schach"?</h3>
+    <h3>Aufgabe 1 – Was bedeutet „Schach"?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b3q1','figur-weg','koenig-angegriffen')">Eine Figur muss weg.</button>
       <button class="ch" onclick="choose(this,'b3q1','koenig-angegriffen','koenig-angegriffen')">Der König ist angegriffen.</button>
@@ -394,26 +442,26 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b3q2">
-    <h3>Aufgabe 2 – Figur ziehen: Rette den König!</h3>
-    <p class="hint">Weißer König auf <strong>e1</strong>, schwarzer Turm auf <strong>a1</strong> (Schach auf ganzer Reihe 1). <strong>Klicke ein sicheres Fluchtfeld!</strong></p>
+    <h3>Aufgabe 2 – König retten!</h3>
+    <p class="hint">Weißer König e1, schwarzer Turm a1 (Schach!). Klicke ein sicheres Fluchtfeld.</p>
     <div id="board-b3q2" class="cb-wrap"></div>
     <div id="fb-b3q2" class="fb"></div>
   </div>
 
   <div class="task" data-task="b3q3">
-    <h3>Aufgabe 3 – Multiple Choice: Was ist Schachmatt?</h3>
+    <h3>Aufgabe 3 – Was ist Schachmatt?</h3>
     <div class="choices">
-      <button class="ch" onclick="choose(this,'b3q3','kein-ausweg','kein-ausweg')">Der König steht im Schach und hat keinen Ausweg mehr.</button>
-      <button class="ch" onclick="choose(this,'b3q3','kein-schach','kein-ausweg')">Der König steht nicht im Schach.</button>
+      <button class="ch" onclick="choose(this,'b3q3','kein-ausweg','kein-ausweg')">König im Schach und kein Ausweg mehr – Partie verloren.</button>
+      <button class="ch" onclick="choose(this,'b3q3','kein-schach','kein-ausweg')">König steht nicht im Schach.</button>
       <button class="ch" onclick="choose(this,'b3q3','nur-dame','kein-ausweg')">Nur die Dame darf noch ziehen.</button>
     </div>
     <div id="fb-b3q3" class="fb"></div>
   </div>
 
   <div class="task" data-task="b3q4">
-    <h3>Aufgabe 4 – Multiple Choice: Was ist Patt?</h3>
+    <h3>Aufgabe 4 – Was ist Patt?</h3>
     <div class="choices">
-      <button class="ch" onclick="choose(this,'b3q4','kein-zug','kein-zug')">Kein erlaubter Zug, aber kein Schach – Unentschieden.</button>
+      <button class="ch" onclick="choose(this,'b3q4','kein-zug','kein-zug')">Kein erlaubter Zug, kein Schach – Unentschieden.</button>
       <button class="ch" onclick="choose(this,'b3q4','koenig-weg','kein-zug')">Der König wird vom Brett genommen.</button>
       <button class="ch" onclick="choose(this,'b3q4','dame-gewinnt','kein-zug')">Die Dame gewinnt automatisch.</button>
     </div>
@@ -421,7 +469,7 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b3q5">
-    <h3>Aufgabe 5 – Multiple Choice: Dein König steht im Schach – was kannst du tun?</h3>
+    <h3>Aufgabe 5 – Dein König steht im Schach – was kannst du tun?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b3q5','drei-wege','drei-wege')">König ziehen, Angreifer schlagen oder eine Figur dazwischenstellen.</button>
       <button class="ch" onclick="choose(this,'b3q5','passen','drei-wege')">Einmal aussetzen.</button>
@@ -432,47 +480,34 @@ input:focus{outline:none;border-color:var(--brand)}
 
   <div class="btns">
     <button class="btn-green" onclick="finishQuest('b3',['b3q1','b3q2','b3q3','b3q4','b3q5'])">✅ Bronze 3 abschließen</button>
-    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
   </div>
 </section>
 
-<!-- ═══ MISSION 4 ═══ -->
+<!-- BRONZE 4 -->
 <section id="b4" class="section card no-print">
-  <button class="back-link" onclick="openSection('quests')">← Zurück</button>
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
   <h2>🥉 Bronze 4: Erste Partie &amp; Fairplay</h2>
   <p><strong>Ziel:</strong> Du spielst ruhig, fair und freundlich.</p>
 
   <div class="task" data-task="b4q1">
-    <h3>Aufgabe 1 – Checkliste: Fairplay-Check</h3>
-    <p class="hint">Setze alle Häkchen, wenn du das wirklich so machst:</p>
+    <h3>Aufgabe 1 – Fairplay-Check</h3>
     <div class="fair-list">
-      <label class="fair-item" for="fair1">
-        <input type="checkbox" id="fair1" onchange="checkFair()"/>
-        🤝 Ich gebe vor und nach dem Spiel die Hand oder sage „gutes Spiel".
-      </label>
-      <label class="fair-item" for="fair2">
-        <input type="checkbox" id="fair2" onchange="checkFair()"/>
-        ⏳ Ich warte geduldig, bis ich am Zug bin.
-      </label>
-      <label class="fair-item" for="fair3">
-        <input type="checkbox" id="fair3" onchange="checkFair()"/>
-        😊 Ich bleibe fair und freundlich, auch wenn ich verliere.
-      </label>
+      <label class="fair-item" for="fair1"><input type="checkbox" id="fair1" onchange="checkFairGeneric('b4q1',['fair1','fair2','fair3','fair-t1'])"/>🤝 Ich gebe vor und nach dem Spiel die Hand oder sage „gutes Spiel".</label>
+      <label class="fair-item" for="fair2"><input type="checkbox" id="fair2" onchange="checkFairGeneric('b4q1',['fair1','fair2','fair3','fair-t1'])"/>⏳ Ich warte geduldig, bis ich am Zug bin.</label>
+      <label class="fair-item" for="fair3"><input type="checkbox" id="fair3" onchange="checkFairGeneric('b4q1',['fair1','fair2','fair3','fair-t1'])"/>😊 Ich bleibe fair und freundlich, auch wenn ich verliere.</label>
     </div>
     <div class="teacher-box">
-      <h3>✏️ Bestätigung</h3>
+      <h3>✏️ AG-Leitung bestätigt</h3>
       <div class="fair-list">
-        <label class="fair-item" for="teacherConfirm">
-          <input type="checkbox" id="teacherConfirm" onchange="checkFair()"/>
-          🏫 AG-Leitung bestätigt: Das Kind hat fair gespielt.
-        </label>
+        <label class="fair-item" for="fair-t1"><input type="checkbox" id="fair-t1" onchange="checkFairGeneric('b4q1',['fair1','fair2','fair3','fair-t1'])"/>🏫 Das Kind hat fair gespielt.</label>
       </div>
     </div>
     <div id="fb-b4q1" class="fb"></div>
   </div>
 
   <div class="task" data-task="b4q2">
-    <h3>Aufgabe 2 – Multiple Choice: Du hast verloren – was sagst du?</h3>
+    <h3>Aufgabe 2 – Du hast verloren – was sagst du?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b4q2','gute-partie','gute-partie')">„Gute Partie, danke fürs Spiel!"</button>
       <button class="ch" onclick="choose(this,'b4q2','wortlos','gute-partie')">Ich gehe wortlos weg.</button>
@@ -482,7 +517,7 @@ input:focus{outline:none;border-color:var(--brand)}
   </div>
 
   <div class="task" data-task="b4q3">
-    <h3>Aufgabe 3 – Multiple Choice: Dein Gegner denkt lange nach – was tust du?</h3>
+    <h3>Aufgabe 3 – Dein Gegner denkt lange nach – was tust du?</h3>
     <div class="choices">
       <button class="ch" onclick="choose(this,'b4q3','warten','warten')">Ich warte ruhig und lasse ihn denken.</button>
       <button class="ch" onclick="choose(this,'b4q3','trommeln','warten')">Ich trommle auf den Tisch.</button>
@@ -493,51 +528,523 @@ input:focus{outline:none;border-color:var(--brand)}
 
   <div class="btns">
     <button class="btn-green" onclick="finishQuest('b4',['b4q1','b4q2','b4q3'])">✅ Bronze 4 abschließen</button>
-    <button class="btn-light" onclick="openSection('quests')">Zur Übersicht</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
   </div>
 </section>
 
-<!-- Urkunde -->
-<section id="certificateArea">
-  <div class="card">
-    <h2>🏅 Bronze-Urkunde</h2>
-    <p class="no-print">Die Urkunde wird freigeschaltet, wenn alle vier Missionen erledigt sind.</p>
-    <div id="certLock" class="note no-print">🔒 Noch gesperrt. Erledige zuerst alle Bronze-Missionen.</div>
-    <div id="certificate" class="certificate" style="display:none">
-      <div style="font-size:52px">♟</div>
-      <h2 style="color:#92400e">Bronze-Schachdiplom</h2>
-      <p style="font-size:17px;color:#374151">verliehen an</p>
-      <p id="certName" style="font-size:30px;font-weight:900;color:#111827">________________</p>
-      <p style="font-size:15px;color:#374151;margin-top:8px">für das erfolgreiche Bearbeiten der Bronze-Missionen<br>im Ludgerus-Schachdiplom.</p>
-      <p style="margin-top:18px;color:#6b7280;font-size:13px">Datum: <span id="certDate"></span> · AG-Leitung: __________________</p>
+<!-- ══════════════════════════════════════════════════════════
+     SILBER MISSIONEN
+══════════════════════════════════════════════════════════ -->
+
+<!-- SILBER 1 -->
+<section id="s1" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥈 Silber 1: Der Bauer</h2>
+  <p><strong>Ziel:</strong> Du verstehst, wie der Bauer zieht, schlägt und umwandelt.</p>
+
+  <div class="task" data-task="s1q1">
+    <h3>Aufgabe 1 – Wie zieht ein Bauer normalerweise?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s1q1','vorwaerts','vorwaerts')">Ein Feld geradeaus vorwärts.</button>
+      <button class="ch" onclick="choose(this,'s1q1','diagonal','vorwaerts')">Ein Feld diagonal.</button>
+      <button class="ch" onclick="choose(this,'s1q1','zwei','vorwaerts')">Immer zwei Felder.</button>
     </div>
-    <div class="btns no-print">
-      <button class="btn-light" onclick="window.print()">🖨️ Drucken</button>
-      <button class="btn-primary" onclick="syncToSheet()">☁️ Stand senden</button>
+    <div id="fb-s1q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s1q2">
+    <h3>Aufgabe 2 – Was passiert, wenn ein Bauer die letzte Reihe erreicht?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s1q2','umwandlung','umwandlung')">Er wird zur Dame, Turm, Läufer oder Springer (Umwandlung).</button>
+      <button class="ch" onclick="choose(this,'s1q2','schach','umwandlung')">Die Partie ist sofort vorbei.</button>
+      <button class="ch" onclick="choose(this,'s1q2','nochmal','umwandlung')">Er fängt wieder von vorne an.</button>
     </div>
+    <div id="fb-s1q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s1q3">
+    <h3>Aufgabe 3 – Bauernzüge: Klicke alle Felder, auf die der Bauer von e2 ziehen kann.</h3>
+    <p class="hint">Beim <strong>ersten Zug</strong> darf ein Bauer ein oder zwei Felder vorwärts!</p>
+    <div id="board-s1q3" class="cb-wrap"></div>
+    <div id="s1q3-info" class="board-info">0 von 2 Feldern markiert.</div>
+    <div id="fb-s1q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s1q4">
+    <h3>Aufgabe 4 – Wie schlägt ein Bauer eine gegnerische Figur?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s1q4','diagonal','diagonal')">Diagonal ein Feld vorwärts.</button>
+      <button class="ch" onclick="choose(this,'s1q4','gerade','diagonal')">Gerade nach vorne.</button>
+      <button class="ch" onclick="choose(this,'s1q4','wie-turm','diagonal')">Wie ein Turm – beliebig weit.</button>
+    </div>
+    <div id="fb-s1q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('s1',['s1q1','s1q2','s1q3','s1q4'])">✅ Silber 1 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
   </div>
 </section>
 
-<p class="footer no-print">Datenschutz: Nur Vorname/Kurzname, Klasse und Lerncode verwenden. · Ludgerus-Schachdiplom Bronze · Pilot-Version</p>
+<!-- SILBER 2 -->
+<section id="s2" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥈 Silber 2: Sonderregeln</h2>
+  <p><strong>Ziel:</strong> Du kennst Rochade und en passant.</p>
+
+  <div class="task" data-task="s2q1">
+    <h3>Aufgabe 1 – Was ist die Rochade?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s2q1','koenig-turm','koenig-turm')">König und Turm ziehen gleichzeitig in einem Zug.</button>
+      <button class="ch" onclick="choose(this,'s2q1','zwei-springer','koenig-turm')">Zwei Springer tauschen die Plätze.</button>
+      <button class="ch" onclick="choose(this,'s2q1','dame-springt','koenig-turm')">Die Dame springt über alle Figuren.</button>
+    </div>
+    <div id="fb-s2q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s2q2">
+    <h3>Aufgabe 2 – Wann darf man NICHT rochieren?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s2q2','im-schach','im-schach')">Wenn der König gerade im Schach steht.</button>
+      <button class="ch" onclick="choose(this,'s2q2','immer','im-schach')">Man darf immer rochieren.</button>
+      <button class="ch" onclick="choose(this,'s2q2','endspiel','im-schach')">Im Endspiel ist Rochade immer erlaubt.</button>
+    </div>
+    <div id="fb-s2q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s2q3">
+    <h3>Aufgabe 3 – Was ist „en passant"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s2q3','sonderschlag','sonderschlag')">Ein besonderer Bauernschlag – ein Bauer schlägt einen anderen, der gerade zwei Felder vorgerückt ist.</button>
+      <button class="ch" onclick="choose(this,'s2q3','normal','sonderschlag')">Ein ganz normaler Bauernzug.</button>
+      <button class="ch" onclick="choose(this,'s2q3','springer','sonderschlag')">Ein Springer schlägt rückwärts.</button>
+    </div>
+    <div id="fb-s2q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s2q4">
+    <h3>Aufgabe 4 – Wie viele Felder bewegt sich der König bei der kleinen Rochade?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s2q4','zwei-felder','zwei-felder')">2 Felder (zur Turmseite hin).</button>
+      <button class="ch" onclick="choose(this,'s2q4','drei-felder','zwei-felder')">3 Felder.</button>
+      <button class="ch" onclick="choose(this,'s2q4','ein-feld','zwei-felder')">1 Feld.</button>
+    </div>
+    <div id="fb-s2q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('s2',['s2q1','s2q2','s2q3','s2q4'])">✅ Silber 2 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- SILBER 3 -->
+<section id="s3" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥈 Silber 3: Eröffnungsprinzipien</h2>
+  <p><strong>Ziel:</strong> Du weißt, wie man eine Schachpartie gut beginnt.</p>
+
+  <div class="task" data-task="s3q1">
+    <h3>Aufgabe 1 – Was ist das wichtigste Ziel in den ersten Zügen?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s3q1','figuren-entwickeln','figuren-entwickeln')">Figuren entwickeln und ins Spiel bringen.</button>
+      <button class="ch" onclick="choose(this,'s3q1','turm-raus','figuren-entwickeln')">Erst den Turm herausbringen.</button>
+      <button class="ch" onclick="choose(this,'s3q1','bauern','figuren-entwickeln')">Alle Bauern so weit wie möglich vorschieben.</button>
+    </div>
+    <div id="fb-s3q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s3q2">
+    <h3>Aufgabe 2 – Welche Felder sind in der Eröffnung besonders wichtig?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s3q2','zentrum','zentrum')">Das Zentrum (d4, d5, e4, e5).</button>
+      <button class="ch" onclick="choose(this,'s3q2','ecken','zentrum')">Die vier Ecken des Bretts.</button>
+      <button class="ch" onclick="choose(this,'s3q2','randspalten','zentrum')">Die Randspalten a und h.</button>
+    </div>
+    <div id="fb-s3q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s3q3">
+    <h3>Aufgabe 3 – Wann sollte man den König in Sicherheit bringen?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s3q3','fruehzeitig','fruehzeitig')">Früh in der Partie, durch Rochade.</button>
+      <button class="ch" onclick="choose(this,'s3q3','vorteil','fruehzeitig')">Erst wenn man klar im Vorteil ist.</button>
+      <button class="ch" onclick="choose(this,'s3q3','nur-angriff','fruehzeitig')">Nur wenn man direkt angegriffen wird.</button>
+    </div>
+    <div id="fb-s3q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s3q4">
+    <h3>Aufgabe 4 – Was sollte man in der Eröffnung vermeiden?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s3q4','einmal','einmal')">Die gleiche Figur mehrmals hintereinander ziehen, statt neue zu entwickeln.</button>
+      <button class="ch" onclick="choose(this,'s3q4','springer','einmal')">Springer zuerst zu entwickeln.</button>
+      <button class="ch" onclick="choose(this,'s3q4','zentrum','einmal')">Das Zentrum mit Bauern zu besetzen.</button>
+    </div>
+    <div id="fb-s3q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('s3',['s3q1','s3q2','s3q3','s3q4'])">✅ Silber 3 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- SILBER 4 -->
+<section id="s4" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥈 Silber 4: Remis-Arten &amp; Etikette</h2>
+  <p><strong>Ziel:</strong> Du kennst die Möglichkeiten, wie eine Partie unentschieden endet.</p>
+
+  <div class="task" data-task="s4q1">
+    <h3>Aufgabe 1 – Was bedeutet Remis?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s4q1','unentschieden','unentschieden')">Unentschieden – kein Gewinner, kein Verlierer.</button>
+      <button class="ch" onclick="choose(this,'s4q1','niederlage','unentschieden')">Eine Niederlage.</button>
+      <button class="ch" onclick="choose(this,'s4q1','sieg','unentschieden')">Ein Sieg nach Verlängerung.</button>
+    </div>
+    <div id="fb-s4q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s4q2">
+    <h3>Aufgabe 2 – Was ist Patt (eine Remis-Art)?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s4q2','patt','patt')">Ein Spieler kann nicht mehr ziehen, steht aber nicht im Schach → Unentschieden.</button>
+      <button class="ch" onclick="choose(this,'s4q2','schachmatt','patt')">Der König hat keinen Ausweg → Niederlage.</button>
+      <button class="ch" onclick="choose(this,'s4q2','schach','patt')">Der König wird angegriffen → Schach.</button>
+    </div>
+    <div id="fb-s4q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s4q3">
+    <h3>Aufgabe 3 – Wie bietet man Remis korrekt an?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'s4q3','anbieten-ziehen','anbieten-ziehen')">Erst den eigenen Zug machen, dann Remis anbieten.</button>
+      <button class="ch" onclick="choose(this,'s4q3','vor-zug','anbieten-ziehen')">Vor dem eigenen Zug fragen.</button>
+      <button class="ch" onclick="choose(this,'s4q3','nach-verlust','anbieten-ziehen')">Nur nach einer Niederlage.</button>
+    </div>
+    <div id="fb-s4q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="s4q4">
+    <h3>Aufgabe 4 – Remis-Etikette Checkliste</h3>
+    <div class="fair-list">
+      <label class="fair-item" for="s-fair1"><input type="checkbox" id="s-fair1" onchange="checkFairGeneric('s4q4',['s-fair1','s-fair2','s-teacher'])"/>🤝 Ich biete Remis nur ehrlich an – wenn ich es wirklich für fair halte.</label>
+      <label class="fair-item" for="s-fair2"><input type="checkbox" id="s-fair2" onchange="checkFairGeneric('s4q4',['s-fair1','s-fair2','s-teacher'])"/>🙂 Wenn mein Gegner ablehnt, akzeptiere ich das ohne Diskussion.</label>
+    </div>
+    <div class="teacher-box">
+      <h3>✏️ AG-Leitung bestätigt</h3>
+      <div class="fair-list">
+        <label class="fair-item" for="s-teacher"><input type="checkbox" id="s-teacher" onchange="checkFairGeneric('s4q4',['s-fair1','s-fair2','s-teacher'])"/>🏫 Das Kind kennt die Remis-Regeln.</label>
+      </div>
+    </div>
+    <div id="fb-s4q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('s4',['s4q1','s4q2','s4q3','s4q4'])">✅ Silber 4 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     GOLD MISSIONEN
+══════════════════════════════════════════════════════════ -->
+
+<!-- GOLD 1 -->
+<section id="g1" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥇 Gold 1: Mattbilder kennen</h2>
+  <p><strong>Ziel:</strong> Du erkennst klassische Mattmuster.</p>
+
+  <div class="task" data-task="g1q1">
+    <h3>Aufgabe 1 – Was ist das „Narren-Matt"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g1q1','narrenmatt','narrenmatt')">Das schnellste Matt – in nur 2 Zügen möglich!</button>
+      <button class="ch" onclick="choose(this,'g1q1','herdenmatt','narrenmatt')">Matt durch 8 Bauern gleichzeitig.</button>
+      <button class="ch" onclick="choose(this,'g1q1','springermatt','narrenmatt')">Matt mit zwei Springern in der Ecke.</button>
+    </div>
+    <div id="fb-g1q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g1q2">
+    <h3>Aufgabe 2 – Was ist „Doppelschach"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g1q2','zwei-figuren','zwei-figuren')">Zwei Figuren geben gleichzeitig Schach.</button>
+      <button class="ch" onclick="choose(this,'g1q2','zweimal','zwei-figuren')">Man gibt zweimal hintereinander Schach.</button>
+      <button class="ch" onclick="choose(this,'g1q2','dame-allein','zwei-figuren')">Nur die Dame darf Doppelschach geben.</button>
+    </div>
+    <div id="fb-g1q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g1q3">
+    <h3>Aufgabe 3 – Was ist „ersticktes Matt"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g1q3','springer-eingemauert','springer-eingemauert')">Der König ist von eigenen Figuren umgeben – ein Springer gibt Matt.</button>
+      <button class="ch" onclick="choose(this,'g1q3','zwei-tuerme','springer-eingemauert')">Zwei Türme geben zusammen Matt.</button>
+      <button class="ch" onclick="choose(this,'g1q3','dame-laeufer','springer-eingemauert')">Dame und Läufer auf einer Diagonale.</button>
+    </div>
+    <div id="fb-g1q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g1q4">
+    <h3>Aufgabe 4 – Was ist das „Grundreihen-Matt" (Back-Rank-Mate)?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g1q4','grundreihe','grundreihe')">Turm oder Dame gibt Matt auf der ersten Reihe des Gegners – der König hat keinen Ausweg nach oben.</button>
+      <button class="ch" onclick="choose(this,'g1q4','seitenlinie','grundreihe')">Matt auf der Seitenlinie durch den Springer.</button>
+      <button class="ch" onclick="choose(this,'g1q4','ecke','grundreihe')">Matt immer in der Ecke des Bretts.</button>
+    </div>
+    <div id="fb-g1q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('g1',['g1q1','g1q2','g1q3','g1q4'])">✅ Gold 1 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- GOLD 2 -->
+<section id="g2" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥇 Gold 2: Strategie &amp; Planung</h2>
+  <p><strong>Ziel:</strong> Du verstehst strategische Konzepte und planst voraus.</p>
+
+  <div class="task" data-task="g2q1">
+    <h3>Aufgabe 1 – Was ist ein „Freibauer"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g2q1','kein-bauer-davor','kein-bauer-davor')">Ein Bauer ohne gegnerischen Bauern auf derselben oder den Nebenspalten – er kann frei zur Umwandlung laufen.</button>
+      <button class="ch" onclick="choose(this,'g2q1','doppelbauer','kein-bauer-davor')">Zwei Bauern auf derselben Spalte.</button>
+      <button class="ch" onclick="choose(this,'g2q1','bauern-mitte','kein-bauer-davor')">Jeder Bauer, der in der Mitte steht.</button>
+    </div>
+    <div id="fb-g2q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g2q2">
+    <h3>Aufgabe 2 – Was ist ein „schwaches Feld"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g2q2','nicht-verteidigt','nicht-verteidigt')">Ein Feld, das nicht mehr von einem Bauern verteidigt werden kann – eine ideale Station für gegnerische Figuren.</button>
+      <button class="ch" onclick="choose(this,'g2q2','ecken','nicht-verteidigt')">Immer die vier Ecken des Bretts.</button>
+      <button class="ch" onclick="choose(this,'g2q2','dunkle','nicht-verteidigt')">Alle dunklen Felder.</button>
+    </div>
+    <div id="fb-g2q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g2q3">
+    <h3>Aufgabe 3 – Was bedeutet „Figurenaktivität"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g2q3','gute-felder','gute-felder')">Eigene Figuren auf Felder stellen, von denen aus sie viele Möglichkeiten haben.</button>
+      <button class="ch" onclick="choose(this,'g2q3','viele-schlagen','gute-felder')">So viele gegnerische Figuren wie möglich schlagen.</button>
+      <button class="ch" onclick="choose(this,'g2q3','schnell','gute-felder')">Figuren möglichst schnell in die gegnerische Hälfte bringen.</button>
+    </div>
+    <div id="fb-g2q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g2q4">
+    <h3>Aufgabe 4 – Wann sollte man Figuren tauschen?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g2q4','wenn-besser','wenn-besser')">Wenn man danach eine bessere Stellung hat als vorher.</button>
+      <button class="ch" onclick="choose(this,'g2q4','immer','wenn-besser')">Immer wenn man kann.</button>
+      <button class="ch" onclick="choose(this,'g2q4','nie','wenn-besser')">Niemals tauschen.</button>
+    </div>
+    <div id="fb-g2q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('g2',['g2q1','g2q2','g2q3','g2q4'])">✅ Gold 2 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- GOLD 3 -->
+<section id="g3" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥇 Gold 3: Endspiele verstehen</h2>
+  <p><strong>Ziel:</strong> Du kennst grundlegende Endspielkonzepte.</p>
+
+  <div class="task" data-task="g3q1">
+    <h3>Aufgabe 1 – Was ist „Opposition" im Königsendspiel?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g3q1','koenige-gegeneinander','koenige-gegeneinander')">Die Könige stehen sich direkt gegenüber (mit einem Feld Abstand). Der Spieler, der NICHT am Zug ist, hat die Opposition – ein Vorteil!</button>
+      <button class="ch" onclick="choose(this,'g3q1','dame-vs-koenig','koenige-gegeneinander')">Dame gegen König am Rand.</button>
+      <button class="ch" onclick="choose(this,'g3q1','turm','koenige-gegeneinander')">Turm deckt den König von hinten.</button>
+    </div>
+    <div id="fb-g3q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g3q2">
+    <h3>Aufgabe 2 – Was ist „Zugzwang"?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g3q2','schlechter-ziehen','schlechter-ziehen')">Man muss ziehen, aber jeder Zug verschlechtert die eigene Stellung – Ziehen ist ein Nachteil.</button>
+      <button class="ch" onclick="choose(this,'g3q2','schnell','schlechter-ziehen')">Man zieht zu schnell und macht Fehler.</button>
+      <button class="ch" onclick="choose(this,'g3q2','keine-zeit','schlechter-ziehen')">Man hat keine Bedenkzeit mehr.</button>
+    </div>
+    <div id="fb-g3q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g3q3">
+    <h3>Aufgabe 3 – Turm + König gegen König: Wer gewinnt?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g3q3','immer-gewinner','immer-gewinner')">Die Seite mit dem Turm gewinnt immer (bei korrektem Spiel).</button>
+      <button class="ch" onclick="choose(this,'g3q3','remis','immer-gewinner')">Meistens Remis.</button>
+      <button class="ch" onclick="choose(this,'g3q3','haengt','immer-gewinner')">Hängt von der Aufstellung ab – manchmal gewinnt der einzelne König.</button>
+    </div>
+    <div id="fb-g3q3" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g3q4">
+    <h3>Aufgabe 4 – Umwandlung: Klicke das Feld, auf das der Bauer von h7 ziehen muss!</h3>
+    <p class="hint">Der Bauer steht auf h7 – ein Zug bis zur Umwandlung!</p>
+    <div id="board-g3q4" class="cb-wrap"></div>
+    <div id="fb-g3q4" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('g3',['g3q1','g3q2','g3q3','g3q4'])">✅ Gold 3 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- GOLD 4 -->
+<section id="g4" class="section card no-print">
+  <button class="back-link" onclick="closeSection()">← Zurück</button>
+  <h2>🥇 Gold 4: Turniervorbereitung</h2>
+  <p><strong>Ziel:</strong> Du bist bereit für dein erstes Schachturnier.</p>
+
+  <div class="task" data-task="g4q1">
+    <h3>Aufgabe 1 – Was ist eine Schachuhr?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g4q1','eigene-bedenkzeit','eigene-bedenkzeit')">Jeder Spieler hat seine eigene Bedenkzeit – nach dem eigenen Zug drückt man die Uhr.</button>
+      <button class="ch" onclick="choose(this,'g4q1','beide-teilen','eigene-bedenkzeit')">Alle Spieler teilen sich eine gemeinsame Uhr.</button>
+      <button class="ch" onclick="choose(this,'g4q1','keine-zeit','eigene-bedenkzeit')">Im Turnier gibt es keine Zeitbegrenzung.</button>
+    </div>
+    <div id="fb-g4q1" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g4q2">
+    <h3>Aufgabe 2 – Dein Gegner macht einen illegalen Zug. Was tust du?</h3>
+    <div class="choices">
+      <button class="ch" onclick="choose(this,'g4q2','schiedsrichter','schiedsrichter')">Ruhig auf den Schiedsrichter hinweisen oder ihn rufen.</button>
+      <button class="ch" onclick="choose(this,'g4q2','weiterspielen','schiedsrichter')">Einfach weiterspielen, ohne etwas zu sagen.</button>
+      <button class="ch" onclick="choose(this,'g4q2','selbst','schiedsrichter')">Den Zug selbst zurücknehmen und korrigieren.</button>
+    </div>
+    <div id="fb-g4q2" class="fb"></div>
+  </div>
+
+  <div class="task" data-task="g4q3">
+    <h3>Aufgabe 3 – Turnier-Checkliste</h3>
+    <div class="fair-list">
+      <label class="fair-item" for="g-fair1"><input type="checkbox" id="g-fair1" onchange="checkFairGeneric('g4q3',['g-fair1','g-fair2','g-fair3','g-teacher'])"/>📋 Ich kenne die Spielregeln und die wichtigsten Turnierregeln.</label>
+      <label class="fair-item" for="g-fair2"><input type="checkbox" id="g-fair2" onchange="checkFairGeneric('g4q3',['g-fair1','g-fair2','g-fair3','g-teacher'])"/>🤫 Ich verhalte mich ruhig und respektiere alle Spieler und Schiedsrichter.</label>
+      <label class="fair-item" for="g-fair3"><input type="checkbox" id="g-fair3" onchange="checkFairGeneric('g4q3',['g-fair1','g-fair2','g-fair3','g-teacher'])"/>🏅 Ich verliere und gewinne mit Würde.</label>
+    </div>
+    <div class="teacher-box">
+      <h3>✏️ AG-Leitung bestätigt</h3>
+      <div class="fair-list">
+        <label class="fair-item" for="g-teacher"><input type="checkbox" id="g-teacher" onchange="checkFairGeneric('g4q3',['g-fair1','g-fair2','g-fair3','g-teacher'])"/>🏫 Das Kind ist turnierreif.</label>
+      </div>
+    </div>
+    <div id="fb-g4q3" class="fb"></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn-green" onclick="finishQuest('g4',['g4q1','g4q2','g4q3'])">✅ Gold 4 abschließen</button>
+    <button class="btn-light" onclick="closeSection()">Zur Übersicht</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     URKUNDEN
+══════════════════════════════════════════════════════════ -->
+<section id="certificateArea" class="no-print">
+  <div class="grid3">
+
+    <div class="card">
+      <h2>🥉 Bronze-Urkunde</h2>
+      <div id="cert-lock-b" class="cert-locked">🔒 Erst alle Bronze-Missionen abschließen.</div>
+      <div id="cert-b" style="display:none" class="cert-card">
+        <div style="font-size:44px">♟</div>
+        <h2 style="color:#92400e;font-size:18px">Bronze-Schachdiplom</h2>
+        <p style="font-size:13px;color:#374151">verliehen an</p>
+        <p id="cert-b-name" style="font-size:22px;font-weight:900;color:#111">___________</p>
+        <p style="font-size:11px;color:#6b7280;margin-top:8px">Datum: <span id="cert-b-date"></span></p>
+      </div>
+      <div class="btns no-print" style="margin-top:8px">
+        <button class="btn-light" style="font-size:12px" onclick="window.print()">🖨️ Drucken</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🥈 Silber-Urkunde</h2>
+      <div id="cert-lock-s" class="cert-locked">🔒 Erst alle Silber-Missionen abschließen.</div>
+      <div id="cert-s" style="display:none" class="cert-card silber">
+        <div style="font-size:44px">♜</div>
+        <h2 style="color:#374151;font-size:18px">Silber-Schachdiplom</h2>
+        <p style="font-size:13px;color:#374151">verliehen an</p>
+        <p id="cert-s-name" style="font-size:22px;font-weight:900;color:#111">___________</p>
+        <p style="font-size:11px;color:#6b7280;margin-top:8px">Datum: <span id="cert-s-date"></span></p>
+      </div>
+      <div class="btns no-print" style="margin-top:8px">
+        <button class="btn-light" style="font-size:12px" onclick="window.print()">🖨️ Drucken</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🥇 Gold-Urkunde</h2>
+      <div id="cert-lock-g" class="cert-locked">🔒 Erst alle Gold-Missionen abschließen.</div>
+      <div id="cert-g" style="display:none" class="cert-card gold">
+        <div style="font-size:44px">♛</div>
+        <h2 style="color:#78350f;font-size:18px">Gold-Schachdiplom</h2>
+        <p style="font-size:13px;color:#374151">verliehen an</p>
+        <p id="cert-g-name" style="font-size:22px;font-weight:900;color:#111">___________</p>
+        <p style="font-size:11px;color:#6b7280;margin-top:8px">Datum: <span id="cert-g-date"></span></p>
+      </div>
+      <div class="btns no-print" style="margin-top:8px">
+        <button class="btn-primary" style="font-size:12px" onclick="syncToSheet()">☁️ Stand senden</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<p class="footer no-print">Datenschutz: Nur Vorname/Kurzname, Klasse und Lerncode verwenden. · Ludgerus-Schachdiplom · Pilot-Version</p>
 </main>
 
 <script>
 "use strict";
 const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwJym6UR2gT0YMPldPCdvNTCzShdofm-7EQBo3SY98UFD__J7C173E3cxhoYSjMDdA1/exec";
-const STORAGE_KEY="ludgerus_bronze_v3";
-const QUEST_IDS=["b1","b2","b3","b4"];
+const STORAGE_KEY="ludgerus_diplom_v1";
+const BRONZE_QS=["b1","b2","b3","b4"];
+const SILBER_QS=["s1","s2","s3","s4"];
+const GOLD_QS=["g1","g2","g3","g4"];
+const ALL_QS=[...BRONZE_QS,...SILBER_QS,...GOLD_QS];
+
 const CORRECT={
   b1q1:"64",b1q2:"tuerme",b1q3:"ok",b1q4:"ok",b1q5:"ok",
   b2q1:"ok",b2q2:"laeufer",b2q3:"springer",b2q4:"ok",b2q5:"dame-alles",
   b3q1:"koenig-angegriffen",b3q2:"ok",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",
-  b4q1:"ok",b4q2:"gute-partie",b4q3:"warten"
+  b4q1:"ok",b4q2:"gute-partie",b4q3:"warten",
+  s1q1:"vorwaerts",s1q2:"umwandlung",s1q3:"ok",s1q4:"diagonal",
+  s2q1:"koenig-turm",s2q2:"im-schach",s2q3:"sonderschlag",s2q4:"zwei-felder",
+  s3q1:"figuren-entwickeln",s3q2:"zentrum",s3q3:"fruehzeitig",s3q4:"einmal",
+  s4q1:"unentschieden",s4q2:"patt",s4q3:"anbieten-ziehen",s4q4:"ok",
+  g1q1:"narrenmatt",g1q2:"zwei-figuren",g1q3:"springer-eingemauert",g1q4:"grundreihe",
+  g2q1:"kein-bauer-davor",g2q2:"nicht-verteidigt",g2q3:"gute-felder",g2q4:"wenn-besser",
+  g3q1:"koenige-gegeneinander",g3q2:"schlechter-ziehen",g3q3:"immer-gewinner",g3q4:"ok",
+  g4q1:"eigene-bedenkzeit",g4q2:"schiedsrichter",g4q3:"ok"
 };
 
-function defaultState(){return{profile:{childName:"",className:"",childCode:""},answers:{},quests:{b1:false,b2:false,b3:false,b4:false},bonus:{springerMove:null},lastSaved:null,lastSent:null}}
+function defaultState(){return{
+  profile:{childName:"",className:"",childCode:""},answers:{},
+  quests:{b1:false,b2:false,b3:false,b4:false,s1:false,s2:false,s3:false,s4:false,g1:false,g2:false,g3:false,g4:false},
+  bonus:{springerMove:null},lastSaved:null,lastSent:null
+}}
 function loadState(){try{return{...defaultState(),...(JSON.parse(localStorage.getItem(STORAGE_KEY))||{})}}catch(e){return defaultState()}}
 const state=loadState();
 function persist(){state.lastSaved=new Date().toISOString();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render()}
 
+function levelDone(qs){return qs.every(q=>state.quests[q])}
+
+/* ── Profile ── */
 function saveProfile(){
   state.profile.childName=document.getElementById("childName").value.trim();
   state.profile.className=document.getElementById("className").value.trim();
@@ -553,13 +1060,24 @@ function makeCode(save=true){
   if(save)saveProfile();
 }
 
+/* ── Navigation ── */
+function scrollTo2(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"})}
+
 function openSection(id){
+  const bDone=levelDone(BRONZE_QS),sDone=levelDone(SILBER_QS);
+  if(SILBER_QS.includes(id)&&!bDone){alert("🔒 Bitte zuerst alle Bronze-Missionen abschließen!");return}
+  if(GOLD_QS.includes(id)&&!sDone){alert("🔒 Bitte zuerst alle Silber-Missionen abschließen!");return}
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   const el=document.getElementById(id);
   if(el){el.classList.add("active");el.scrollIntoView({behavior:"smooth",block:"start"})}
-  else{document.getElementById("quests").scrollIntoView({behavior:"smooth"})}
 }
 
+function closeSection(){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("quests").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* ── Tasks ── */
 function choose(btn,taskId,value,correct){
   const task=btn.closest(".task");
   task.querySelectorAll(".ch").forEach(b=>b.classList.remove("sel","ok","err"));
@@ -567,17 +1085,14 @@ function choose(btn,taskId,value,correct){
   state.answers[taskId]=value;
   const ok=(value===correct);
   btn.classList.add(ok?"ok":"err");
-  task.classList.toggle("good",ok);
-  task.classList.toggle("bad",!ok);
+  task.classList.toggle("good",ok);task.classList.toggle("bad",!ok);
   showFb(taskId,ok,ok?"✓ Richtig!":"✗ Noch nicht ganz. Probiere es nochmal!");
   persist();
 }
 
 function showFb(taskId,ok,msg){
-  const el=document.getElementById("fb-"+taskId);
-  if(!el)return;
-  el.textContent=msg;
-  el.className="fb show "+(ok===true?"fb-ok":ok===false?"fb-err":"fb-info");
+  const el=document.getElementById("fb-"+taskId);if(!el)return;
+  el.textContent=msg;el.className="fb show "+(ok===true?"fb-ok":ok===false?"fb-err":"fb-info");
 }
 function markTask(taskId,ok){
   state.answers[taskId]=ok?"ok":"";
@@ -592,18 +1107,19 @@ function finishQuest(qid,taskIds){
   const wrong=taskIds.filter(t=>CORRECT[t]&&state.answers[t]!==CORRECT[t]);
   if(wrong.length){alert("Fast! Mindestens eine Antwort stimmt noch nicht.");return}
   state.quests[qid]=true;persist();syncToSheet(false);
-  alert("🎉 Mission erledigt!");openSection("quests");
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  alert("🎉 Mission erledigt!");
+  document.getElementById("quests").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-function checkFair(){
-  const ids=["fair1","fair2","fair3","teacherConfirm"];
-  ids.forEach(id=>{const l=document.getElementById(id)?.closest(".fair-item");if(l)l.classList.toggle("checked",document.getElementById(id).checked)});
+function checkFairGeneric(taskId,ids){
+  ids.forEach(id=>{const l=document.getElementById(id)?.closest(".fair-item");if(l)l.classList.toggle("checked",!!document.getElementById(id)?.checked)});
   const ok=ids.every(id=>document.getElementById(id)?.checked);
-  markTask("b4q1",ok);
-  showFb("b4q1",ok,ok?"✓ Super! Alle Häkchen gesetzt.":"Bitte alle Punkte bestätigen.");
+  markTask(taskId,ok);
+  showFb(taskId,ok,ok?"✓ Super! Alle Punkte bestätigt.":"Bitte alle Punkte bestätigen.");
 }
 
-/* ═══ BRETT ENGINE ═══ */
+/* ── Brett Engine ── */
 const FILES=["a","b","c","d","e","f","g","h"];
 function buildBoard(cid,opts={}){
   const c=document.getElementById(cid);if(!c)return;
@@ -637,173 +1153,164 @@ function clearMarks(bid,cls=["sq-mark","sq-err","sq-dot","sq-active"]){
   b.querySelectorAll(".cb-sq").forEach(sq=>sq.classList.remove(...cls));
 }
 
-/* B1Q3 */
-function setupB1Board(){
-  buildBoard("board-b1q3",{
-    onSquareClick(coord,sq){
-      clearMarks("board-b1q3",["sq-mark","sq-err"]);
-      const ok=coord==="h1";
-      sq.classList.add(ok?"sq-mark":"sq-err");
-      markTask("b1q3",ok);
-      showFb("b1q3",ok,ok?"✓ Richtig! h1 – ganz rechts unten.":` ✗ Das war ${coord}. Das helle Feld ist h1 – ganz rechts unten.`);
-    }
-  });
-}
+/* ── Board Setups ── */
 
-/* B1Q5: dunkle Felder Reihe 1 */
+// B1Q3
+function setupB1Board(){buildBoard("board-b1q3",{onSquareClick(coord,sq){
+  clearMarks("board-b1q3",["sq-mark","sq-err"]);
+  const ok=coord==="h1";sq.classList.add(ok?"sq-mark":"sq-err");
+  markTask("b1q3",ok);showFb("b1q3",ok,ok?"✓ Richtig! h1 ist ganz rechts unten.":` ✗ Das war ${coord}. h1 ist das helle Feld ganz rechts unten.`);
+}})}
+
+// B1Q5
 const DARK1=new Set(["a1","c1","e1","g1"]);
-function setupB1Q5(){
-  const marked=new Set();
-  buildBoard("board-b1q5",{
-    onSquareClick(coord,sq,board){
-      if(!DARK1.has(coord)){
-        sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return;
-      }
-      if(marked.has(coord)){sq.classList.remove("sq-mark");marked.delete(coord)}
-      else{sq.classList.add("sq-mark");marked.add(coord)}
-      const n=marked.size,done=n===4;
-      document.getElementById("b1q5-info").textContent=
-        `${n} von 4 dunklen Feldern markiert${done?" — Super! ✓":"."} `;
-      if(done){markTask("b1q5",true);showFb("b1q5",true,"✓ Alle 4 dunklen Felder in Reihe 1 gefunden!")}
-      else markTask("b1q5",false);
-    }
-  });
-}
+function setupB1Q5(){const marked=new Set();buildBoard("board-b1q5",{onSquareClick(coord,sq,board){
+  if(!DARK1.has(coord)){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+  if(marked.has(coord)){sq.classList.remove("sq-mark");marked.delete(coord)}else{sq.classList.add("sq-mark");marked.add(coord)}
+  const n=marked.size,done=n===4;
+  document.getElementById("b1q5-info").textContent=`${n} von 4 dunklen Feldern markiert${done?" — Super! ✓.":"."} `;
+  if(done){markTask("b1q5",true);showFb("b1q5",true,"✓ Alle 4 dunklen Felder in Reihe 1 gefunden!")}else markTask("b1q5",false);
+}})}
 
-/* B2Q1: Turmzüge */
+// B2Q1
 const TURM=new Set(["a4","b4","c4","e4","f4","g4","h4","d1","d2","d3","d5","d6","d7","d8"]);
-function setupB2Q1(){
-  buildBoard("board-b2q1",{
-    position:{"d4":{sym:"♜",color:"w"}},
-    onSquareClick(coord,sq,board){
-      if(coord==="d4")return;
-      const ok=TURM.has(coord),already=sq.classList.contains("sq-mark");
-      if(already){sq.classList.remove("sq-mark")}
-      else if(ok){sq.classList.add("sq-mark")}
-      else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
-      const n=board.querySelectorAll(".sq-mark").length,done=n===14;
-      document.getElementById("turm-info").textContent=`${n} von 14 Turmfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
-      if(done){markTask("b2q1",true);showFb("b2q1",true,"✓ Perfekt! Du kennst alle Turmzüge.")}
-      else markTask("b2q1",false);
-    }
-  });
-}
+function setupB2Q1(){buildBoard("board-b2q1",{position:{"d4":{sym:"♜",color:"w"}},onSquareClick(coord,sq,board){
+  if(coord==="d4")return;
+  const ok=TURM.has(coord),already=sq.classList.contains("sq-mark");
+  if(already)sq.classList.remove("sq-mark");
+  else if(ok)sq.classList.add("sq-mark");
+  else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+  const n=board.querySelectorAll(".sq-mark").length,done=n===14;
+  document.getElementById("turm-info").textContent=`${n} von 14 Turmfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
+  if(done){markTask("b2q1",true);showFb("b2q1",true,"✓ Perfekt! Du kennst alle Turmzüge.")}else markTask("b2q1",false);
+}})}
 
-/* B2Q4: Läuferzüge */
+// B2Q4
 const LAEUFER=new Set(["a1","b2","c3","e5","f6","g7","h8","c5","b6","a7","e3","f2","g1"]);
-function setupB2Q4(){
-  buildBoard("board-b2q4",{
-    position:{"d4":{sym:"♝",color:"w"}},
-    onSquareClick(coord,sq,board){
-      if(coord==="d4")return;
-      const ok=LAEUFER.has(coord),already=sq.classList.contains("sq-mark");
-      if(already){sq.classList.remove("sq-mark")}
-      else if(ok){sq.classList.add("sq-mark")}
-      else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
-      const n=board.querySelectorAll(".sq-mark").length,done=n===13;
-      document.getElementById("laeufer-info").textContent=`${n} von 13 Läuferfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
-      if(done){markTask("b2q4",true);showFb("b2q4",true,"✓ Klasse! Du kennst alle Läuferzüge.")}
-      else markTask("b2q4",false);
-    }
-  });
-}
+function setupB2Q4(){buildBoard("board-b2q4",{position:{"d4":{sym:"♝",color:"w"}},onSquareClick(coord,sq,board){
+  if(coord==="d4")return;
+  const ok=LAEUFER.has(coord),already=sq.classList.contains("sq-mark");
+  if(already)sq.classList.remove("sq-mark");
+  else if(ok)sq.classList.add("sq-mark");
+  else{sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+  const n=board.querySelectorAll(".sq-mark").length,done=n===13;
+  document.getElementById("laeufer-info").textContent=`${n} von 13 Läuferfeldern markiert${done?" — Alle gefunden! ✓":"."} `;
+  if(done){markTask("b2q4",true);showFb("b2q4",true,"✓ Klasse! Du kennst alle Läuferzüge.")}else markTask("b2q4",false);
+}})}
 
-/* B2 Bonus: Springer */
+// B2 Bonus
 const SPR=new Set(["b3","b5","c2","c6","e2","e6","f3","f5"]);
 let sprSel=false;
-function setupBonus(){
-  buildBoard("board-bonus",{
-    position:{"d4":{sym:"♞",color:"w"}},
-    onSquareClick(coord,sq,board){
-      if(coord==="d4"){
-        sprSel=!sprSel;clearMarks("board-bonus",["sq-active","sq-dot","sq-mark"]);
-        if(sprSel){sq.classList.add("sq-active");SPR.forEach(t=>{const s=board.querySelector(`[data-coord="${t}"]`);if(s)s.classList.add("sq-dot")});document.getElementById("springer-info").textContent="Zielfeld anklicken!"}
-        else{document.getElementById("springer-info").textContent="Klicke den Springer auf d4."}
-        return;
-      }
-      if(sprSel&&SPR.has(coord)){
-        const from=board.querySelector(`[data-coord="d4"]`),piece=from?.querySelector(".cb-piece");
-        if(piece&&from){from.removeChild(piece);sq.appendChild(piece)}
-        clearMarks("board-bonus",["sq-active","sq-dot"]);sq.classList.add("sq-mark");sprSel=false;
-        document.getElementById("springer-info").textContent=`🎉 Springer d4→${coord} – typischer L-Zug!`;
-        state.bonus.springerMove=coord;persist();
-      }else if(sprSel){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);document.getElementById("springer-info").textContent="Kein gültiges Springer-Feld."}
-    }
-  });
-}
+function setupBonus(){buildBoard("board-bonus",{position:{"d4":{sym:"♞",color:"w"}},onSquareClick(coord,sq,board){
+  if(coord==="d4"){
+    sprSel=!sprSel;clearMarks("board-bonus",["sq-active","sq-dot","sq-mark"]);
+    if(sprSel){sq.classList.add("sq-active");SPR.forEach(t=>{const s=board.querySelector(`[data-coord="${t}"]`);if(s)s.classList.add("sq-dot")});document.getElementById("springer-info").textContent="Zielfeld anklicken!"}
+    else document.getElementById("springer-info").textContent="Klicke den Springer auf d4.";
+    return;
+  }
+  if(sprSel&&SPR.has(coord)){
+    const from=board.querySelector(`[data-coord="d4"]`),piece=from?.querySelector(".cb-piece");
+    if(piece&&from){from.removeChild(piece);sq.appendChild(piece)}
+    clearMarks("board-bonus",["sq-active","sq-dot"]);sq.classList.add("sq-mark");sprSel=false;
+    document.getElementById("springer-info").textContent=`🎉 Springer d4→${coord}!`;
+    state.bonus.springerMove=coord;persist();
+  }else if(sprSel){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500)}
+}})}
 
-/* B3Q2: König retten */
+// B3Q2
 const K_SAFE=new Set(["d2","e2","f2"]);
 const K_ATK=new Set(["a1","b1","c1","d1","e1","f1","g1","h1","a2","a3","a4","a5","a6","a7","a8"]);
-function setupB3Q2(){
-  buildBoard("board-b3q2",{
-    position:{"e1":{sym:"♚",color:"w"},"a1":{sym:"♜",color:"b"}},
-    onSquareClick(coord,sq,board){
-      if(coord==="e1"||coord==="a1")return;
-      clearMarks("board-b3q2",["sq-mark","sq-err"]);
-      if(K_SAFE.has(coord)){
-        sq.classList.add("sq-mark");
-        const k=board.querySelector(`[data-coord="e1"] .cb-piece`);if(k)sq.appendChild(k);
-        markTask("b3q2",true);showFb("b3q2",true,`✓ Richtig! ${coord} – der König ist sicher.`);
-      }else{
-        sq.classList.add("sq-err");
-        markTask("b3q2",false);
-        showFb("b3q2",false,K_ATK.has(coord)?`✗ ${coord} wird vom schwarzen Turm kontrolliert!`:`✗ ${coord} ist kein Zug des Königs von e1.`);
-      }
-    }
-  });
-}
+function setupB3Q2(){buildBoard("board-b3q2",{position:{"e1":{sym:"♚",color:"w"},"a1":{sym:"♜",color:"b"}},onSquareClick(coord,sq,board){
+  if(coord==="e1"||coord==="a1")return;
+  clearMarks("board-b3q2",["sq-mark","sq-err"]);
+  if(K_SAFE.has(coord)){sq.classList.add("sq-mark");const k=board.querySelector(`[data-coord="e1"] .cb-piece`);if(k)sq.appendChild(k);markTask("b3q2",true);showFb("b3q2",true,`✓ Richtig! ${coord} – der König ist sicher.`)}
+  else{sq.classList.add("sq-err");markTask("b3q2",false);showFb("b3q2",false,K_ATK.has(coord)?`✗ ${coord} wird vom schwarzen Turm kontrolliert!`:`✗ ${coord} ist kein erlaubtes Königsfeld von e1.`)}
+}})}
 
-/* B1Q4: Match-Zuordnung */
+// S1Q3: Bauer e2 → e3 und e4
+const BAUER_E2=new Set(["e3","e4"]);
+function setupS1Q3(){const marked=new Set();buildBoard("board-s1q3",{position:{"e2":{sym:"♟",color:"w"}},onSquareClick(coord,sq,board){
+  if(coord==="e2")return;
+  if(!BAUER_E2.has(coord)){sq.classList.add("sq-err");setTimeout(()=>sq.classList.remove("sq-err"),500);return}
+  if(marked.has(coord)){sq.classList.remove("sq-mark");marked.delete(coord)}else{sq.classList.add("sq-mark");marked.add(coord)}
+  const n=marked.size,done=n===2;
+  document.getElementById("s1q3-info").textContent=`${n} von 2 Feldern markiert${done?" — Super! ✓":"."} `;
+  if(done){markTask("s1q3",true);showFb("s1q3",true,"✓ Richtig! e3 (ein Feld) und e4 (zwei Felder) beim ersten Zug.")}else markTask("s1q3",false);
+}})}
+
+// G3Q4: Bauer h7 → h8
+function setupG3Q4(){buildBoard("board-g3q4",{position:{"h7":{sym:"♟",color:"w"}},onSquareClick(coord,sq,board){
+  clearMarks("board-g3q4",["sq-mark","sq-err"]);
+  if(coord==="h8"){sq.classList.add("sq-mark");markTask("g3q4",true);showFb("g3q4",true,"✓ Richtig! h8 – der Bauer wandelt um und wird zur Dame!")}
+  else{sq.classList.add("sq-err");markTask("g3q4",false);showFb("g3q4",false,`✗ ${coord} ist nicht das Umwandlungsfeld. Der Bauer auf h7 zieht auf h8.`)}
+}})}
+
+/* ── Match B1Q4 ── */
 let matchSel=null;const matchDone=new Set();
 function matchClick(el,type){
   if(el.classList.contains("ok"))return;
   const key=el.dataset.key;
-  if(!matchSel){
-    document.querySelectorAll(".msym.sel,.mnam.sel").forEach(b=>b.classList.remove("sel"));
-    el.classList.add("sel");matchSel={key,el,type};return;
-  }
-  if(matchSel.type===type){
-    matchSel.el.classList.remove("sel");el.classList.add("sel");matchSel={key,el,type};return;
-  }
-  if(matchSel.key===key){
-    matchSel.el.classList.remove("sel");matchSel.el.classList.add("ok");el.classList.add("ok");
-    matchDone.add(key);matchSel=null;
+  if(!matchSel){document.querySelectorAll(".msym.sel,.mnam.sel").forEach(b=>b.classList.remove("sel"));el.classList.add("sel");matchSel={key,el,type};return}
+  if(matchSel.type===type){matchSel.el.classList.remove("sel");el.classList.add("sel");matchSel={key,el,type};return}
+  if(matchSel.key===key){matchSel.el.classList.remove("sel");matchSel.el.classList.add("ok");el.classList.add("ok");matchDone.add(key);matchSel=null;
     if(matchDone.size===5){markTask("b1q4",true);showFb("b1q4",true,"✓ Alle 5 Figuren richtig zugeordnet!")}
     else showFb("b1q4",null,`${matchDone.size} von 5 Figuren zugeordnet.`);
-  }else{
-    el.classList.add("err");setTimeout(()=>el.classList.remove("err"),500);
-    matchSel.el.classList.remove("sel");matchSel=null;
-  }
+  }else{el.classList.add("err");setTimeout(()=>el.classList.remove("err"),500);matchSel.el.classList.remove("sel");matchSel=null}
 }
 
-/* Render */
+/* ── Render ── */
 function render(){
   document.getElementById("childName").value=state.profile.childName||"";
   document.getElementById("className").value=state.profile.className||"";
   document.getElementById("childCode").value=state.profile.childCode||"";
-  const done=QUEST_IDS.filter(q=>state.quests[q]).length;
-  document.getElementById("progressBar").style.width=(done/4*100)+"%";
-  document.getElementById("progressText").textContent=`${done} von 4 Missionen erledigt`;
-  QUEST_IDS.forEach(q=>{
-    const el=document.getElementById("status-"+q);
-    if(el){el.textContent=state.quests[q]?"✓ erledigt":"offen";el.className="badge "+(state.quests[q]?"badge-done":"badge-open")}
-  });
-  const ready=done===4;
-  document.getElementById("certLock").style.display=ready?"none":"block";
-  document.getElementById("certificate").style.display=ready?"block":"none";
-  document.getElementById("certName").textContent=state.profile.childName||"________________";
-  document.getElementById("certDate").textContent=new Date().toLocaleDateString("de-DE");
   const info=document.getElementById("saveInfo");
   if(info&&state.lastSaved)info.textContent=`✓ Gespeichert: ${new Date(state.lastSaved).toLocaleString("de-DE")}`;
+
+  const bDone=BRONZE_QS.filter(q=>state.quests[q]).length;
+  const sDone=SILBER_QS.filter(q=>state.quests[q]).length;
+  const gDone=GOLD_QS.filter(q=>state.quests[q]).length;
+  const bronzeDone=bDone===4,silberDone=sDone===4,goldDone=gDone===4;
+
+  document.getElementById("b-prog").style.width=(bDone/4*100)+"%";
+  document.getElementById("s-prog").style.width=(sDone/4*100)+"%";
+  document.getElementById("g-prog").style.width=(gDone/4*100)+"%";
+  document.getElementById("b-prog-text").textContent=bDone+"/4";
+  document.getElementById("s-prog-text").textContent=sDone+"/4";
+  document.getElementById("g-prog-text").textContent=gDone+"/4";
+
+  ALL_QS.forEach(q=>{
+    const el=document.getElementById("status-"+q);
+    if(el){el.textContent=state.quests[q]?"✓ erledigt":"offen";el.className="badge "+(state.quests[q]?"badge-done":"badge-open")}
+    const btn=document.getElementById("btn-"+q);
+    if(btn){
+      const locked=(SILBER_QS.includes(q)&&!bronzeDone)||(GOLD_QS.includes(q)&&!silberDone);
+      btn.disabled=locked;
+    }
+  });
+
+  const sLock=document.getElementById("silber-lock");if(sLock)sLock.style.display=bronzeDone?"none":"inline-flex";
+  const gLock=document.getElementById("gold-lock");if(gLock)gLock.style.display=silberDone?"none":"inline-flex";
+
+  const now=new Date().toLocaleDateString("de-DE");
+  const name=state.profile.childName||"________________";
+  // Bronze cert
+  document.getElementById("cert-lock-b").style.display=bronzeDone?"none":"block";
+  document.getElementById("cert-b").style.display=bronzeDone?"block":"none";
+  if(bronzeDone){document.getElementById("cert-b-name").textContent=name;document.getElementById("cert-b-date").textContent=now}
+  // Silber cert
+  document.getElementById("cert-lock-s").style.display=silberDone?"none":"block";
+  document.getElementById("cert-s").style.display=silberDone?"block":"none";
+  if(silberDone){document.getElementById("cert-s-name").textContent=name;document.getElementById("cert-s-date").textContent=now}
+  // Gold cert
+  document.getElementById("cert-lock-g").style.display=goldDone?"none":"block";
+  document.getElementById("cert-g").style.display=goldDone?"block":"none";
+  if(goldDone){document.getElementById("cert-g-name").textContent=name;document.getElementById("cert-g-date").textContent=now}
 }
 
+/* ── Sync ── */
 function payload(){
-  const done=QUEST_IDS.filter(q=>state.quests[q]).length;
-  return{system:"Ludgerus-Schachdiplom",level:"Bronze",version:"3.0",
-    profile:state.profile,quests:state.quests,answers:state.answers,bonus:state.bonus,
-    progressPercent:Math.round(done/4*100),completedCount:done,totalCount:4,
-    certificateReady:done===4,clientTimestamp:new Date().toISOString()};
+  const bD=levelDone(BRONZE_QS),sD=levelDone(SILBER_QS),gD=levelDone(GOLD_QS);
+  return{system:"Ludgerus-Schachdiplom",version:"4.0",profile:state.profile,quests:state.quests,answers:state.answers,bonus:state.bonus,bronzeDone:bD,silberDone:sD,goldDone:gD,clientTimestamp:new Date().toISOString()};
 }
 async function syncToSheet(showAlert=true){
   saveProfile();
@@ -811,24 +1318,34 @@ async function syncToSheet(showAlert=true){
   try{
     await fetch(APPS_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload())});
     state.lastSent=new Date().toISOString();persist();
-    if(showAlert)alert("✓ Gesendet. Prüfe das Google Sheet.");
+    if(showAlert)alert("✓ Gesendet.");
   }catch(err){if(showAlert)alert("Senden nicht möglich: "+err.message)}
 }
 
-/* Init */
-setupB1Board();setupB1Q5();setupB2Q1();setupB2Q4();setupBonus();setupB3Q2();render();
+/* ── Init ── */
+setupB1Board();setupB1Q5();setupB2Q1();setupB2Q4();setupBonus();setupB3Q2();setupS1Q3();setupG3Q4();
+render();
 
 /* Antworten wiederherstellen */
 (function(){
-  const map={b1q1:"64",b1q2:"tuerme",b2q2:"laeufer",b2q3:"springer",b2q5:"dame-alles",
-    b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",b4q2:"gute-partie",b4q3:"warten"};
-  Object.entries(map).forEach(([tid,correct])=>{
+  const mcTasks={
+    b1q1:"64",b1q2:"tuerme",b2q2:"laeufer",b2q3:"springer",b2q5:"dame-alles",
+    b3q1:"koenig-angegriffen",b3q3:"kein-ausweg",b3q4:"kein-zug",b3q5:"drei-wege",b4q2:"gute-partie",b4q3:"warten",
+    s1q1:"vorwaerts",s1q2:"umwandlung",s1q4:"diagonal",
+    s2q1:"koenig-turm",s2q2:"im-schach",s2q3:"sonderschlag",s2q4:"zwei-felder",
+    s3q1:"figuren-entwickeln",s3q2:"zentrum",s3q3:"fruehzeitig",s3q4:"einmal",
+    s4q1:"unentschieden",s4q2:"patt",s4q3:"anbieten-ziehen",
+    g1q1:"narrenmatt",g1q2:"zwei-figuren",g1q3:"springer-eingemauert",g1q4:"grundreihe",
+    g2q1:"kein-bauer-davor",g2q2:"nicht-verteidigt",g2q3:"gute-felder",g2q4:"wenn-besser",
+    g3q1:"koenige-gegeneinander",g3q2:"schlechter-ziehen",g3q3:"immer-gewinner",
+    g4q1:"eigene-bedenkzeit",g4q2:"schiedsrichter"
+  };
+  Object.entries(mcTasks).forEach(([tid,correct])=>{
     const saved=state.answers[tid];if(!saved)return;
     const task=document.querySelector(`[data-task='${tid}']`);if(!task)return;
     task.querySelectorAll(".ch").forEach(btn=>{
       const m=btn.getAttribute("onclick")?.match(/choose\(this,'[^']+','([^']+)'/);
-      if(!m)return;
-      if(m[1]===saved){btn.classList.add(saved===correct?"ok":"err");task.classList.toggle("good",saved===correct);task.classList.toggle("bad",saved!==correct)}
+      if(m&&m[1]===saved){btn.classList.add(saved===correct?"ok":"err");task.classList.toggle("good",saved===correct);task.classList.toggle("bad",saved!==correct)}
     });
   });
 })();
