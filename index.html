@@ -321,7 +321,7 @@ textarea:focus{outline:none;border-color:var(--brand)}
     <div class="path-card gold"><strong>🥇 Gold</strong><span>Mattbilder, Endspiele und stärkere Schachideen lösen.</span></div>
     <div class="path-card final"><strong>🏁 Abschlusstest</strong><span>Aufgaben aus allen drei Stufen lösen und Diplom sichern.</span></div>
   </div>
-  <div class="dev-note"><strong>Entwicklermodus:</strong> Aktuell bleiben alle Stufen und der Abschlusstest direkt freigeschaltet, damit die Inhalte geprüft und weiterentwickelt werden können. Die echte Freischaltung wird erst ganz am Ende aktiviert.</div>
+
   <div class="top-nav">
     <button class="btn-bronze" onclick="scrollTo2('quests')">Mit den Missionen starten</button>
     <button class="btn-light" onclick="scrollTo2('pass')">Diplom-Pass öffnen</button>
@@ -333,7 +333,7 @@ textarea:focus{outline:none;border-color:var(--brand)}
       <li>Geeignet für Schach-AG, Ganztag, Vertretung und selbstständige Übungsphasen.</li>
       <li>Empfohlen: Kinder arbeiten mit Kopfhörern, wenn sie die Vorlesefunktion nutzen.</li>
       <li>Bronze sollte vor der ersten freien Partie bearbeitet werden.</li>
-      <li>Der Abschlusstest bleibt in der Entwicklungsfassung offen. In der späteren Schülerversion öffnet er sich erst nach Bronze, Silber und Gold.</li>
+      <li>Der Abschlusstest öffnet sich erst nach Abschluss aller Bronze-, Silber- und Gold-Missionen.</li>
     </ul>
   </details>
   <details class="teacher-info">
@@ -2616,7 +2616,7 @@ textarea:focus{outline:none;border-color:var(--brand)}
 "use strict";
 const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbya2SAD281BIz7SrIyqbXjMlYVPbS6c1WSYPuchl9y-08yrh3L_RbX5ofMNXDVTzU4pDw/exec";
 const STORAGE_KEY="ludgerus_diplom_v1";
-const CREATION_MODE_UNLOCK_ALL=true; // Erstellungsphase: alle Module frei. Später auf false setzen, um die Sperrlogik wieder zu aktivieren.
+const CREATION_MODE_UNLOCK_ALL=false; // Sperrlogik aktiv: Silber erst nach Bronze, Gold erst nach Silber.
 const BRONZE_QS=["b1","b2","b3","b4"];
 const SILBER_QS=["s1","s2","s3","s4"];
 const GOLD_QS=["g1","g2","g3","g4"];
@@ -5590,4 +5590,4 @@ reopenAfterReset();
 })();
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                      
