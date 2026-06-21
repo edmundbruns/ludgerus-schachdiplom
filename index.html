@@ -315,17 +315,9 @@ textarea:focus{outline:none;border-color:var(--brand)}
   <span class="pill pill-g">🥇 Gold</span>
   <h1>Ludgerus-Schachdiplom</h1>
   <p class="lead"><strong>Lerne Schach Schritt für Schritt:</strong> erst Bronze, dann Silber, dann Gold. Am Ende zeigst du im Abschlusstest, was du kannst.</p>
-  <div class="learning-path" aria-label="Lernweg Bronze Silber Gold Abschlusstest">
-    <div class="path-card bronze"><strong>🥉 Bronze</strong><span>Brett, Figuren, Felder und Grundstellung sicher verstehen.</span></div>
-    <div class="path-card silber"><strong>🥈 Silber</strong><span>Regeln, Notation und erste taktische Motive anwenden.</span></div>
-    <div class="path-card gold"><strong>🥇 Gold</strong><span>Mattbilder, Endspiele und stärkere Schachideen lösen.</span></div>
-    <div class="path-card final"><strong>🏁 Abschlusstest</strong><span>Aufgaben aus allen drei Stufen lösen und Diplom sichern.</span></div>
-  </div>
-
   <div class="top-nav">
     <button class="btn-bronze" onclick="scrollTo2('quests')">Mit den Missionen starten</button>
     <button class="btn-light" onclick="scrollTo2('pass')">Diplom-Pass öffnen</button>
-    <button class="btn-light" onclick="scrollTo2('teacherGuide')">Hinweise für Lehrkräfte</button>
   </div>
   <details id="teacherGuide" class="teacher-info">
     <summary>Hinweise für Lehrkräfte</summary>
@@ -334,20 +326,6 @@ textarea:focus{outline:none;border-color:var(--brand)}
       <li>Empfohlen: Kinder arbeiten mit Kopfhörern, wenn sie die Vorlesefunktion nutzen.</li>
       <li>Bronze sollte vor der ersten freien Partie bearbeitet werden.</li>
       <li>Der Abschlusstest öffnet sich erst nach Abschluss aller Bronze-, Silber- und Gold-Missionen.</li>
-    </ul>
-  </details>
-  <details class="teacher-info">
-    <summary>Technischer Endtest für Tablet und Smartphone</summary>
-    <ul>
-      <li><strong>Smartphone hochkant:</strong> Startseite, Kacheln, Bretter, Buttons und Feedback müssen ohne horizontales Scrollen nutzbar sein.</li>
-      <li><strong>Smartphone quer:</strong> Schachbrett, Koordinaten und Drag-/Klickaufgaben prüfen.</li>
-      <li><strong>Tablet:</strong> Bronze 1 Drag-and-Drop, Silber 2 Patt-Diagramm, Gold 4 Turm-Matt und Abschlusstest öffnen.</li>
-      <li><strong>Touch-Test:</strong> Jede Figur lässt sich zuverlässig auswählen, Zielfelder reagieren nicht versetzt.</li>
-      <li><strong>Reset-Test:</strong> Eine richtig gelöste Aufgabe zurücksetzen und erneut lösen.</li>
-      <li><strong>Speicher-Test:</strong> Browser schließen, Datei erneut öffnen, Lernstand prüfen.</li>
-      <li><strong>Vorlesetest:</strong> Text vorlesen und mit dem globalen Stopp-Button beenden.</li>
-      <li><strong>Abschlusstest:</strong> Während der Bearbeitung darf kein Richtig/Falsch-Feedback erscheinen.</li>
-      <li><strong>Barriere-Basis:</strong> Schriftgröße, Kontrast, Fokusrahmen und Buttonhöhe prüfen.</li>
     </ul>
   </details>
 </section>
@@ -483,16 +461,16 @@ textarea:focus{outline:none;border-color:var(--brand)}
     </div>
   </div>
 
-  <!-- ABSCHLUSSTEST DIREKTZUGRIFF -->
+  <!-- ABSCHLUSSTEST -->
   <div class="level-block">
     <div class="level-hdr">
-      <span class="level-hdr-title">🏁 Abschlusstest – Direktzugriff für die Erstellungsphase</span>
-      <span class="lock-tag">🛠️ freigeschaltet</span>
+      <span class="level-hdr-title">🏁 Abschlusstest</span>
+      <span id="final-lock" class="lock-tag">🔒 Erst alle Gold-Missionen abschließen</span>
     </div>
     <div class="quest-grid">
       <div class="q-card"><div class="icon">🏁</div><h3>Abschlusstest</h3><p>Aufgaben aus Bronze, Silber und Gold</p>
-        <span class="badge badge-open">prüfbar</span>
-        <div class="btns" style="justify-content:center"><button id="btn-finalTest" class="btn-primary" onclick="openSection('finalTest')">Öffnen →</button></div>
+        <span id="status-finalTest" class="badge badge-open">gesperrt</span>
+        <div class="btns" style="justify-content:center"><button id="btn-finalTest" class="btn-primary" onclick="openSection('finalTest')" disabled>Öffnen →</button></div>
       </div>
     </div>
   </div>
@@ -2845,9 +2823,10 @@ function makeCode(save=true){
 function scrollTo2(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"})}
 
 function openSection(id){
-  const bDone=levelDone(BRONZE_QS),sDone=levelDone(SILBER_QS);
+  const bDone=levelDone(BRONZE_QS),sDone=levelDone(SILBER_QS),gDone=levelDone(GOLD_QS);
   if(!CREATION_MODE_UNLOCK_ALL&&SILBER_QS.includes(id)&&!bDone){alert("🔒 Bitte zuerst alle Bronze-Missionen abschließen!");return}
   if(!CREATION_MODE_UNLOCK_ALL&&GOLD_QS.includes(id)&&!sDone){alert("🔒 Bitte zuerst alle Silber-Missionen abschließen!");return}
+  if(!CREATION_MODE_UNLOCK_ALL&&id==="finalTest"&&!(bDone&&sDone&&gDone)){alert("🔒 Bitte zuerst alle Bronze-, Silber- und Gold-Missionen abschließen!");return}
   document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   const el=document.getElementById(id);
   if(!el)return;
@@ -5271,13 +5250,25 @@ function render(){
 
   const sLock=document.getElementById("silber-lock");
   if(sLock){
-    sLock.textContent=CREATION_MODE_UNLOCK_ALL?"🛠️ Erstellungsphase: freigeschaltet":"🔒 Erst Bronze abschließen";
-    sLock.style.display=(CREATION_MODE_UNLOCK_ALL||!bronzeDone)?"inline-flex":"none";
+    sLock.textContent="🔒 Erst Bronze abschließen";
+    sLock.style.display=(!bronzeDone)?"inline-flex":"none";
   }
   const gLock=document.getElementById("gold-lock");
   if(gLock){
-    gLock.textContent=CREATION_MODE_UNLOCK_ALL?"🛠️ Erstellungsphase: freigeschaltet":"🔒 Erst Silber abschließen";
-    gLock.style.display=(CREATION_MODE_UNLOCK_ALL||!silberDone)?"inline-flex":"none";
+    gLock.textContent="🔒 Erst Silber abschließen";
+    gLock.style.display=(!silberDone)?"inline-flex":"none";
+  }
+
+  // Abschlusstest freischalten wenn alle Module (inkl. Gold 4) erledigt
+  const allDone=bronzeDone&&silberDone&&goldDone;
+  const fBtn=document.getElementById("btn-finalTest");
+  if(fBtn) fBtn.disabled=!allDone;
+  const fLock=document.getElementById("final-lock");
+  if(fLock) fLock.style.display=allDone?"none":"inline-flex";
+  const fStatus=document.getElementById("status-finalTest");
+  if(fStatus){
+    fStatus.textContent=state.finalTestDone?"✓ erledigt":allDone?"offen":"gesperrt";
+    fStatus.className="badge "+(state.finalTestDone?"badge-done":allDone?"badge-open":"badge-open");
   }
 
   if(bronzeDone&&silberDone&&goldDone&&!state.finalTestDone&&!state.finalAutoOpened){
@@ -5590,4 +5581,4 @@ reopenAfterReset();
 })();
 </script>
 </body>
-</html>                                                                                                                                                                                                                                                                                                                                                      
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
